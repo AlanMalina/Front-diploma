@@ -1,0 +1,134 @@
+.create-post-app{
+    display: flex;
+    flex-direction: column;
+    width: 34.7vw;
+    /* height: 92.222vh; */
+    padding: 1.111vh 0 1.111vh 0;
+    box-sizing: border-box;
+}
+.create-post-container{
+    width: 100%;
+    height: 100vh;
+    padding: 4.444vh 0 4.444vh 0;
+    box-sizing: border-box;
+    background-color: #F0F2EF;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    box-shadow: 1px 1px 10px #cccecb;
+    overflow: auto;
+}
+.btn-add-photo{
+    width: 29.167vw;
+    min-height: 22.222vh;
+    opacity: 0;
+}
+.added-img{
+    width: 100%;
+}
+.add-photo{
+    width: 29.167vw;
+    min-height: 22.222vh;
+    overflow: hidden;   
+    background-color: #DEDCD6;
+}
+    
+.post-description{
+    width: 28.889vw;
+    min-height: 11.111vh;
+    background-color: #DEDCD6;
+    border: 0;   
+}
+.btn-create{
+    position: relative;
+    width: 8.542vw;
+    height: 5vh;
+    color: #ffff;
+    font-size: 25px;
+    background-color: #78866B;
+}
+    
+.post-info{
+    width: 28.889vw;
+    min-height: 4.444vh;
+    background-color: #DEDCD6;
+    border: 0;   
+}
+.post-info::placeholder {
+    font-size: 15px;
+    color: rgb(143, 143, 143);
+}
+.title-to_add-photo{
+    position: relative;
+    /* left: -10vw; */
+    margin: 0 0 -1.667vh 0;
+}
+
+
+
+
+
+
+/* ----------------  1024  ----------------------*/
+
+
+@media(min-width: 1024px){
+    .create-post-app{
+        width: 500px;
+        height: 92.222vh;
+    }
+    .btn-add-photo{
+        width: 420px;
+        min-height: 200px;
+    }
+    .add-photo{
+        width: 420px;
+        min-height: 200px;
+    }
+    .post-description{
+        width: 420px;
+        min-height: 100px;
+    }
+    .btn-create{
+        width: 123px;
+        min-height: 45px;
+    }
+    .post-info{
+        width: 420px;
+        min-height: 40px;  
+    }
+}
+
+
+
+/* ---------  1440  --------------------------- */
+
+
+
+@media(min-width: 1440px){
+    .create-post-app{
+        width: 34.7vw;
+        height: 92.222vh;
+    }
+    .btn-add-photo{
+        width: 29.167vw;
+        min-height: 22.222vh;
+    }
+    .add-photo{
+        width: 29.167vw;
+        min-height: 22.222vh;
+    }
+    .post-description{
+        width: 28.889vw;
+        min-height: 11.111vh;
+    }
+    .btn-create{
+        width: 8.542vw;
+        height: 5vh;
+    }
+    .post-info{
+        width: 28.889vw;
+        min-height: 4.444vh;  
+    }
+}

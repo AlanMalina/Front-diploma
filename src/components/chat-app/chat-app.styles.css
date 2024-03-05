@@ -1,0 +1,26 @@
+.chat-container{
+    position: absolute;
+    overflow: hidden;
+    top: 7.778vh;
+    right: 0;
+    width: 30.972vw;
+    height: 92.222vh;
+    z-index: -1;
+}
+
+.chat-app{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: -100vh;
+    right: -69.028vw;
+    background-color: red;
+    transition: 0.1s;
+    font-size: 50px;
+}
+
+@media(max-width: 1023px){
+    .chat-container{
+        display: none;
+    }
+}

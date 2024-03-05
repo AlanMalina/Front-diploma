@@ -1,0 +1,15 @@
+.my-profile-app{
+    display: flex;
+    width: 71vh;
+    height: 100%;
+    /* margin: 0 auto; */
+    position: relative;
+}
+.my-profile-block{
+    width: 100%;
+    background-color: grey;
+    position: relative;
+    height: 100%;
+    padding: 2vh 0vh 2vh 0vh ;
+    text-align: center;
+}

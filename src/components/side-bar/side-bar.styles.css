@@ -1,0 +1,26 @@
+.sidebar-container{
+    position: absolute;
+    overflow: hidden;
+    top: 8.889vh;
+    right: 0;
+    width: 45.573vw;
+    height: 91.111vh;
+    z-index: -1;
+}
+.sidebar{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: -100vw;
+    background-color: rgb(8, 3, 106);
+    transition: 0.5s;
+    color: yellow;
+    font-size: 50px;    
+}
+
+@media(min-width: 1024px){
+    .sidebar-container{
+        display: none;
+    }
+}

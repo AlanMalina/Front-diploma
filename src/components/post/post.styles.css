@@ -1,0 +1,190 @@
+.post-container{
+    width: 31.25vw;
+    background-color: #D9D9D9;
+    box-shadow: 0.5px 1px 4px grey;
+}
+.post-header{
+    width: 100%;
+    height: 5.556vh;
+    background-color: #DEDCD6;
+    display: flex;
+    align-items: center;
+    /* padding-left: 0.556vw;  */
+    box-sizing: border-box;
+    font-size: 1.25vw;
+}
+
+.avatar{
+    width: 4.445vh;
+    height: 4.445vh;
+    background-color: aqua;
+    border-radius: 50%;
+    margin: 0 0.556vw 0 0.556vw;
+}
+.content_post{
+    display: flex;
+    flex-direction: column;
+}
+.post-img{
+    width: 100%;
+}
+.post-describtion{
+    width: 100%;
+    min-height: 11.667vh;
+    background: #FBFAF8;
+    overflow-wrap: break-word;
+    padding: 1.111vh 0.347vw 1.111vh 0.347vw;
+    box-sizing: border-box;
+}
+.post-footer{
+    width: 100%;
+    height: 4.778vh;
+    background-color: #DEDCD6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-item-left{
+    background: none;
+    border: 0;
+    width: 16.5%;
+}
+.footer-item{
+    background: none;
+    border: 0;
+    width: 34%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.footer-item-right{
+    background: none;
+    border: 0;
+    width: 33%;
+}
+.like-btn img{
+    width: 1.944vw;
+    height: 2.667vh;
+}
+.comment-btn img{
+    width: 1.736vw;
+    height: 2.778vh;
+}
+.btn-donate-block{
+    width: 9.722vw;
+    min-height: 5.556vh;
+    background-color: #DEDCD6;
+    border-radius: 2.778vh;
+    position: relative;
+    top: -0.5vh;
+}
+.donate-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 2.222vh;
+    width: 6.944vw;
+    height: 3.889vh;
+    font-size: 1.25vw;
+    background: #FBFAF8;
+}
+.donate-btn img{
+    width: 1.736vw;
+    height: 2.222vh;
+}
+.share-btn img{
+    width: 1.736vw;
+    height: 2.778vh;
+}
+h2{
+    margin: 0;
+}
+.post-description p{
+    font-size: 0.833vw;
+}
+
+@media (max-width: 1023px){
+    .post-container{
+        width: 100%;
+    }
+    /* .avatar{
+        width: 5.208vw;
+
+    } */
+
+}
+@media (min-width: 1024px){
+    .post-container{
+        width: 450px;
+    }
+    .post-header{
+        height: 50px;
+        font-size: 18px;
+    }
+    .post-footer{
+        height: 43px;
+    }
+    .like-btn img{
+        width: 28px;
+        height: 24px;
+    }
+    .comment-btn img{
+        width: 25px;
+        height: 25px;
+    }
+    .btn-donate-block{
+        width: 140px;
+        height: 50px;
+    }
+    .donate-btn{
+        width: 106px;
+        height: 40px;
+        font-size: 18px;
+    }
+    .donate-btn img{
+        width: 30px;
+        height: 25px;
+    }
+    .share-btn img{
+        width: 25px;
+        height: 25px;
+    }
+}
+@media (min-width: 1440px){
+    .post-container{
+        width: 31.25vw;
+    }
+    .post-header{
+        height: 5.556vh;
+        font-size: 1.25vw;
+    }
+    .post-footer{
+        height: 4.778vh
+    }
+    .like-btn img{
+        width: 1.944vw;
+        height: 2.667vh;
+    }
+    .comment-btn img{
+        width: 1.736vw;
+        height: 2.778vh;
+    }  
+    .btn-donate-block{
+        width: 9.722vw;
+        height: 5.556vh;
+    }
+    .donate-btn{
+        width: 7.361vw;
+        height: 4.444vh;
+        font-size: 1.25vw;;
+    }
+    .donate-btn img{
+        width: 1.736vw;
+        height: 2.444vh;
+    }
+    .share-btn img{
+        width: 2.083vw;
+        height: 2.778vh;
+    }
+}
