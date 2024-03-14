@@ -3,9 +3,10 @@
     background-color: #D9D9D9;
     box-shadow: 0.5px 1px 4px grey;
 }
+
 .post-header{
     width: 100%;
-    height: 5.556vh;
+    height: 50px;
     background-color: #DEDCD6;
     display: flex;
     align-items: center;
@@ -72,11 +73,11 @@
 }
 .btn-donate-block{
     width: 9.722vw;
-    min-height: 5.556vh;
+    height: 5.556vh;
     background-color: #DEDCD6;
     border-radius: 2.778vh;
     position: relative;
-    top: -0.5vh;
+    bottom: 0.5vh;
 }
 .donate-btn{
     display: flex;
@@ -104,7 +105,15 @@ h2{
     font-size: 0.833vw;
 }
 
-@media (max-width: 1023px){
+
+
+
+/* ----------------------  360  ---------------------------- */
+
+
+
+
+@media (min-width: 360px){
     .post-container{
         width: 100%;
     }
@@ -114,6 +123,72 @@ h2{
     } */
 
 }
+
+
+
+
+/* -------------------  768  ---------------------------- */
+
+
+
+
+@media(min-width: 768px){
+    .post-container{
+        width: 82.292vw;
+    }
+    .post-header{
+        height: 5.859vh;
+        font-size: 1.953vh;
+    }
+    .avatar{
+        width: 4.688vh;
+        height: 4.688vh;
+    }
+    .post-describtion{
+        min-height: 14.648vh;
+    }
+    .post-footer{
+        height: 5.176vh;
+    }
+    .like-btn img{
+        width: 4.557vw;
+        height: 2.93vh;
+    }
+    .comment-btn img{
+        width: 4.427vw;
+        height: 3.32vh;
+    }
+    .btn-donate-block{
+        width: 23.438vw;
+        height: 5.859vh;
+        border-radius: 50px;
+    }
+    .donate-btn{
+        width: 15.625vw;
+        height: 4.395vh;
+        font-size: 1.953vh;
+    }
+    .donate-btn img{
+        width: 4.167vw;
+        height: 2.734vh;
+    }
+    .share-btn img{
+        width: 3.906vw;
+        height: 2.93vh;
+    }
+}
+
+
+
+
+
+/* ------------------  1024  -----------------------------------*/
+
+
+
+
+
+
 @media (min-width: 1024px){
     .post-container{
         width: 450px;
@@ -121,6 +196,13 @@ h2{
     .post-header{
         height: 50px;
         font-size: 18px;
+    }
+    .avatar{
+        width: 40px;
+        height: 40px;
+    }
+    .post-describtion{
+        min-height: 100px;
     }
     .post-footer{
         height: 43px;
@@ -151,6 +233,15 @@ h2{
         height: 25px;
     }
 }
+
+
+
+
+/* ------------------  1440  ---------------------------*/
+
+
+
+
 @media (min-width: 1440px){
     .post-container{
         width: 31.25vw;
@@ -158,6 +249,13 @@ h2{
     .post-header{
         height: 5.556vh;
         font-size: 1.25vw;
+    }
+    .avatar{
+        width: 4.445vh;
+        height: 4.445vh;
+    }
+    .post-describtion{
+        min-height: 11.667vh;
     }
     .post-footer{
         height: 4.778vh

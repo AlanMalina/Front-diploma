@@ -21,15 +21,16 @@ class ChatApp extends Component {
     
       handleClickOutside(e) {
         const chatapp = document.getElementById('chat-app')
-
+        const container = document.getElementById('chat-container')
         if (this.wrapperRef && !this.wrapperRef.current.contains(e.target)) {
             chatapp.style.top = '-100vh'
+            container.style.zIndex = "-1"
         }
       }
 
     render() {
         return(
-            <div id="chat-container" className='chat-container' >
+            <div id="chat-container" className='chat-app-container' >
                 <div id='chat-app' className="chat-app" ref={this.wrapperRef}>
                     Hello!!!
                 </div>

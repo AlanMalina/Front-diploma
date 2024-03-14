@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import React, {Component} from 'react'
 import './App.css'
 import Header from './components/header/header.component'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
@@ -7,6 +7,8 @@ import MyProfilePage from './pages/my_profile/my_profile.component'
 import CreatePostPage from './pages/create-post_page/create-post_page.component'
 import ChatApp from './components/chat-app/chat-app.component'
 import SideBar from './components/side-bar/side-bar.component'
+import ChatPage from './pages/chat-page/chat-page.component'
+import FullPagePost from './pages/full-page-post/full-page-post.component'
 
 
 class App extends Component {
@@ -27,6 +29,8 @@ class App extends Component {
               <Route path='/' element={<MainPage/>}/>
               <Route path='/my-profile' element={<MyProfilePage/>}/>
               <Route path='/create-post' element={<CreatePostPage/>}/>
+              <Route path='/chat' element={<ChatPage/>}/>
+              <Route path='/post/:id' element={<FullPagePost/>}/>
             </Routes>
           </div>
         </Router>

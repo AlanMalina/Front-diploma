@@ -17,7 +17,7 @@ class CreatePostPage extends Component {
         const formPhoto = new FormData()
         formPhoto.append('image', this.state.photo)
         console.log(formPhoto)
-        const response = await postService.postPost('Yura', this.state.title, 'Наївся блох', this.state.photo, '12334')
+        const response = await postService.postPost('Yura', this.state.title, 'Наївся блох', this.state.photo, '1234')
         this.setState({post: response.data})
 
         console.log(response.data)
@@ -48,7 +48,8 @@ class CreatePostPage extends Component {
                         </div>
                     ):(
                         <div className="add-photo">
-                            <input type="file" onChange={this.fileChange} className="btn-add-photo"/>
+                            <input type="file" onChange={this.fileChange}  className="btn-add-photo"/>
+                            <img src="./img/add-photo.svg" className="add-photo-icon"/>
                         </div>)}
                     
                     

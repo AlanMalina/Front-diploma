@@ -1,4 +1,4 @@
-.chat-container{
+.chat-app-container{
     position: absolute;
     overflow: hidden;
     top: 7.778vh;
@@ -6,6 +6,7 @@
     width: 30.972vw;
     height: 92.222vh;
     z-index: -1;
+    transition: 0.2s;
 }
 
 .chat-app{
@@ -15,12 +16,60 @@
     top: -100vh;
     right: -69.028vw;
     background-color: red;
-    transition: 0.1s;
+    transition: 0.2s;
     font-size: 50px;
 }
 
-@media(max-width: 1023px){
+
+
+/* ----------------------  768  -----------------------
+
+
+
+@media(min-width: 768px){
     .chat-container{
-        display: none;
+        width: 100vw;
+        height: 93.652vh;
+        top: 6.348vh;
+        transition: 0s;
+    }
+    .chat-app{
+        right: 0vw;
+        transition: 0s;
+    }
+}
+
+
+
+
+/* --------------------  1024  ----------------------------- */
+
+
+
+
+@media(min-width: 1024px){
+    .chat-app-container{
+        width: 446px;
+        height: 92.222vh;
+        top: 7.778vh;
+        transition: 0.2s;
+    }
+    .chat-app{
+        right: -69.028vw;
+        transition: 0.2s;
+    }
+}
+
+
+
+
+/* ----------------  1440  --------------------- */
+
+
+
+
+@media(min-width: 1440px){
+    .chat-app-container{
+        width: 30.972vw;
     }
 }

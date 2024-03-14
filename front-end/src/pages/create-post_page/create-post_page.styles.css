@@ -2,39 +2,58 @@
     display: flex;
     flex-direction: column;
     width: 34.7vw;
-    /* height: 92.222vh; */
     padding: 1.111vh 0 1.111vh 0;
     box-sizing: border-box;
 }
 .create-post-container{
     width: 100%;
-    height: 100vh;
+    height: 92.222vh;
     padding: 4.444vh 0 4.444vh 0;
     box-sizing: border-box;
     background-color: #F0F2EF;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1.667vh;
     align-items: center;
     box-shadow: 1px 1px 10px #cccecb;
     overflow: auto;
-}
-.btn-add-photo{
-    width: 29.167vw;
-    min-height: 22.222vh;
-    opacity: 0;
-}
-.added-img{
-    width: 100%;
 }
 .add-photo{
     width: 29.167vw;
     min-height: 22.222vh;
     overflow: hidden;   
     background-color: #DEDCD6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-    
+.added-img{
+    width: 100%;
+}
+.btn-add-photo{
+    width: 29.167vw;
+    min-height: 22.222vh;
+    opacity: 0;
+    position: absolute;
+}
+.add-photo-icon{
+    width: 50px;
+    height: 50px;
+    top: 25.222vh;
+    left: 47.917vw;
+}  
+.post-info{
+    width: 28.889vw;
+    min-height: 4.444vh;
+    background-color: #DEDCD6;
+    border: 0;   
+}
+.post-info::placeholder {
+    font-size: 15px;
+    color: rgb(143, 143, 143);
+}  
 .post-description{
+    font-size: 15px;
     width: 28.889vw;
     min-height: 11.111vh;
     background-color: #DEDCD6;
@@ -47,36 +66,86 @@
     color: #ffff;
     font-size: 25px;
     background-color: #78866B;
+    border: 0;
 }
     
-.post-info{
-    width: 28.889vw;
-    min-height: 4.444vh;
-    background-color: #DEDCD6;
-    border: 0;   
-}
-.post-info::placeholder {
-    font-size: 15px;
-    color: rgb(143, 143, 143);
-}
 .title-to_add-photo{
+    font-size: 1.181vw;
     position: relative;
-    /* left: -10vw; */
-    margin: 0 0 -1.667vh 0;
+    left: -10.069vw;
+    margin: 0 0 -1.6vh 0;
 }
 
 
 
 
+/* ----------------  768  ------------------------ */
 
 
-/* ----------------  1024  ----------------------*/
+
+@media(min-width: 768px){
+    .create-post-app{
+        width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .create-post-container{
+        height: 93.652vh;
+        padding: 4.883vh 0 4.883vh 0;
+        box-sizing: border-box;
+    }
+    .add-photo{
+        width: 82.292vw;
+        min-height: 29.297vh;
+    }
+    .btn-add-photo{
+        width: 82.292vw;
+        min-height: 29.297vh;
+    } 
+    .post-info{
+        width: 82.292vw;
+    }
+    .post-info::placeholder{
+        font-size: 1.66vh;
+    }
+    .post-description{
+        font-size: 1.66vh;
+        width: 82.292vw;
+    }
+    .btn-create{
+        width: 26.042vw;
+        height: 5.176vh;
+        font-size: 2.93vh;
+        font-weight: 500;
+    }
+        
+    .title-to_add-photo{
+        font-size: 2.344vw;
+        position: relative;
+        left: -32.552vw;
+        margin: 0 0 -1.6vh 0;
+    }
+}
+
+
+
+
+/* ----------------  1024  ---------------------- */
+
+
 
 
 @media(min-width: 1024px){
     .create-post-app{
         width: 500px;
-        height: 92.222vh;
+        height: 88.333vh;
+        padding: 1.111vh 0 1.111vh 0;
+        box-sizing: border-box;
+        gap: 15px;
+    }
+    .create-post-container{
+        padding: 4.444vh 0 4.444vh 0;
+        box-sizing: border-box;
     }
     .btn-add-photo{
         width: 420px;
@@ -98,6 +167,12 @@
         width: 420px;
         min-height: 40px;  
     }
+    .title-to_add-photo{
+        font-size: 17px;
+        position: relative;
+        left: -145px;
+        margin: 0 0 -1.667vh 0;
+    }
 }
 
 
@@ -110,6 +185,7 @@
     .create-post-app{
         width: 34.7vw;
         height: 92.222vh;
+        gap: 1.667vh;
     }
     .btn-add-photo{
         width: 29.167vw;
@@ -130,5 +206,11 @@
     .post-info{
         width: 28.889vw;
         min-height: 4.444vh;  
+    }
+    .title-to_add-photo{
+        font-size: 1.181vw;
+        position: relative;
+        left: -10.069vw;
+        margin: 0 0 -1.6vh 0;
     }
 }

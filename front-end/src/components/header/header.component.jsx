@@ -1,4 +1,4 @@
-import {Component} from 'react'
+import React, {Component} from 'react'
 import './header.styles.css';
 import {NavLink} from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,11 +12,10 @@ class Header extends Component {
 
     constructor(props){
         super(props)
-        this.state = {sidebar: false, chatapp: false, }
+        this.state = {sidebar_in_header: false, chatapp_in_header: false}
         this.funcToast = this.funcToast.bind(this);
         this.ChatAppHandler = this.ChatAppHandler.bind(this);
         this.SideBarHandler = this.SideBarHandler.bind(this);
-        this.closeChat = this.closeChat.bind(this)
     }
 
     
@@ -35,24 +34,21 @@ class Header extends Component {
             });
     }
 
-    closeChat(){       
-        
-    }
 
     ChatAppHandler(){
         const chatapp = document.getElementById('chat-app')
         const container = document.getElementById('chat-container')
 
-        if(this.state.chatapp === false){
+        if(this.state.chatapp_in_header === false){
             chatapp.style.top = '0'
             container.style.zIndex = '1'
-            this.setState({chatapp: true})
+            this.setState({chatapp_in_header: true})
         }else{
             chatapp.style.top = '-100vh'
             setTimeout(() => {
                 container.style.zIndex = "-1"
-            }, 500);
-            this.setState({chatapp: false});
+            }, 200);
+            this.setState({chatapp_in_header: false});
         }
 
         
@@ -60,18 +56,23 @@ class Header extends Component {
 
     SideBarHandler(){
         const sidebar = document.getElementById('sidebar');
+        const blur = document.getElementById('black-blur');
         const container = document.getElementById('sidebar-container');
 
-        if(this.state.sidebar === false){
-            sidebar.style.right = '-54.427vw'
+        if(this.state.sidebar_in_header === false){
             container.style.zIndex = '1';
-            this.setState({sidebar: true})
-        }else{
-            sidebar.style.right = '-100vw'
+            blur.style.right = '0vw'
             setTimeout(() => {
-                container.style.zIndex = "-1"
-            }, 500);
-            this.setState({sidebar: false});
+                blur.style.opacity = '30%'
+                sidebar.style.right = '-54.427vw'
+            }, 100)
+            this.setState({sidebar_in_header: true})
+        }
+        else{
+            blur.style.opacity = '0%';
+            sidebar.style.right = '-100vw';
+            container.style.zIndex = '-1';
+            this.setState({sidebar_in_header: false});
         }
     }
     
@@ -92,21 +93,27 @@ class Header extends Component {
                 </div>
             </div>
             <div className='nav-right'>
-                <div className='nav-item'>
-                    <NavLink className={`${setActive} create`} to='create-post'>+</NavLink>
+                <div className='nav-item '>
+                    <NavLink className={`${setActive} create item-content`} to='create-post'>
+                        <img src="./img/+.svg"/>
+                    </NavLink>
                 </div>
                 <div className='nav-item chat'>
-                    <a className='btn-chat item-content' onClick={this.ChatAppHandler}>
-                        Chat
+                    <a className='btn-chat ' onClick={this.ChatAppHandler}>
+                        <img src="./img/Chat button.svg"/>
                     </a>
                 </div>
-                <div className='nav-item prof'>
-                    <NavLink className={`${setActive} item-content`} to='/my-profile'>My profile</NavLink>
+                <div className='nav-item'>
+                    <NavLink className={`${setActive} prof item-content`} to='/my-profile'>
+                        <div className="avatar-header">
+                            <img src='./img/avatar icon.svg'/>
+                        </div>
+                    </NavLink>
                 </div>
 
                 <div className='nav-item burger'>
-                    <a className='btn-burger item-content' onClick={this.SideBarHandler}>
-                        =
+                    <a className='btn-burger' onClick={this.SideBarHandler}>
+                        <img src="./img/Burger btn.svg"/>
                     </a>
                 </div>
             </div>

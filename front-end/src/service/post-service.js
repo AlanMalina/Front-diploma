@@ -2,8 +2,29 @@ import axios from "axios";
 
 const api = 'http://localhost:5000/api';
 
-const getPost = (req, res) => {
+const getPost = () => {
     return axios.get(api + '/posts')
+}
+
+const getOne = (_id) => {
+    return axios.get(api + `/posts/${_id}`, 
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data'
+        }
+    })
+}
+
+
+const getPic = (picture) => {
+    return axios.get(api + '/posts')
+    // return axios.get(api + '/posts', {picture}, {
+    //     headers:{
+    //         'Accept' : '*/*',
+    //         'Content-Type' : 'multipart/form-data'
+    //     }
+    // })
 }
 
 const postPost = (author, title, content, picture, avatar) => {
@@ -24,7 +45,9 @@ const postPost = (author, title, content, picture, avatar) => {
 
 const postService = {
     getPost,
-    postPost
+    getOne,
+    postPost,
+    getPic
 }
 
 export default postService;
