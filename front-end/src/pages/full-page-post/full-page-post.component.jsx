@@ -1,9 +1,6 @@
 import React, { Component} from 'react';
 import './full-page-post.style.css';
 import postService from '../../service/post-service';
-import Post from '../../components/post/post.component';
-import MyProfilePage from '../my_profile/my_profile.component';
-import { useParams } from 'react-router-dom';
 
 
 class FullPagePost extends Component {
@@ -16,9 +13,9 @@ class FullPagePost extends Component {
         const url = window.location.href
         const id = url.split('/').pop()
         const response = await postService.getOne(id)
-        this.setState({fullPost: response.data})
+        this.setState({fullPost: response.data[0]})
         console.log(id)
-        console.log(response.data)
+        console.log(response.data[0])
     }
 
     componentDidMount(){
@@ -27,38 +24,79 @@ class FullPagePost extends Component {
 
     render(){
         return(
-            <div className='full-post-container'>
-                {this.state.fullPost?._id}
-                <header className='post-header'>
-                    <img className='avatar' src={`http://localhost:5000/${this.state.fullPost?.avatar}`}/>
-                    {this.state.fullPost?.author}
-                </header>
-                <div className="content_post">
-                    <img className='post-img' src={`http://localhost:5000/${this.state.fullPost?.picture}`}/>
-                    <div className="post-describtion">
-                        <h2>{this.state.fullPost?.title}</h2>
-                        <p>{this.state.fullPost?.content}</p>
+            <div className='full-post-page-container'>
+                <div className="img-block">
+                <img className='fullpost-img' src={`http://localhost:5000/${this.state.fullPost?.picture}`}/>
+                </div>
+                
+                <div className="info-block">
+                    <div className="post-header">
+                        <div className="user-block">
+                            <img className='avatar' src={`http://localhost:5000/${this.state.fullPost?.avatare}`}/>
+                            <div className="name-and-time">
+                                <p className='user-name'>{this.state.fullPost?.author}</p>
+                                <p className='post-time'>1w ago</p>
+                            </div>
+                        </div>
+                        <div className="follow-btn">
+                            +Follow
+                        </div>
+                    </div>
+                    
+                    {/* {this.state.fullPost?.title} */}
+                    <div className='fullpost-description'>
+                        {this.state.fullPost?.content}
+                        
+                    </div>
+                    <hr className='info-hr'/>
+                    <div className="fullpost-footer">
+                        <div className="like-block">
+                            <img className='like-btn-icon' src="../img/like-btn.svg" alt="#" />
+                            Like
+                        </div>
+                        <div className="repost-block">
+                            <img className='repost-btn-icon' src="../img/repost-btn.svg" alt="#" />
+                            Repost
+                        </div>
                     </div>
                 </div>
-                <footer className='post-footer'>
-                    <button className='like-btn footer-item-left'>
-                        <img src='./img/Like button.svg'/>
-                    </button>
-                    <button className='comment-btn footer-item-left'>
-                        <img src='./img/Comment button.svg'/>
-                    </button>
+            </div>
 
-                    <div className="btn-donate-block footer-item">
-                        <button className='donate-btn'>
-                            Donate
-                            <img src='./img/la_donate.svg'/>
-                        </button>
-                    </div>
-                     <button className='share-btn footer-item-right'>
-                         <img src='./img/Share button.svg'/>
-                     </button>
-                 </footer>
-            </div>          
+            // <div className='full-post-page-container'>
+            //     <div className="full-post-page-main">
+            //         <div className='post-container'>
+            //             <header className='post-header'>
+            //                 <img className='avatar' src={`http://localhost:5000/${this.state.fullPost?.avatar}`}/>
+            //                 {this.state.fullPost?.author}
+            //             </header>
+            //             <div className="post-content-block">
+            //                 <img className='post-img' src={`http://localhost:5000/${this.state.fullPost?.picture}`}/>
+            //                 <div className="fullpost-describtion">
+            //                     <h2>{this.state.fullPost?.title}</h2>
+            //                     <p className='fullpost-content'>{this.state.fullPost?.content}</p>
+            //                 </div>
+            //             </div>
+            //             <footer className='post-footer'>
+            //                 <button className='like-btn footer-item-left'>
+            //                     <img src='./img/Like button.svg'/>
+            //                 </button>
+            //                 <button className='comment-btn footer-item-left'>
+            //                     <img src='./img/Comment button.svg'/>
+            //                 </button>
+
+            //                 <div className="btn-donate-block footer-item">
+            //                     <button className='donate-btn'>
+            //                         Donate
+            //                         <img src='./img/la_donate.svg'/>
+            //                     </button>
+            //                 </div>
+            //                 <button className='share-btn footer-item-right'>
+            //                     <img src='./img/Share button.svg'/>
+            //                 </button>
+            //             </footer>
+            //         </div>
+            //     </div>
+            // </div>          
         )
     }
 }

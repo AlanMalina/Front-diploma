@@ -1,29 +1,106 @@
 .main-page-app{
     display: flex;
     flex-direction: column;
-    width: 34.7vw;
-    padding: 1.111vh 0 0 0;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 12.037vh 0 6.037vh 0;
     box-sizing: border-box;
+    gap: 2.604vw;
+    overflow: auto; 
 }
 .main-block{
-    width: 100%;
-    height: 92.222vh;
-    padding: 2.5vh 0 2.5vh 0;
+    width: 43.906vw;
     box-sizing: border-box;
-    background-color: #F0F2EF;
     display: flex;
     flex-direction: column;
-    gap: 1.333vh;
+    gap: 3.981vh;
     align-items: center;
-    overflow: auto; 
-    box-shadow: 1px 1px 10px #c3c5c1;
-    order: 1;
 }
+.user-menu-main{
+    width: 14.583vw;
+    height: 45.648vh;
+    background-color: #ffffff;
+    position: absolute;
+    top: 12.037vh;
+    left: 10.729vw;
+    border-radius: 15px;
+    box-shadow: 1px 1px 7px rgb(205, 205, 205);    
+}
+.user-menu-header{
+    width: 100%;
+    height: 7.87vh;
+    background-color: #616F54;
+    margin-bottom: 4.7vh;
+    box-sizing: border-box;
+    border-radius: 15px 15px 0 0;
+}
+.user-menu-avatar{
+    width: 9.259vh;
+    height: 9.259vh;
+    border: 3px solid white;
+    border-radius: 50%;
+    position: absolute;
+    top: 3.056vh;
+    left: 4.688vw;
+    object-fit: cover;
+}
+.user-menu-userName{
+    font-size: 1.042vw;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+.user-statistics{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 0.926vh 2.292vw 0;
+    box-sizing: border-box;
+}
+.user-statistics p{
+    font-size: 0.625vw;
+    font-weight: bold;
+    margin: 0;
+}
+.posts-count{
+    width: 2.24vw;
+    font-size: 0.781vw;
+    font-weight: bold;
+}
+.followers-count{
+    width: 2.813vw;
+    font-size: 0.781vw;
+    font-weight: bold;
+}
+.following-count{
+    width: 2.813vw;
+    font-size: 0.781vw;
+    font-weight: bold;
+}
+.services-block{
+    display: flex;
+    flex-direction: column;
+    padding: 3.889vh 2.188vw 0;
+    box-sizing: border-box;
+    gap: 0.648vh;
+}
+.services-btn{
+    background: none;
+    border: 0;
+    width: 9.792vw;
+    height: 2.315vh;
+    font-size: 1.042vw;
+    text-align: left;
+}
+
 
 
 
   /* Стилізація скролбара */
 .main-block::-webkit-scrollbar {
+    position: absolute;
     width: 6px; /* Ширина скролбара */
 }
   
@@ -59,7 +136,7 @@
 
 
 
-@media (min-width: 300px){
+/* @media (min-width: 300px){
     .main-page-app{
         width: 100%;
         padding: 0;
@@ -68,7 +145,7 @@
         padding: 2.556vh 7.161vw 0 7.161vw;
         box-sizing: border-box;
     }
-}
+} */
 
 
 
@@ -78,47 +155,55 @@
 
 
 
-
+/* 
 @media(min-width:768px){
     .main-page-app{
         width: 100%;
         padding: 0;
-        
+        height: 93.652vh;
     }
     .main-block{ 
-        height: 93.652vh;
-        padding: 2.148vh 8.541vw 2.148vh;
+        padding: 2.148vh 8.541vw;
         box-sizing: border-box;
     }
 }
 
 
 
-
+ */
 
 
 /* -------------  1024  -------------------------------*/
 
 
 
-
+/* 
 @media(min-width: 1024px){
     .main-page-app{
         width: 500px;
-        height: 92.223vh;
+        height: 88.333vh;
         padding: 1.111vh 0 0 0;
     }
     .main-block{
+        height: 100vh;
         padding: 2.5vh 0 2.5vh 0;
         box-sizing: border-box;
     }
-}
+} */
 
 
-
+/* 
 @media(min-width: 1440px){
     .main-page-app{
         width: 34.722vw;
-        height: 92.223vh;
+        height: 92.222vh;
+        padding: 1.111vh 0 0 0;
+        box-sizing: border-box;
     }
-}
+    .main-block{
+        width: 100%;
+        padding: 2.5vh 0 2.5vh 0;
+        box-sizing: border-box;
+        gap: 1.333vh;
+    }
+} */

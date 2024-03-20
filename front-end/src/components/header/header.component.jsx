@@ -85,9 +85,9 @@ class Header extends Component {
                 <div className='nav-item logo'>
                     <NavLink className={`${setActive} item-content`} to='/'>Logo</NavLink>
                 </div>
-                <div className='nav-item search-bar'>
+                {/* <div className='nav-item search-bar'>
                     <input id='item-content' type='text' />
-                </div>
+                </div> */}
                 <div className='nav-item search-icon'>
                     <a className='item-content'>0</a>
                 </div>
@@ -95,25 +95,25 @@ class Header extends Component {
             <div className='nav-right'>
                 <div className='nav-item '>
                     <NavLink className={`${setActive} create item-content`} to='create-post'>
-                        <img src="./img/+.svg"/>
+                        <img src="../img/create_header_icon.svg"/>
                     </NavLink>
                 </div>
                 <div className='nav-item chat'>
                     <a className='btn-chat ' onClick={this.ChatAppHandler}>
-                        <img src="./img/Chat button.svg"/>
+                        <img src="../img/chat_header_icon.svg"/>
                     </a>
                 </div>
                 <div className='nav-item'>
                     <NavLink className={`${setActive} prof item-content`} to='/my-profile'>
-                        <div className="avatar-header">
-                            <img src='./img/avatar icon.svg'/>
-                        </div>
+                        {/* <div className="avatar-header"> */}
+                            <img src='../img/avatar_header_icon.svg'/>
+                        {/* </div> */}
                     </NavLink>
                 </div>
 
                 <div className='nav-item burger'>
                     <a className='btn-burger' onClick={this.SideBarHandler}>
-                        <img src="./img/Burger btn.svg"/>
+                        <img src="../img/Burger btn.svg"/>
                     </a>
                 </div>
             </div>

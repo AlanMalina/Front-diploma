@@ -1,58 +1,86 @@
 import React, {Component} from 'react'
 import './post.styles.css';
 import { NavLink } from 'react-router-dom';
-import FullPagePost from '../../pages/full-page-post/full-page-post.component';
 
 class Post extends Component{
 
     constructor(props){
         super(props)
-        this.state = {idshka: ''}
-        this.getId = this.getId.bind(this)
     }
 
-    getId(){
-        const postId = this.props.data._id
-        this.setState({idshka: postId})
-        console.log(postId)       
+    componentDidMount(){
+        console.log(this.props.data)
     }
-    
 
     render(){
         return(
-            <div className='post-container' >
-                <header className='post-header'>
-                    <img className='avatar' src={`http://localhost:5000/${this.props.data.avatar}`}/>
-                    {this.props.data.author}
-                </header>
-                <div className="content_post">
-                    <img onClick={this.getId} className='post-img' src={`http://localhost:5000/${this.props.data.picture}`}/>
-                    <div className="post-describtion">
-                        <h2>{this.props.data.title}</h2>
-                        <NavLink onClick={this.getId} to={`/post/${this.props.data._id}`}>
-                            <p>{this.props.data.content}</p>
-                        </NavLink>
+            <div className='post-container'>
+                <div className="post-header">
+                    <div className="user-block">
+                        <img className='avatar' src={`http://localhost:5000/${this.props.data.avatare}`}/>
+                        <div className="name-and-time">
+                            <p className='user-name'>{this.props.data.author}</p>
+                            <p className='post-time'>1w ago</p>
+                        </div>
+                    </div>
+                    <div className="follow-btn">
+                        +Follow
                     </div>
                 </div>
-                <footer className='post-footer'>
-                    <button className='like-btn footer-item-left'>
-                        <img src='./img/Like button.svg'/>
-                    </button>
-                    <button className='comment-btn footer-item-left'>
-                        <img src='./img/Comment button.svg'/>
-                    </button>
-
-                    <div className="btn-donate-block footer-item">
-                        <button className='donate-btn'>
-                            Donate
-                            <img src='./img/la_donate.svg'/>
-                        </button>
+                <div className="post-description">
+                    {/* <h2>{this.props.data.title}</h2> */}
+                   <h2>{this.props.data.content}</h2>
+                </div>
+                <NavLink to={`/post/${this.props.data.id}`}>
+                    <img className='post-img' src={`http://localhost:5000/${this.props.data.picture}`}/>
+                </NavLink>
+                <div className="post-footer">
+                    <div className="like-block">
+                        <img className='like-btn-icon' src="./img/like-btn.svg" alt="#" />
+                        Like
                     </div>
-                     <button className='share-btn footer-item-right'>
-                         <img src='./img/Share button.svg'/>
-                     </button>
-                 </footer>
-             </div>
+                    <div className="repost-block">
+                        <img className='repost-btn-icon' src="./img/repost-btn.svg" alt="#" />
+                        Repost
+                    </div>
+                </div>
+            </div>
+
+
+
+            // <div className='post-container' >
+            //     <header className='post-header'>
+            //         <img className='avatar' src={`http://localhost:5000/${this.props.data.avatar}`}/>
+            //         {this.props.data.author}
+            //     </header>
+            //     <div className="post-content-block">
+            //         <NavLink to={`/post/${this.props.data._id}`}>
+            //             <img className='post-img' src={`http://localhost:5000/${this.props.data.picture}`}/>
+            //         </NavLink>
+            //         <div className="post-describtion">
+            //             <h2>{this.props.data.title}</h2>
+            //             <p className='post-content'>{this.props.data.content}</p>
+            //         </div>
+            //     </div>
+            //     <footer className='post-footer'>
+            //         <button className='like-btn footer-item-left'>
+            //             <img src='./img/Like button.svg'/>
+            //         </button>
+            //         <button className='comment-btn footer-item-left'>
+            //             <img src='./img/Comment button.svg'/>
+            //         </button>
+
+            //         <div className="btn-donate-block footer-item">
+            //             <button className='donate-btn'>
+            //                 Donate
+            //                 <img src='./img/la_donate.svg'/>
+            //             </button>
+            //         </div>
+            //          <button className='share-btn footer-item-right'>
+            //              <img src='./img/Share button.svg'/>
+            //          </button>
+            //      </footer>
+            //  </div>
         )
     }
 }

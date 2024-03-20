@@ -6,8 +6,8 @@ const getPost = () => {
     return axios.get(api + '/posts')
 }
 
-const getOne = (_id) => {
-    return axios.get(api + `/posts/${_id}`, 
+const getOne = (id) => {
+    return axios.get(api + `/posts/${id}`, 
     {
         headers:{
             'Accept' : '*/*',

@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Post from '../../components/post/post.component';
 import postService from '../../service/post-service';
 import { NavLink } from 'react-router-dom';
-import FullPagePost from '../full-page-post/full-page-post.component';
 
 
 // let notify = () => toast("Wow so easy!");
@@ -14,13 +13,11 @@ class MyProfilePage extends Component {
 
     constructor(props){
         super(props)
-        this.state = {post_in_profile: [], _id: '', picture: null, sort: false}
+        this.state = {post_in_profile: [], sort: false}
         this.funcToast = this.funcToast.bind(this)
-        this.getPost = this.getPost.bind(this)
-        this.getPic = this.getPic.bind(this)
+        // this.getPost = this.getPost.bind(this)
         this.ColumnSort = this.ColumnSort.bind(this)
         this.BlockSort = this.BlockSort.bind(this)
-        // this.handleClick = this.handleClick.bind(this)
     }
     
 
@@ -37,33 +34,11 @@ class MyProfilePage extends Component {
             });
     }
 
-    async getPic(){
-        const response = await postService.getPic();
-    //     // const firstPost = response.data.slice(0, 1);
-    //     // this.setState({ post_in_profile: firstPost });
-    //     // console.log(firstPost);
-
-    //     const response = await postService.getPic()
-    //     // const dataArray = ;  Отримання масиву з відповіді
-    //     // response.data.map((el, index) => {
-    //     //     return(
-    //     //         <img key={index} src={`http://localhost:5000/${el.picture}`} alt="" />
-    //     //     )
-    //     // });
-    //      // Отримання першого елемента масиву
-    //     // Отримання внутрішнього елемента
-        
-        this.setState({ picture: response.data });
-    //     // console.log(response.data);
-    } 
-
     async getPost(){
         const response = await postService.getPost()
         this.setState({post_in_profile: response.data})
-        // console.log(response.data)
+        console.log(response.data)
     }
-
-    
 
     ColumnSort(){
         const container = document.getElementById('my-profile-post-container')
@@ -74,6 +49,7 @@ class MyProfilePage extends Component {
 
         if(this.state.sort === false){
             container.style.flexDirection = 'column'
+            container.style.gap = '1.333vh'
             blocks.forEach(block => {
                 block.style.display = 'none';
             });
@@ -111,7 +87,6 @@ class MyProfilePage extends Component {
 
     async componentDidMount(){
         await this.getPost()
-        await this.getPic()
     }
 
     render() {
@@ -145,23 +120,20 @@ class MyProfilePage extends Component {
                     <button className='next' onClick={this.funcToast}>
                         toast
                     </button>
-                    <NavLink to='/post'>
-                        go full
-                    </NavLink>
                     <div id='my-profile-post-container' className="my-profile-post-container">
                         
                         {this.state.post_in_profile.map((pic, index ) => (
                             <div id='block-post' key={index} className="block-post" >
-                                <img className='block-post-img' src={`http://localhost:5000/${pic.picture}`} alt="" />
+                                <NavLink to={`/post/${pic.id}`}>
+                                    <img className='block-post-img' src={`http://localhost:5000/${pic.picture}`} alt="" />
+                                </NavLink>    
                             </div>
                         ))}
                         
 
                         {this.state.post_in_profile.map((post, index) => (
                             <div key={index} id='column-post' className="column-post" onClick={this.getOne}>
-               
-                                    <Post data={post}/> 
-                        
+                                <Post data={post}/> 
                             </div>
                         ))}
                     </div>

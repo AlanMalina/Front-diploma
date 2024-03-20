@@ -1,4 +1,101 @@
 .post-container{
+    width:100%;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 7px rgb(205, 205, 205);
+    border-radius: 15px;
+}
+.post-header{
+    width: 100%;
+    padding: 2.5vh 1.823vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 1.25vw;
+}
+.user-block{
+    display: flex;
+}
+.avatar{
+    width: 7.407vh;
+    height: 7.407vh;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.name-and-time{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 0 0 0.781vw;
+    box-sizing: border-box;
+}
+.user-name{
+    margin: 0;
+    font-size: 1.042vw;
+    font-weight: bold;
+}
+
+.post-time{
+    margin: 0;
+    font-size: 0.833vw;
+}
+.follow-btn{
+    font-size: 1.25vw;
+    font-weight: bold;
+    color: #336CFF;
+}
+.post-description{
+    width: 100%;
+    max-height: 9.259vh;
+    overflow-wrap: break-word;
+    padding: 0 1.458vw 1.667vh;
+    box-sizing: border-box;
+}
+.post-img{
+    width: 100%;
+    /* max-height: 44.444vh; */
+    object-fit: cover;
+    padding: 0 1.458vw;
+    box-sizing: border-box;
+}
+
+.post-footer{
+    width: 100%;
+    height: 9.722vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.51vw;
+    box-sizing: border-box;
+}
+.like-block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1vw;
+    gap: 0.2vw;
+}
+.like-btn-icon{
+    width: 1.927vw;
+    height: 1.927vw;
+}
+.repost-block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1vw;
+}
+.repost-btn-icon{
+    width: 1.719vw;
+    height: 1.719vw;
+}
+
+h2{
+    margin: 0;
+}
+
+
+
+/* .post-container{
     width: 31.25vw;
     background-color: #D9D9D9;
     box-shadow: 0.5px 1px 4px grey;
@@ -10,7 +107,6 @@
     background-color: #DEDCD6;
     display: flex;
     align-items: center;
-    /* padding-left: 0.556vw;  */
     box-sizing: border-box;
     font-size: 1.25vw;
 }
@@ -22,20 +118,28 @@
     border-radius: 50%;
     margin: 0 0.556vw 0 0.556vw;
 }
-.content_post{
+.post-content-block{
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 .post-img{
     width: 100%;
+    max-height: 44.444vh;
+    object-fit: cover;
 }
 .post-describtion{
     width: 100%;
-    min-height: 11.667vh;
     background: #FBFAF8;
     overflow-wrap: break-word;
     padding: 1.111vh 0.347vw 1.111vh 0.347vw;
     box-sizing: border-box;
+}
+.post-content{
+    max-height: 5vh;
+    font-size: 1.181vw;
+    margin: 0;
+    padding: 0.556vh 0.347vw;
 }
 .post-footer{
     width: 100%;
@@ -100,10 +204,8 @@
 }
 h2{
     margin: 0;
-}
-.post-description p{
-    font-size: 0.833vw;
-}
+} */
+
 
 
 
@@ -113,17 +215,7 @@ h2{
 
 
 
-@media (min-width: 360px){
-    .post-container{
-        width: 100%;
-    }
-    /* .avatar{
-        width: 5.208vw;
-
-    } */
-
-}
-
+/* 
 
 
 
@@ -131,7 +223,7 @@ h2{
 
 
 
-
+/* 
 @media(min-width: 768px){
     .post-container{
         width: 82.292vw;
@@ -144,8 +236,11 @@ h2{
         width: 4.688vh;
         height: 4.688vh;
     }
+    .post-img{
+        max-height: 48.828vh;
+    }
     .post-describtion{
-        min-height: 14.648vh;
+        max-height: 14.648vh;
     }
     .post-footer{
         height: 5.176vh;
@@ -178,7 +273,7 @@ h2{
     }
 }
 
-
+ */
 
 
 
@@ -188,7 +283,7 @@ h2{
 
 
 
-
+/* 
 @media (min-width: 1024px){
     .post-container{
         width: 450px;
@@ -201,8 +296,16 @@ h2{
         width: 40px;
         height: 40px;
     }
+    .post-img{
+        max-height: 300px;
+    }
     .post-describtion{
-        min-height: 100px;
+        max-height: 100px;
+    }
+    .post-content{
+        max-height: 45px;
+        font-size: 17px;
+        padding: 5px 5px;
     }
     .post-footer{
         height: 43px;
@@ -233,14 +336,14 @@ h2{
         height: 25px;
     }
 }
-
+ */
 
 
 
 /* ------------------  1440  ---------------------------*/
 
 
-
+/* 
 
 @media (min-width: 1440px){
     .post-container{
@@ -254,8 +357,11 @@ h2{
         width: 4.445vh;
         height: 4.445vh;
     }
+    .post-img{
+        max-height: 33.333vh;
+    }
     .post-describtion{
-        min-height: 11.667vh;
+        max-height: 11.667vh;
     }
     .post-footer{
         height: 4.778vh
@@ -285,4 +391,4 @@ h2{
         width: 2.083vw;
         height: 2.778vh;
     }
-}
+} */

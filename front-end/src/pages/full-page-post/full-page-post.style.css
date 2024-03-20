@@ -1,15 +1,89 @@
-.full-post-container{
-    width: 500px;
+/* .full-post-page-container{
+    width: 34.7vw;
     height: 92.222vh;
-    padding: 10px 0;
+    padding: 1.111vh 0 0 0;
     box-sizing: border-box;
-    background-color: violet;
+}
+.full-post-page-main{
+    width: 100%;
+    height: 91.111vh;
+    padding: 2.5vh 0 0 0;
+    box-sizing: border-box;
+    background-color: #F0F2EF;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: auto; 
+    box-shadow: 1px 1px 10px #c3c5c1;
+}
+.fullpost-describtion{
+    width: 100%;
+    background: #FBFAF8;
+    overflow-wrap: break-word;
+    padding: 1.111vh 0.347vw 1.111vh 0.347vw;
+    box-sizing: border-box;
+}
+.fullpost-content{
+    font-size: 1.181vw;
+    margin: 0;
+    padding: 0.556vh 0.347vw;
+} */
+
+
+
+.full-post-page-container{
+    width:100%;
+    height: 100vh;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.img-block{
+    width: 40.625vw;
+    height: 64.815vh;
+    background-color: rgb(51, 51, 51);
+    display: flex;
+    align-items: center;
+    border-radius: 15px 0px 0px 15px;
+    object-fit: cover;
+}
+.fullpost-img{
+    width: 100%;
+    max-height: 64.815vh;
+    border-radius: 15px 0px 0px 15px;
+    
+}
+.info-block{
+    width: 31.25vw;
+    height: 64.815vh;
+    background-color: #ffffff;
+    border-radius: 0 15px 15px 0;
+    position: relative;
+}
+.fullpost-description{
+    width: 100%;
+    max-height: 45.278vh;
+    overflow-wrap: break-word;
+    padding: 0 1.458vw 1.667vh;
+    box-sizing: border-box;
+    font-size: 1.25vw;
+    font-weight: bold;
     overflow: auto;
 }
-.author{
-    font-weight: bold;
-    font-style: italic;
+.info-hr{
+    position: absolute;
+    bottom: 7.13vh;
+    width: 28.125vw;
+    margin-left: 1.563vw;
+}
+.fullpost-footer{
+    width: 31.25vw;
+    height: 7.13vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.51vw;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
 }

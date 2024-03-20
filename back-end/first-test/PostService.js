@@ -2,14 +2,14 @@ import Post from "./Post.js";
 import fileService from "./fileService.js";
 
 class PostService{
-    async create(post, picture
-         //avatar
+    async create(post, picture,
+         avatar
          ){
         const picName = fileService.saveFile(picture)
-        // const avaName = fileService.saveFile(avatar)
+        const avaName = fileService.saveFile(avatar)
         const createPost = await Post.create({...post,
-              picture: picName
-            // avatar: avaName
+              picture: picName,
+            avatar: avaName
             });
         return createPost
     }
@@ -41,6 +41,11 @@ class PostService{
         }
         const post = await Post.findByIdAndDelete(id)
         return post
+    }
+
+    async deleteAll(){
+        const posts = await Post.deleteMany()
+        return posts
     }
 }
 
