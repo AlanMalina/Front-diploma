@@ -15,7 +15,6 @@ class MyProfilePage extends Component {
         super(props)
         this.state = {post_in_profile: [], sort: false}
         this.funcToast = this.funcToast.bind(this)
-        // this.getPost = this.getPost.bind(this)
         this.ColumnSort = this.ColumnSort.bind(this)
         this.BlockSort = this.BlockSort.bind(this)
     }
@@ -41,45 +40,30 @@ class MyProfilePage extends Component {
     }
 
     ColumnSort(){
-        const container = document.getElementById('my-profile-post-container')
-        const columns = document.querySelectorAll('.column-post')
-        const blocks = document.querySelectorAll('.block-post');
-        const btn_block = document.getElementById('btn-block-sort')       
-        const btn_column = document.getElementById('btn-column-sort')
+        const pageContainer = document.getElementById('my-profile-page-container')
+        const mainBlock = document.getElementById('my-profile-page-main')
+        const mainColumn = document.getElementById('my-profile-main-postsColumn')
+        const sortContainer = document.getElementById('sort-container')
 
         if(this.state.sort === false){
-            container.style.flexDirection = 'column'
-            container.style.gap = '1.333vh'
-            blocks.forEach(block => {
-                block.style.display = 'none';
-            });
-            columns.forEach(column => {
-                column.style.display = 'flex';
-            });
-            btn_block.style.background = 'none'
-            btn_column.style.background = '#CAC8C1'
+            mainBlock.style.display = 'none';
+            mainColumn.style.display = 'flex'
+            pageContainer.style.overflow = 'auto'
+            sortContainer.style.padding = '0.926vh 0 0.926vh'            
             this.setState({sort: true})
         }
     }
 
     BlockSort(){
-        const container = document.getElementById('my-profile-post-container')
-        const columns = document.querySelectorAll('.column-post')
-        const blocks = document.querySelectorAll('.block-post');
-        const btn_block = document.getElementById('btn-block-sort')       
-        const btn_column = document.getElementById('btn-column-sort')
+        const pageContainer = document.getElementById('my-profile-page-container')
+        const mainBlock = document.getElementById('my-profile-page-main')
+        const mainColumn = document.getElementById('my-profile-main-postsColumn')
+
 
         if(this.state.sort === true){
-            container.style.flexDirection = 'row'
-            container.style.gap = '0.278vw'
-            blocks.forEach(block => {
-                block.style.display = 'block';
-            });
-            columns.forEach(column => {
-                column.style.display = 'none';
-            });
-            btn_block.style.background = '#CAC8C1'
-            btn_column.style.background = 'none'
+            mainColumn.style.display = 'none'
+            mainBlock.style.display = 'block';
+            pageContainer.style.overflow = 'none'            
             this.setState({sort: false})
         }
     }
@@ -87,13 +71,14 @@ class MyProfilePage extends Component {
 
     async componentDidMount(){
         await this.getPost()
+        console.log(this.props.data)
     }
 
     render() {
 
 
         return (
-            <div className='my-profile-page-container'>
+            <div id='my-profile-page-container' className='my-profile-page-container'>
                 <ToastContainer
                         position="top-right"
                         autoClose={false}
@@ -104,22 +89,15 @@ class MyProfilePage extends Component {
                         draggable
                         theme="light"
                 />
-                <div className='my-profile-page-main'>
-
-
-                    
-
-                    <div className="sort-container">
-                        <button id='btn-block-sort' className='btn-block-sort' onClick={this.BlockSort}>
-                            <img className='block-sort-icon' src="./img/block sort.svg" alt="" />
-                        </button>
-                        <button id='btn-column-sort' className='btn-column-sort' onClick={this.ColumnSort}>
-                            <img className='column-sort-icon' src="./img/column sort.svg" alt="" />
-                        </button>
-                    </div>
-                    <button className='next' onClick={this.funcToast}>
-                        toast
+                <div id='sort-container' className="sort-container">
+                    <button id='btn-block-sort' className='btn-block-sort' onClick={this.BlockSort}>
+                        <img className='block-sort-icon' src="./img/block sort.svg" alt="" />
                     </button>
+                    <button id='btn-column-sort' className='btn-column-sort' onClick={this.ColumnSort}>
+                        <img className='column-sort-icon' src="./img/column sort.svg" alt="" />
+                    </button>
+                </div>
+                <div id='my-profile-page-main' className='my-profile-page-main'>
                     <div id='my-profile-post-container' className="my-profile-post-container">
                         
                         {this.state.post_in_profile.map((pic, index ) => (
@@ -129,21 +107,23 @@ class MyProfilePage extends Component {
                                 </NavLink>    
                             </div>
                         ))}
-                        
+                    </div>                    
+                </div>
 
-                        {this.state.post_in_profile.map((post, index) => (
-                            <div key={index} id='column-post' className="column-post" onClick={this.getOne}>
-                                <Post data={post}/> 
-                            </div>
-                        ))}
-                    </div>
-                    
-                </div> 
+                <div id='my-profile-main-postsColumn' className="my-profile-main-postsColumn">
+                    {this.state.post_in_profile.map((post, index) => (
+                        <div key={index} id='column-post' className="column-post">
+                            <Post data={post}/> 
+                        </div>
+                    ))}
+                </div>
+
                 <div className="user-menu-container">
                 <h1>User menu</h1>
                     <button className='next' onClick={this.funcToast}>
                         toast
                     </button>
+                    {this.props.email}
                 </div>
             </div>
             

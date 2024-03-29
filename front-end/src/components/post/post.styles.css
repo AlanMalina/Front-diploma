@@ -46,14 +46,32 @@
 }
 .post-description{
     width: 100%;
-    max-height: 9.259vh;
     overflow-wrap: break-word;
     padding: 0 1.458vw 1.667vh;
     box-sizing: border-box;
 }
+.content{
+    width: 100%;
+    max-height: 5vh;
+}
+.appointer{
+    width: 100%;
+    font-size: 1.094vw;
+    font-weight: bold;
+}
+.goal{
+    width: 100%;
+    font-size: 1.094vw;
+    font-weight: bold;
+}
+.deadline{
+    width: 100%;
+    font-size: 1.094vw;
+    font-weight: bold;
+}
 .post-img{
     width: 100%;
-    /* max-height: 44.444vh; */
+    max-height: 78.056vh;
     object-fit: cover;
     padding: 0 1.458vw;
     box-sizing: border-box;

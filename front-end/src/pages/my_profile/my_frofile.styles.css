@@ -1,66 +1,95 @@
 .my-profile-page-container{
     display: flex;
-    width: 54.862vw;
-    height: 92.222vh;
-    padding: 1.111vh 0 1.111vh 0;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
     box-sizing: border-box;
-    left: 32.639vw;
-    right: 12.5vw;
-    position: fixed;
+}
+.my-profile-main-postsColumn{
+    width: 43.907vw;
+    display: none;
+    margin-left: 18.594vw;
+    padding: 0 0 3.981vh;
+    box-sizing: border-box;
+    flex-direction: column;
+    gap: 3.981vh;
 }
 .my-profile-page-main{
-    width: 34.723vw;
-    background-color: #F0F2EF;
+    width: 43.907vw;
+    height: 100vh;
+    background-color: #ffffff;
     box-shadow: 1px 1px 10px #c3c5c1;
-    overflow: auto;
+    margin-left: 18.594vw;
+    border-radius: 15px;
+    box-sizing: border-box;
 }
+
 .user-menu-container{
-    width: 19.444vw;
-    background-color: #F0F2EF;
-    box-shadow: 1px 1px 10px #c3c5c1;
-    margin-left: 0.694vw;
+    width: 24.792vw;
+    height: 57.407vh;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 7px rgb(205, 205, 205);
+    border-radius: 15px;
+    position: absolute;
+    top: 12.037vh;
+    right: 10vw;
 }
 
 .sort-container{
-    max-width: 100%;
+    width: 43.907vw;
     display: flex;
     justify-content: center;
-    padding: 1.222vh 0;
+    padding: 0.926vh 0 0.926vh;
     box-sizing: border-box;
+    border-radius: 15px;
+    background-color: #ffffff;
+    margin: 12.037vh 0 30px 18.594vw;
+
+}
+.profile-hr{
+    width: 39.063vw;
+    margin: 0 0 0 2.396vw;
 }
 .btn-block-sort{
-    width: 5vh;
-    height: 5vh;
+    width: 4.63vh;
+    height: 4.63vh;
     border: 0;
-    background: #CAC8C1;
+    background: none;
+    border-radius: 10px;
 }
 .btn-column-sort{
-    width: 5vh;
-    height: 5vh;  
+    width: 4.63vh;
+    height: 4.63vh;
     border: 0;  
+    background: none;
+    border-radius: 10px;
 }
 .block-sort-icon{
-    width: 1.91vw;
-    height: 1.91vw;
+    width: 1.667vw;
+    height: 1.667vw;
 }
 .column-sort-icon{
-    width: 2.083vw;
-    height: 1.563vw;
+    width: 1.823vw;
+    height: 1.354vw;
 }
 
 .my-profile-post-container{
     width: 100%;
+    height: 73.055vh;
     display: flex;
     flex-direction: row;
-    gap: 0.278vw;
     flex-wrap: wrap;
-    padding: 1.333vh 0;
+    gap: 1.615vw;
+    margin-top: 4.63vh;
+    padding: 0 1.52vw 4.63vh;
     box-sizing: border-box;
+    overflow: auto;
 }
 .block-post{
-    width: 11.25vw;
-    height: 11.25vw;
+    width: 12.448vw;
+    height: 12.448vw;
     overflow: hidden;
+    border-radius: 15px;
 }
 .block-post-img{
     width: 100%;
@@ -68,18 +97,12 @@
     object-fit: cover;
 }
 
-.column-post{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    display: none;
-}
 
 
 
 
 
-
+/* 
 @media(min-width: 1024px){
     .my-profile-page-container{
         width: 790px;
@@ -123,12 +146,12 @@
     }
 }
 
+ */
 
 
 
 
-
-
+/* 
 @media(min-width: 1367px){
     .my-profile-page-container{
         width: 54.862vw;
@@ -170,4 +193,4 @@
         width: 11.25vw;
         height: 11.25vw;
     }
-}
+} */

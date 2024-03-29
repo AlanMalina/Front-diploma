@@ -6,10 +6,13 @@ class CreatePostPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {post: [], title: '', picture: ''};
+        this.state = {post: [], content: '', picture: '', appointer: '', goal: '', deadline: ''};
         this.postPost = this.postPost.bind(this);
-        this.titleChange = this.titleChange.bind(this);
+        this.contentChange = this.contentChange.bind(this);
         this.pictureChange = this.pictureChange.bind(this);
+        this.appointerChange = this.appointerChange.bind(this);
+        this.goalChange = this.goalChange.bind(this);
+        this.deadlineChange = this.deadlineChange.bind(this);
     }
 
     async postPost(){
@@ -17,15 +20,15 @@ class CreatePostPage extends Component {
         const formPhoto = new FormData()
         formPhoto.append('image', this.state.picture)
         console.log(formPhoto)
-        const response = await postService.postPost('Siiiii', this.state.title, 'Наївся блох', this.state.picture, 'avatar')
+        const response = await postService.postPost(this.state.picture, this.state.content, this.state.appointer, this.state.goal, this.state.deadline)
         this.setState({post: response.data})
 
         console.log(response.data)
     }
 
-    titleChange(e){
-        const title = e.target.value
-        this.setState({title: title})
+    contentChange(e){
+        const content = e.target.value
+        this.setState({content: content})
         
     }
 
@@ -35,11 +38,18 @@ class CreatePostPage extends Component {
         console.log(photo)
     }
 
-    // avatarChange(e){
-    //     const photo = e.target.files[0]
-    //     this.setState({avatar: photo})
-    //     console.log(photo) 
-    // }
+    appointerChange(e){
+        const appointer = e.target.value
+        this.setState({appointer: appointer})
+    }
+    goalChange(e){
+        const goal = e.target.value
+        this.setState({goal: goal})
+    }
+    deadlineChange(e){
+        const deadline = e.target.value
+        this.setState({deadline: deadline})
+    }
 
 
     render() {
@@ -54,15 +64,15 @@ class CreatePostPage extends Component {
                         </div>
                     ):(
                         <div className="add-photo">
-                            <input type="file" onChange={this.pictureChange}  className="btn-add-photo"/>
+                            <input type="file" onChange={this.pictureChange} className="btn-add-photo"/>
                             <img src="./img/add-photo.svg" className="add-photo-icon"/>
                         </div>)}
                     
                     
-                    <input type="text" onChange={this.titleChange}  placeholder='Title:' className="post-title post-info"/>
-                    <input type="text" placeholder='For whom:' className="for-whom post-info" />
-                    <input type="text" placeholder="Sum:" className="sum post-info" />
-                    <input type="text" placeholder="Deadline:" className="deadline post-info" />
+                    <input type="text" onChange={this.contentChange}  placeholder='Title:' className="post-title post-info"/>
+                    <input type="text" onChange={this.appointerChange} placeholder='For whom:' className="for-whom post-info" />
+                    <input type="text" onChange={this.goalChange} placeholder="Sum:" className="sum post-info" />
+                    <input type="text" onChange={this.deadlineChange} placeholder="Deadline:" className="deadline post-info" />
                     <input type="text" placeholder="Cooperator:" className="cooperator post-info" />
                     <div>
                         <textarea type="text" placeholder="Description:" className="create-post-description" />

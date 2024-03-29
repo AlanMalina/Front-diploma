@@ -83,7 +83,7 @@ class Header extends Component {
           <div className='header'>
             <div className='nav-left'>
                 <div className='nav-item logo'>
-                    <NavLink className={`${setActive} item-content`} to='/'>Logo</NavLink>
+                    <NavLink className={`${setActive} item-content`} to='/main'>Logo</NavLink>
                 </div>
                 {/* <div className='nav-item search-bar'>
                     <input id='item-content' type='text' />

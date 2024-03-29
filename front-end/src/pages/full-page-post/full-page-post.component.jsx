@@ -32,9 +32,9 @@ class FullPagePost extends Component {
                 <div className="info-block">
                     <div className="post-header">
                         <div className="user-block">
-                            <img className='avatar' src={`http://localhost:5000/${this.state.fullPost?.avatare}`}/>
+                            <img className='avatar' src='../img/kolobok.png'/>
                             <div className="name-and-time">
-                                <p className='user-name'>{this.state.fullPost?.author}</p>
+                                <p className='user-name'>Юра Сеатович</p>
                                 <p className='post-time'>1w ago</p>
                             </div>
                         </div>
@@ -42,13 +42,16 @@ class FullPagePost extends Component {
                             +Follow
                         </div>
                     </div>
-                    
-                    {/* {this.state.fullPost?.title} */}
                     <div className='fullpost-description'>
-                        {this.state.fullPost?.content}
-                        
+                        {this.state.fullPost?.content}<br/>
+                        <br/>
+                        Goal: {this.state.fullPost?.goal}<br/>
+                        <br/>
+                        Appointer: {this.state.fullPost?.appointer}<br/>
+                        <br/>
+                        Deadline: {this.state.fullPost?.deadline}
                     </div>
-                    <hr className='info-hr'/>
+                    <hr className='fullpost-hr'/>
                     <div className="fullpost-footer">
                         <div className="like-block">
                             <img className='like-btn-icon' src="../img/like-btn.svg" alt="#" />

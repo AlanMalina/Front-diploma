@@ -17,9 +17,9 @@ class Post extends Component{
             <div className='post-container'>
                 <div className="post-header">
                     <div className="user-block">
-                        <img className='avatar' src={`http://localhost:5000/${this.props.data.avatare}`}/>
+                        <img className='avatar' src='./img/kolobok.png'/>
                         <div className="name-and-time">
-                            <p className='user-name'>{this.props.data.author}</p>
+                            <p className='user-name'>Юра Сеатович</p>
                             <p className='post-time'>1w ago</p>
                         </div>
                     </div>
@@ -28,8 +28,18 @@ class Post extends Component{
                     </div>
                 </div>
                 <div className="post-description">
-                    {/* <h2>{this.props.data.title}</h2> */}
-                   <h2>{this.props.data.content}</h2>
+                    <div className="content">
+                        <h2>{this.props.data.content}</h2>
+                    </div>
+                    <div className='appointer'>
+                        Appointer: {this.props.data.appointer}
+                    </div>  
+                    <div className="goal">
+                        Goal: {this.props.data.goal}
+                    </div>
+                    <div className="deadline">
+                        Deadline: {this.props.data.deadline}
+                    </div>
                 </div>
                 <NavLink to={`/post/${this.props.data.id}`}>
                     <img className='post-img' src={`http://localhost:5000/${this.props.data.picture}`}/>

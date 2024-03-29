@@ -27,13 +27,28 @@ const getPic = (picture) => {
     // })
 }
 
-const postPost = (author, title, content, picture, avatar) => {
-    return axios.post(api + '/post', {
-        author, 
-        title, 
-        content,
+const postPost = ( picture, content, appointer, goal, deadline) => {
+    return axios.post(api + '/post', { 
         picture,
-        avatar
+        content,
+        appointer,
+        goal,
+        deadline
+    },
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data'
+        }
+    })
+}
+
+const postUser = (email, password, userName, userSurname) => {
+    return axios.post(api + '/user', {
+        email,
+        password,
+        userName,
+        userSurname
     },
     {
         headers:{
@@ -47,6 +62,7 @@ const postService = {
     getPost,
     getOne,
     postPost,
+    postUser,
     getPic
 }
 

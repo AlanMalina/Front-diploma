@@ -14,6 +14,5 @@ app.use(express.static('static'));
 app.use(fileUpload({}))
 app.use('/api', router)
 
-
 app.listen(PORT, () => console.log('Server started at port: ' + PORT));
 
