@@ -1,6 +1,8 @@
 import pool from "../first-test-postgre/db.js"
 import fileService from "../first-test-postgre/fileService.js"
 import bcrypt from 'bcrypt' 
+import JwtToken from "./JWT-token.js" 
+import cookie from "cookie-parser"
 
 class PostController{
     async create(req, res){
@@ -45,14 +47,47 @@ class PostController{
         }
       }
 
-    async getAll(req, res){
+    async logIn(req, res) {
         try{
-            const posts = await pool.query('select * from posts')
-            res.status(200).json(posts.rows)
-        }catch(e){
-            res.status(500).json(e)
+            const {email, password} = req.body
+            const user = await pool.query('SELECT * FROM users WHERE email = $1', [email])     
+
+            if (!user.rows.length > 0) {
+                return res.status(400).json({ message: 'User is not found!' });
+            }  
+            
+            const hashedPassword = user.rows[0].password;
+            const comparedPassword = await bcrypt.compare(password, hashedPassword);
+
+            if (!comparedPassword) {
+                return res.status(400).json({ message: 'Wrong password!' });
+            }else {
+                const accessToken = JwtToken.generateAccessToken(user);
+                res.cookie('ACCESS_TOKEN', accessToken, {
+                    maxAge: 60*60*24*30*1000,
+                })
+
+                return res.json({ message: 'logged in!' });
+            }
+
+        }catch(err){
+            res.status(500).json(err);
+        }
+        
+    }
+
+    
+
+    async getAll(req, res) {
+        try {
+            const posts = await pool.query('select * from posts');
+            res.status(200).json(posts.rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json(err);
         }
     }
+    
 
 
     async getOne(req, res){
@@ -75,7 +110,7 @@ class PostController{
             const user = await pool.query('select * FROM users where id = $1', [id]);
             if (user.rows.length === 0)
             {
-                return res.status(404).json({error:"User not found"})
+                return res.status(404).json({error: "User not found"})
             }
             return res.status(200).json(user.rows)
         }catch(e){

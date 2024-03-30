@@ -32,7 +32,22 @@ class ChatApp extends Component {
         return(
             <div id="chat-container" className='chat-app-container' >
                 <div id='chat-app' className="chat-app" ref={this.wrapperRef}>
-                    Hello!!!
+                    <div className="user-chat-container">
+                        <img className="avatar-chat" src="../img/kolobok.png" alt="avatar" />
+                        <div className="userName-chat">
+                            Юра Сеатович
+                        </div>
+                        <div className="last-message">
+                            Шо ти галава
+                        </div>
+                        <img className="check-read-icon" src="../img/check-read.png" alt="read" />
+                        <div className="message-time">
+                            15:17
+                        </div>
+                        <div className="message-nofication">
+                            1
+                        </div>
+                    </div>
                 </div>
             </div>
            

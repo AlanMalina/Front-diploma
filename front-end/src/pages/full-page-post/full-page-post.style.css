@@ -63,20 +63,43 @@
 }
 .fullpost-description{
     width: 100%;
-    max-height: 45.278vh;
+    /* max-height: 45.278vh; */
     overflow-wrap: break-word;
     padding: 0 1.458vw 1.667vh;
     box-sizing: border-box;
-    font-size: 1.25vw;
+}
+.fullpost-content{
+    height: 35.648vh;
+    margin-bottom: 0.926vh;
+    font-size: 1.302vw;
     font-weight: bold;
     overflow: auto;
+    padding: 0 0 1vh;
+    box-sizing: border-box;
 }
+.fullpost-goal{
+    font-size: 1.094vw;
+    font-weight: bold;
+    color: #646464;
+}
+.fullpost-appointer{
+    font-size: 1.094vw;
+    font-weight: bold;
+    color: #646464;
+}
+.fullpost-deadline{
+    font-size: 1.094vw;
+    font-weight: bold;
+    color: #646464;
+}
+
 .fullpost-hr{
     position: absolute;
     bottom: 7.13vh;
     width: 28.125vw;
     margin-left: 1.563vw;
 }
+
 .fullpost-footer{
     width: 31.25vw;
     height: 7.13vh;

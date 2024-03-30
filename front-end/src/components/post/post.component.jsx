@@ -29,7 +29,7 @@ class Post extends Component{
                 </div>
                 <div className="post-description">
                     <div className="content">
-                        <h2>{this.props.data.content}</h2>
+                        {this.props.data.content}
                     </div>
                     <div className='appointer'>
                         Appointer: {this.props.data.appointer}

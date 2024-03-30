@@ -6,7 +6,7 @@
 }
 .post-header{
     width: 100%;
-    padding: 2.5vh 1.823vw;
+    padding: 1.852vh 1.823vw;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,7 +31,7 @@
 }
 .user-name{
     margin: 0;
-    font-size: 1.042vw;
+    font-size: 1.146vw;
     font-weight: bold;
 }
 
@@ -52,26 +52,35 @@
 }
 .content{
     width: 100%;
-    max-height: 5vh;
+    max-height: 2.778vh;
+    font-size: 1.302vw;
+    font-weight: bold;
+    padding: 0 0 0.648vh;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .appointer{
     width: 100%;
     font-size: 1.094vw;
     font-weight: bold;
+    color: #646464;
 }
 .goal{
     width: 100%;
     font-size: 1.094vw;
     font-weight: bold;
+    color: #646464;
 }
 .deadline{
     width: 100%;
     font-size: 1.094vw;
     font-weight: bold;
+    color: #646464;
 }
 .post-img{
     width: 100%;
-    max-height: 78.056vh;
+    max-height: 40.99vw;
     object-fit: cover;
     padding: 0 1.458vw;
     box-sizing: border-box;
@@ -91,6 +100,7 @@
     align-items: center;
     font-size: 1vw;
     gap: 0.2vw;
+    color: #646464;
 }
 .like-btn-icon{
     width: 1.927vw;
@@ -101,6 +111,7 @@
     flex-direction: row;
     align-items: center;
     font-size: 1vw;
+    color: #646464;
 }
 .repost-btn-icon{
     width: 1.719vw;
@@ -110,121 +121,6 @@
 h2{
     margin: 0;
 }
-
-
-
-/* .post-container{
-    width: 31.25vw;
-    background-color: #D9D9D9;
-    box-shadow: 0.5px 1px 4px grey;
-}
-
-.post-header{
-    width: 100%;
-    height: 50px;
-    background-color: #DEDCD6;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    font-size: 1.25vw;
-}
-
-.avatar{
-    width: 4.445vh;
-    height: 4.445vh;
-    background-color: aqua;
-    border-radius: 50%;
-    margin: 0 0.556vw 0 0.556vw;
-}
-.post-content-block{
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-.post-img{
-    width: 100%;
-    max-height: 44.444vh;
-    object-fit: cover;
-}
-.post-describtion{
-    width: 100%;
-    background: #FBFAF8;
-    overflow-wrap: break-word;
-    padding: 1.111vh 0.347vw 1.111vh 0.347vw;
-    box-sizing: border-box;
-}
-.post-content{
-    max-height: 5vh;
-    font-size: 1.181vw;
-    margin: 0;
-    padding: 0.556vh 0.347vw;
-}
-.post-footer{
-    width: 100%;
-    height: 4.778vh;
-    background-color: #DEDCD6;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.footer-item-left{
-    background: none;
-    border: 0;
-    width: 16.5%;
-}
-.footer-item{
-    background: none;
-    border: 0;
-    width: 34%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.footer-item-right{
-    background: none;
-    border: 0;
-    width: 33%;
-}
-.like-btn img{
-    width: 1.944vw;
-    height: 2.667vh;
-}
-.comment-btn img{
-    width: 1.736vw;
-    height: 2.778vh;
-}
-.btn-donate-block{
-    width: 9.722vw;
-    height: 5.556vh;
-    background-color: #DEDCD6;
-    border-radius: 2.778vh;
-    position: relative;
-    bottom: 0.5vh;
-}
-.donate-btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid black;
-    border-radius: 2.222vh;
-    width: 6.944vw;
-    height: 3.889vh;
-    font-size: 1.25vw;
-    background: #FBFAF8;
-}
-.donate-btn img{
-    width: 1.736vw;
-    height: 2.222vh;
-}
-.share-btn img{
-    width: 1.736vw;
-    height: 2.778vh;
-}
-h2{
-    margin: 0;
-} */
-
-
 
 
 

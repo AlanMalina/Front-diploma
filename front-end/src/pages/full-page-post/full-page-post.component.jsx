@@ -43,13 +43,18 @@ class FullPagePost extends Component {
                         </div>
                     </div>
                     <div className='fullpost-description'>
-                        {this.state.fullPost?.content}<br/>
-                        <br/>
-                        Goal: {this.state.fullPost?.goal}<br/>
-                        <br/>
-                        Appointer: {this.state.fullPost?.appointer}<br/>
-                        <br/>
-                        Deadline: {this.state.fullPost?.deadline}
+                        <div className="fullpost-content">
+                            {this.state.fullPost?.content}
+                        </div>
+                        <div className="fullpost-goal">
+                            Goal: {this.state.fullPost?.goal}
+                        </div>
+                        <div className="fullpost-appointer">
+                            Appointer: {this.state.fullPost?.appointer}
+                        </div>
+                        <div className="fullpost-deadline">
+                            Deadline: {this.state.fullPost?.deadline}
+                        </div>
                     </div>
                     <hr className='fullpost-hr'/>
                     <div className="fullpost-footer">

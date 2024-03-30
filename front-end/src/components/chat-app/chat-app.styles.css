@@ -3,10 +3,11 @@
     overflow: hidden;
     top: 7.778vh;
     right: 0;
-    width: 30.972vw;
+    width: 36.458vw;
     height: 92.222vh;
     z-index: -1;
-    transition: 0.2s;
+    transition: 0.2s; 
+    box-shadow: 1px 1px 7px rgba(0, 0, 0, 25%);
 }
 
 .chat-app{
@@ -14,10 +15,70 @@
     height: 100vh;
     position: absolute;
     top: -100vh;
-    right: -69.028vw;
-    background-color: red;
+    right: -63.542vw;
+    background-color: white;
     transition: 0.2s;
-    font-size: 50px;
+}
+
+.user-chat-container{
+    width: 100%;
+    height: 12.037vh;
+    display: flex;
+    position: relative;
+}
+.user-chat-container:hover{
+    background-color: #F0F0F0;
+}
+
+.avatar-chat{
+    width: 4.948vw;
+    height: 4.948vw;
+    border-radius: 100%;
+    margin: 1.62vh 0.417vw 1.62vh 1.042vw;
+    object-fit: cover;
+}
+.userName-chat{
+    font-size: 1.146vw;
+    font-weight: bold;
+    position: absolute;
+    left: 6.406vw;
+    top: 1.528vh;
+}
+.last-message{
+    position: absolute;
+    left: 6.771vw;
+    top: 6.3vh;
+    font-size: 0.938vw;
+}
+.check-read-icon{
+    width: 2.4vw;
+    height: 20px;
+    position: absolute;
+    top:  0.7vh;
+    left: 31.7vw;
+    object-fit: cover;
+}
+.message-time{
+    position: absolute;
+    font-size: 0.885vw;
+    font-weight: bold;
+    top: 0.648vh;
+    left: 33.698vw;
+}
+.message-nofication{
+    width: 1.563vw;
+    height: 1.563vw;
+    border-radius: 100%;
+    background-color: #616F54;
+    color: white;
+    font-size: 0.781vw;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 7vh;
+    left: 33.906vw;
 }
 
 
@@ -47,7 +108,7 @@
 
 
 
-@media(min-width: 1024px){
+/* @media(min-width: 1024px){
     .chat-app-container{
         width: 446px;
         height: 92.222vh;
@@ -58,7 +119,7 @@
         right: -69.028vw;
         transition: 0.2s;
     }
-}
+} */
 
 
 
@@ -68,8 +129,8 @@
 
 
 
-@media(min-width: 1440px){
+/* @media(min-width: 1440px){
     .chat-app-container{
         width: 30.972vw;
     }
-}
+} */

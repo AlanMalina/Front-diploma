@@ -118,12 +118,12 @@ class MyProfilePage extends Component {
                     ))}
                 </div>
 
-                <div className="user-menu-container">
-                <h1>User menu</h1>
+                <div className="user-menu-profile-container">
+                    <div className="menu-profile-header"></div>
+                    <h1>User menu</h1>
                     <button className='next' onClick={this.funcToast}>
                         toast
                     </button>
-                    {this.props.email}
                 </div>
             </div>
             

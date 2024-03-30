@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './registration-page.styles.css';
-import { NavLink } from 'react-router-dom';
 import postService from "../../service/post-service";
 
 class RegistrationPage extends Component {
@@ -12,15 +11,6 @@ class RegistrationPage extends Component {
     }    
 
     async postUser(){
-        // if (this.state.link === '') {
-        //     alert('The form cannot be empty! Please enter it');
-        //     console.error('The form is empty');
-        // }else{
-        //     const response = await postService.postUser(this.state.email, this.state.password, this.state.userName, this.state.userSurname)
-        //     this.setState({user: response.data})
-        //     console.log(response.data)
-        // }
-
         const { email, password, userName, userSurname } = this.state;
         const errors = {};
         let isValid = true;
@@ -119,10 +109,8 @@ class RegistrationPage extends Component {
                         <input id='userSurname-input' type="text" className='userSurname-input' name="userSurname" value={userSurname} onChange={this.handleChange} />
                         {errors.userSurname && <span>{errors.userSurname}</span>}
                     </div>
-                    <div className='btn-register' >
-                        <div className='navlink-btn' onClick={this.postUser} >
-                            Register
-                        </div>                            
+                    <div className='btn-register' onClick={this.postUser}>
+                        Register                         
                     </div>                    
                 </div>
             </div>

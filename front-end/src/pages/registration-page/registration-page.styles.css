@@ -97,10 +97,10 @@
     align-items: center;
     border: 1px solid #4A4A4A;
     margin-top: 4.537vh;
-}
-.navlink-btn{
     font-size: 1.25vw;
     font-weight: bold;
     text-decoration: none;
     color: white;
+    cursor: pointer;
 }
+
