@@ -13,45 +13,45 @@ import RegistrationPage from './pages/registration-page/registration-page.compon
 import LogInPage from './pages/login-page/login-page.component'
 import TestProfile from './pages/test-profile/test-profile.component'
 import { jwtDecode } from "jwt-decode";
-
+import Cookies from 'js-cookie'
 
 
 class App extends Component {
 
   constructor(props){
     super(props)
-    this.state = { fullPostData: null, token: null, decoded: []};
+    this.state = { fullPostData: null, token: Cookies.get('ACCESS_TOKEN'), decoded: []};
   }
 
   setFullPostData = (postData) => {
     this.setState({ fullPostData: postData });
   }
 
-  componentDidMount() {
+//   componentDidMount() {
     
-    if (localStorage.getItem('token')) {
-        const token = JSON.parse(localStorage.getItem('token')).token;
-        this.setState({ token }, () => {
-            console.log(this.state.token);
-            if (this.state.token) {
-                const decoded = jwtDecode(this.state.token);
-                this.setState({ decoded });
-                console.log(decoded);
-            }
-        });
+//     if (localStorage.getItem('token')) {
+//         const token = JSON.parse(localStorage.getItem('token')).token;
+//         this.setState({ token }, () => {
+//             console.log(this.state.token);
+//             if (this.state.token) {
+//                 const decoded = jwtDecode(this.state.token);
+//                 this.setState({ decoded });
+//                 console.log(decoded);
+//             }
+//         });
         
-    }
-}
-
-// componentDidMount() {
-//   const token = Cookies.get('token'); // Отримати токен з файлу cookie
-//   this.setState({ token });
-//   if (token) {
-//     const decoded = jwtDecode(token);
-//     this.setState({ decoded });
-//   }
+//     }
 // }
 
+
+
+componentDidMount() {
+  const token = Cookies.get('ACCESS_TOKEN');
+  this.setState(prevState => ({
+    token,
+    decoded: token ? jwtDecode(token) : prevState.decoded,
+  }));
+}
 
 
   render() {

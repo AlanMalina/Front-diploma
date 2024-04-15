@@ -65,6 +65,8 @@ class PostController{
                 res.cookie('ACCESS_TOKEN', accessToken, {
                     maxAge: 60*60*24*30*1000,
                     httpOnly: true,
+                    secure: true, // Токен передається лише через HTTPS
+                    sameSite: 'strict' // Встановлення атрибута SameSite
                 })
 
                 return res.json({ token: accessToken });
@@ -75,6 +77,41 @@ class PostController{
         }
         
     }
+
+
+    // async logIn(req, res) {
+    //     try {
+    //         const { email, password } = req.body;
+    //         const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+    
+    //         if (!user.rows.length > 0) {
+    //             return res.status(400).json({ message: 'User is not found!' });
+    //         }
+    
+    //         const hashedPassword = user.rows[0].password;
+    //         const comparedPassword = await bcrypt.compare(password, hashedPassword);
+    
+    //         if (!comparedPassword) {
+    //             return res.status(400).json({ message: 'Wrong password!' });
+    //         } else {
+    //             const accessToken = JwtToken.generateAccessToken(user.rows[0]);
+    //             res.cookie('token', accessToken, {
+    //                 maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    //                 httpOnly: true,
+    //                 secure: true,
+    //                 sameSite: 'strict'
+    //             });
+    
+    //             return res.status(200).json({ message: 'Login successful' });
+    //         }
+    //     } catch (err) {
+    //         res.status(500).json(err);
+    //     }
+    // }
+    
+
+
+
 
     async getUserProfile(req, res) {
         const {id} = req.params

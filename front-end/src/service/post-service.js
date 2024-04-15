@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from 'js-cookie'
 
 const api = 'http://localhost:5000/api';
 
@@ -44,20 +45,42 @@ const postPost = ( picture, content, appointer, goal, deadline, user_id) => {
     })
 }
 
-const postUser = (email, password, userName, userSurname) => {
-    return axios.post(api + '/user', {
+// const postUser = (email, password, userName, userSurname) => {
+//     return axios.post(api + '/user', {
+//         email,
+//         password,
+//         userName,
+//         userSurname
+//     }).then((response) => {
+//         if(response.data.token){
+//             localStorage.setItem('token', JSON.stringify(response.data))
+//         }
+//         return response.data
+//     })
+// }
+
+
+const postUser = async (email, password, userName, userSurname) => {
+    try {
+      const response = await axios.post(api + '/user', {
         email,
         password,
         userName,
         userSurname
-    }).then((response) => {
-        if(response.data.token){
-            localStorage.setItem('token', JSON.stringify(response.data))
-        }
-        return response.data
-    })
-}
-
+      });
+  
+      if (response.data.token) {
+        // Зберігайте токен в куках
+        Cookies.set('ACCESS_TOKEN', response.data.token, { expires: 30 * 24 * 60 * 60 * 1000 }); // 30 days
+      }
+  
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error; // Перекиньте помилку, щоб обробити її на верхньому рівні
+    }
+  };
+  
 
 const postService = {
     getPost,

@@ -4,8 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Post from '../../components/post/post.component';
 import postService from '../../service/post-service';
-import { NavLink } from 'react-router-dom';
-import { queryAllByAltText } from '@testing-library/react';
+import Cookies from 'js-cookie'
 import loginService from '../../service/login-service';
 
 
@@ -20,6 +19,7 @@ class MyProfilePage extends Component {
         this.ColumnSort = this.ColumnSort.bind(this)
         this.BlockSort = this.BlockSort.bind(this)
         this.getFullPost = this.getFullPost.bind(this)
+        this.logOut = this.logOut.bind(this)
     }
     
 
@@ -92,6 +92,21 @@ class MyProfilePage extends Component {
 
         }
     }
+
+    async logOut() {
+        try {
+          // Видалення токена з куків
+          Cookies.remove('ACCESS_TOKEN');
+      
+          // Додаткові дії, наприклад, оновлення стану компонента
+          this.setState({ isLoggedIn: false });
+      
+          // Перенаправлення на сторінку входу
+          window.location.href = "/login";
+        } catch (error) {
+          console.error(error);
+        }
+      }
     
 
 
@@ -151,12 +166,54 @@ class MyProfilePage extends Component {
                 </div>
  
                 <div className="user-menu-profile-container">
-                    <div className="menu-profile-header"></div>
-                    <h1>User menu</h1>
+                    <div className="menu-profile-header">
+                        <img className='edit-btn' src="../img/edit.svg" alt="" />
+                        <img className='menu-profile-avatar' src="" alt="" />
+                        <div className="user-profileData">
+                            <div className="menu-profile-userName">
+                                {this.props.user?.userName} {this.props.user?.userSurname}
+                            </div>
+                            <div className="profile-indicators">
+                                <div className="current-posts">
+                                    5 <br /> current <br /> posts
+                                </div>
+                                <div className="folowers">
+                                    150 <br /> followers
+                                </div>
+                                <div className="following">
+                                    32 <br /> following
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div className="user-profile-description">
+                        I’m a volunteer with big experience and always ready for hepling
+                    </div>
+                    <div className="user-menu-buttons-block">
+                        <div className="donate-history-btn">
+                            Donate history
+                        </div>
+                        <div className="notifications-btn">
+                            Notifications
+                        </div>
+                        <div className="settings-btn">
+                            Settings
+                        </div>
+                        <div className="premium-pots-btn">
+                            Premium post
+                        </div>
+                        <div className="support-btn">
+                            Support
+                        </div>
+                        <img className='logOut-btn' onClick={this.logOut} src="../img/logout.svg" alt="" />
+                    </div>
+                    
+                    {/* <h1>User menu</h1>
                     {this.props.user?.email}
                     <button className='next' onClick={this.funcToast}>
                         toast
-                    </button>
+                    </button> */}
                 </div>
             </div>
             

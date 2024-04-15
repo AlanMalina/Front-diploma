@@ -79,6 +79,7 @@ class RegistrationPage extends Component {
         
       }
 
+
     render(){
 
         const { email, password, userName, userSurname, errors } = this.state;
@@ -88,6 +89,7 @@ class RegistrationPage extends Component {
                 <div className="register-photo-block">
                     <img className='register-back-photo' src="https://static.ukrinform.com/photos/2022_10/thumb_files/630_360_1665682812-404.jpg" alt="" />
                 </div>
+                
                 <div className='register-form'>
                     <div className='register-email-block'>
                         <label htmlFor='register-email-input'>Email:</label>

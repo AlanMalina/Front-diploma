@@ -25,41 +25,18 @@ class LogInPage extends Component{
 
 
     async logIn() {
-        const errors = {};
-        let isValid = true;
 
         try{
-            // if (this.state.email !== this.props.user?.email) {
-            //     errors.email = 'Неправильний email!';
-            //     isValid = false;
-            // } 
-            // if (this.state.password.length < 8) {
-            //     errors.password = 'Неправильний пароль!';
-            //     isValid = false;
-            // }             
-            // if(isValid) {
-                const response = await loginService.logInUser(this.state.email, this.state.password)
-                this.setState({ userProfile: response.data })
-                window.location.href = "/my-profile";
-                console.log(response.data)
-
-                 // const id = await loginService.logInUser(this.state.email, this.state.password);
-                // if (id) {
-                //     const userProfile = await loginService.getUserProfile(id);
-                //     this.setState({ userProfile: userProfile })
-                //     window.location.href = "/my-profile";
-                // } else {
-                //     console.error('Помилка при вході: id невизначений');
-                // }
-            // }
-            this.setState({ errors });
+            const response = await loginService.logInUser(this.state.email, this.state.password)
+            this.setState({ userProfile: response.data })
+            window.location.href = "/my-profile";
+            console.log(response.data)
         }
         catch(e){
             console.log(e)
         }
         
     }
-
     
     
 
@@ -73,12 +50,12 @@ class LogInPage extends Component{
                     <div className='login-email-block'>
                         <label htmlFor='login-email-input'>Email:</label>
                         <input id='login-email-input' type="text" className='login-email-input' name="email" value={this.state.email} onChange={this.emailValue} />
-                        {this.state.errors.email && <span>{this.state.errors.email}</span>}
+                        {/* {this.state.errors.email && <span>{this.state.errors.email}</span>} */}
                     </div>
                     <div className='login-password-block'>
                         <label htmlFor='login-password-input'>Password:</label>
                         <input id='login-password-input' type="password" className='login-password-input' name="password" value={this.state.password} onChange={this.passwordValue} />
-                           {this.state.errors.password && <span>{this.state.errors.password}</span>}
+                           {/* {this.state.errors.password && <span>{this.state.errors.password}</span>} */}
                     </div>     
                     <div className='btn-login' onClick={this.logIn}>
                         Log in                         

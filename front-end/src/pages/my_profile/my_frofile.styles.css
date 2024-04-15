@@ -24,23 +24,6 @@
     box-sizing: border-box;
 }
 
-.user-menu-profile-container{
-    width: 24.792vw;
-    height: 57.407vh;
-    background-color: #ffffff;
-    box-shadow: 1px 1px 7px rgb(205, 205, 205);
-    border-radius: 15px;
-    position: absolute;
-    top: 12.037vh;
-    right: 10vw;
-}
-/* .menu-profile-header{
-    width: 100%;
-    height: 10.185vh;
-    background-color: #616F54;
-    border-radius: 15px 15px 0 0;
-} */
-
 .sort-container{
     width: 43.907vw;
     display: flex;
@@ -101,6 +84,103 @@
     object-fit: cover;
     cursor: pointer;
 }
+
+.user-menu-profile-container{
+    width: 24.792vw;
+    height: 57.407vh;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 7px rgb(205, 205, 205);
+    border-radius: 15px;
+    position: absolute;
+    top: 12.037vh;
+    right: 10vw;
+    box-sizing: border-box;
+}
+.menu-profile-header{
+    width: 100%;
+    display: flex;
+    padding: 2.87vh 0 0 1.042vw;
+    box-sizing: border-box;
+    position: relative;
+    /* width: 100%;
+    height: 10.185vh;
+    background-color: #616F54;
+    border-radius: 15px 15px 0 0; */
+}
+.edit-btn{
+    position: absolute;
+    top: 1.389vh;
+    right: 0.781vw;
+    cursor: pointer;
+}
+.menu-profile-avatar{
+    width: 12.037vh;
+    height: 12.037vh;
+    background-color: #e7e7e7;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.user-profileData{
+    width: 16.979vw;
+    height: 12.037vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.menu-profile-userName{
+    font-size: 1.302vw;
+    font-weight: bold;
+}
+.profile-indicators{
+    width: 16.979vw;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 1vw;
+    box-sizing: border-box;
+    position: relative;
+    bottom: 0;
+}
+.current-posts{
+    text-align: center;
+    font-size: 1vw;
+    font-weight: bold;
+}
+.folowers{
+    text-align: center;
+    font-size: 1vw;
+    font-weight: bold;
+}
+.following{
+    text-align: center;
+    font-size: 1vw;
+    font-weight: bold;
+}
+.user-profile-description{
+    width: 100%;
+    font-size: 1.146vw;
+    font-weight: 500;
+    padding: 1.481vh 1.563vw;
+    box-sizing: border-box;
+}
+.user-menu-buttons-block{
+    margin-top: 9.259vh;
+    width: 100%;
+    font-size: 1.25vw;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8vh;
+    position: relative;
+}
+.logOut-btn{
+    position: absolute;
+    bottom: 0;
+    right: 0.781vw;
+    cursor: pointer;
+}
+
 
 
 
