@@ -6,7 +6,7 @@ class CreatePostPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {post: [], content: '', picture: '', appointer: '', goal: '', deadline: ''};
+        this.state = {post: [], content: '', picture: '', appointer: '', goal: '', deadline: '', id: ''};
         this.postPost = this.postPost.bind(this);
         this.contentChange = this.contentChange.bind(this);
         this.pictureChange = this.pictureChange.bind(this);
@@ -20,10 +20,10 @@ class CreatePostPage extends Component {
         const formPhoto = new FormData()
         formPhoto.append('image', this.state.picture)
         console.log(formPhoto)
-        const response = await postService.postPost(this.state.picture, this.state.content, this.state.appointer, this.state.goal, this.state.deadline)
+        const response = await postService.postPost(this.state.picture, this.state.content, this.state.appointer, this.state.goal, this.state.deadline, this.props.user?.id)
         this.setState({post: response.data})
-
         console.log(response.data)
+        window.location.href = '/main'
     }
 
     contentChange(e){
@@ -50,6 +50,7 @@ class CreatePostPage extends Component {
         const deadline = e.target.value
         this.setState({deadline: deadline})
     }
+    
 
 
     render() {
@@ -69,13 +70,13 @@ class CreatePostPage extends Component {
                         </div>)}
                     
                     
-                    <input type="text" onChange={this.contentChange}  placeholder='Title:' className="post-title post-info"/>
+                    <input type="text"   placeholder='Title:' className="post-title post-info"/>
                     <input type="text" onChange={this.appointerChange} placeholder='For whom:' className="for-whom post-info" />
                     <input type="text" onChange={this.goalChange} placeholder="Sum:" className="sum post-info" />
                     <input type="text" onChange={this.deadlineChange} placeholder="Deadline:" className="deadline post-info" />
                     <input type="text" placeholder="Cooperator:" className="cooperator post-info" />
                     <div>
-                        <textarea type="text" placeholder="Description:" className="create-post-description" />
+                        <textarea type="text" onChange={this.contentChange} placeholder="Description:" className="create-post-description" />
                     </div>
                     <button className="btn-create" onClick={this.postPost}>Create</button>
                 </div>

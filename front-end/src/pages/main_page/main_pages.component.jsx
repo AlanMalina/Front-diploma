@@ -5,30 +5,21 @@ import postService from '../../service/post-service';
 import { NavLink } from 'react-router-dom';
 
 
-
 class MainPage extends Component {
 
     constructor(props) {
-        super(props)
-        this.state = {post: []}
-        this.onClickHandler = this.onClickHandler.bind(this);
-        this.getPost = this.getPost.bind(this)
+        super(props);
+        this.state = { post: [] };
+        this.getPost = this.getPost.bind(this);
     }
 
-    onClickHandler(){
-        let currentClass = this.state.activeClass === 'main-block' ? 'a1' : 'main-block'
-        this.setState({ activeClass: currentClass})
+    async getPost() {
+        const response = await postService.getPost();
+        this.setState({ post: response.data });
     }
 
-    async getPost(){
-        const response = await postService.getPost()
-        this.setState({post: response.data})
-        // console.log(response.data)
-    }
-
-    async componentDidMount(){
-        await this.getPost()
-        // console.log(this.state.post)
+    async componentDidMount() {
+        await this.getPost();
     }
     
     render() {
@@ -39,7 +30,7 @@ class MainPage extends Component {
                     <img className="user-menu-avatar" src='./img/photofinish.png'/>
                     <NavLink to='/my-profile' className='user-menu-userName'>
                         <div>
-                            Yura Shket
+                            {this.props.user?.userName} {this.props.user?.userSurname}
                         </div>
                     </NavLink>
                     <div className="user-statistics">
@@ -75,8 +66,12 @@ class MainPage extends Component {
                     </div>
                 </div>
                 <div className='main-block'>
-                    {this.state.post.map((post, index) => (
-                        <Post key={index} data={post}/>
+                    {this.state.post.map((post) => (
+                        <Post
+                            key={post.id}
+                            data={post}
+                            setFullPostData={this.props.setFullPostData}
+                        />
                     ))}
                 </div>
             </div>

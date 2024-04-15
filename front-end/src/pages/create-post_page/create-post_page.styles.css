@@ -55,7 +55,8 @@
 }  
 .create-post-description{
     font-size: 15px;
-    width: 28.889vw;
+    min-width: 28.889vw;
+    max-width: 28.889vw;
     min-height: 11.111vh;
     background-color: #F0F0F0;
     border: 0;   

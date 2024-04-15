@@ -1,16 +1,46 @@
 import React, {Component} from 'react'
 import './post.styles.css';
 import { NavLink } from 'react-router-dom';
+import postService from '../../service/post-service';
+
 
 class Post extends Component{
 
     constructor(props){
         super(props)
+        this.state = {openfull: false}
+        this.getFullPost = this.getFullPost.bind(this)
     }
 
-    componentDidMount(){
-        console.log(this.props.data)
+    async getFullPost(){
+        try{
+            const response = await postService.getOne(this.props.data.id);
+            const postData = response.data[0];
+            this.props.setFullPostData(postData);
+            console.log(response.data[0])
+        }
+        catch(e){
+            console.log(e)
+        }
+        finally{
+            const fullpostContainer = document.getElementById('full-post-page-container')
+            if(this.state.openfull === false){
+                fullpostContainer.style.zIndex = '1'
+                fullpostContainer.style.display = 'flex'
+                this.setState({openfull: true})
+                console.log('State setted: ' + this.state.openfull) 
+            }
+        }
     }
+
+    componentDidUpdate(){
+        if(this.state.openfull === true){
+            this.setState({openfull: false})
+        }
+    }
+
+
+
 
     render(){
         return(
@@ -19,7 +49,7 @@ class Post extends Component{
                     <div className="user-block">
                         <img className='avatar' src='./img/kolobok.png'/>
                         <div className="name-and-time">
-                            <p className='user-name'>Юра Сеатович</p>
+                            <p className='user-name'>{this.props.data.user_name} {this.props.data.user_surname}</p>
                             <p className='post-time'>1w ago</p>
                         </div>
                     </div>
@@ -28,7 +58,7 @@ class Post extends Component{
                     </div>
                 </div>
                 <div className="post-description">
-                    <div className="content">
+                    <div className="content" onClick={this.getFullPost}>
                         {this.props.data.content}
                     </div>
                     <div className='appointer'>
@@ -41,9 +71,7 @@ class Post extends Component{
                         Deadline: {this.props.data.deadline}
                     </div>
                 </div>
-                <NavLink to={`/post/${this.props.data.id}`}>
-                    <img className='post-img' src={`http://localhost:5000/${this.props.data.picture}`}/>
-                </NavLink>
+                <img className='post-img' onClick={this.getFullPost} src={`http://localhost:5000/${this.props.data.picture}`}/>
                 <div className="post-footer">
                     <div className="like-block">
                         <img className='like-btn-icon' src="./img/like-btn.svg" alt="#" />

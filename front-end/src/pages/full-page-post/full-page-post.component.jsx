@@ -1,40 +1,49 @@
 import React, { Component} from 'react';
 import './full-page-post.style.css';
-import postService from '../../service/post-service';
 
 
 class FullPagePost extends Component {
     constructor(props){
         super(props)
-        this.state = {id: '', fullPost: null}
+        this.state = {fullPost: null}
+        this.wrapperRef = React.createRef();
+        this.closeFullpost = this.closeFullpost.bind(this)
+        
     }
 
-    async getOne(){
-        const url = window.location.href
-        const id = url.split('/').pop()
-        const response = await postService.getOne(id)
-        this.setState({fullPost: response.data[0]})
-        console.log(id)
-        console.log(response.data[0])
+    closeFullpost(e) {
+        const fullpostContainer = document.getElementById('full-post-page-container')
+        if (this.wrapperRef && this.wrapperRef.current.contains(e.target)) {
+            fullpostContainer.style.zIndex = '-1'
+            fullpostContainer.style.display = 'none'
+            console.log('Ref is working') 
+        }else{
+            console.log('Ref is NOT working') 
+        }
+           
     }
-
-    componentDidMount(){
-        this.getOne()        
+   
+    componentDidMount() {  
+        document.addEventListener('mousedown', this.closeFullpost);
+    }
+    
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.closeFullpost);
     }
 
     render(){
         return(
-            <div className='full-post-page-container'>
+            <div id='full-post-page-container' className='full-post-page-container' >
+                <div id='fullpost-background' className="fullpost-background" ref={this.wrapperRef}></div>
                 <div className="img-block">
-                <img className='fullpost-img' src={`http://localhost:5000/${this.state.fullPost?.picture}`}/>
+                    <img className='fullpost-img' src={`http://localhost:5000/${this.props.fullPostData?.picture}`}/>
                 </div>
-                
                 <div className="info-block">
                     <div className="post-header">
                         <div className="user-block">
                             <img className='avatar' src='../img/kolobok.png'/>
                             <div className="name-and-time">
-                                <p className='user-name'>Юра Сеатович</p>
+                                <p className='user-name'>{this.props.fullPostData?.user_name} {this.props.fullPostData?.user_surname}</p>
                                 <p className='post-time'>1w ago</p>
                             </div>
                         </div>
@@ -44,16 +53,16 @@ class FullPagePost extends Component {
                     </div>
                     <div className='fullpost-description'>
                         <div className="fullpost-content">
-                            {this.state.fullPost?.content}
+                            {this.props.fullPostData?.content}
                         </div>
                         <div className="fullpost-goal">
-                            Goal: {this.state.fullPost?.goal}
+                            Goal: {this.props.fullPostData?.goal}
                         </div>
                         <div className="fullpost-appointer">
-                            Appointer: {this.state.fullPost?.appointer}
+                            Appointer: {this.props.fullPostData?.appointer}
                         </div>
                         <div className="fullpost-deadline">
-                            Deadline: {this.state.fullPost?.deadline}
+                            Deadline: {this.props.fullPostData?.deadline}
                         </div>
                     </div>
                     <hr className='fullpost-hr'/>
@@ -69,42 +78,6 @@ class FullPagePost extends Component {
                     </div>
                 </div>
             </div>
-
-            // <div className='full-post-page-container'>
-            //     <div className="full-post-page-main">
-            //         <div className='post-container'>
-            //             <header className='post-header'>
-            //                 <img className='avatar' src={`http://localhost:5000/${this.state.fullPost?.avatar}`}/>
-            //                 {this.state.fullPost?.author}
-            //             </header>
-            //             <div className="post-content-block">
-            //                 <img className='post-img' src={`http://localhost:5000/${this.state.fullPost?.picture}`}/>
-            //                 <div className="fullpost-describtion">
-            //                     <h2>{this.state.fullPost?.title}</h2>
-            //                     <p className='fullpost-content'>{this.state.fullPost?.content}</p>
-            //                 </div>
-            //             </div>
-            //             <footer className='post-footer'>
-            //                 <button className='like-btn footer-item-left'>
-            //                     <img src='./img/Like button.svg'/>
-            //                 </button>
-            //                 <button className='comment-btn footer-item-left'>
-            //                     <img src='./img/Comment button.svg'/>
-            //                 </button>
-
-            //                 <div className="btn-donate-block footer-item">
-            //                     <button className='donate-btn'>
-            //                         Donate
-            //                         <img src='./img/la_donate.svg'/>
-            //                     </button>
-            //                 </div>
-            //                 <button className='share-btn footer-item-right'>
-            //                     <img src='./img/Share button.svg'/>
-            //                 </button>
-            //             </footer>
-            //         </div>
-            //     </div>
-            // </div>          
         )
     }
 }

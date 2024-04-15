@@ -1,4 +1,4 @@
-.register-page-container{
+.login-page-container{
     width: 100%;
     height: 100vh;
     /* padding: 30vh 20vw; */
@@ -7,17 +7,17 @@
     overflow: hidden;
     z-index: 3;
 }
-.register-photo-block{
+.login-photo-block{
     width: 100vw;
     filter: blur(7px)
 }
-.register-back-photo{
+.login-back-photo{
     width: 100vw;
     /* height: 100vh; */
     object-fit: cover;
     z-index: 3;
 }
-.register-form{
+.login-form{
     width: 38.021vw;
     position: absolute;
     right: 0;
@@ -33,61 +33,39 @@
     gap: 1.111vh;
     z-index: 3;
 }
-.register-email-block{
+.login-email-block{
     display: flex;
     flex-direction: column;
 }
-.register-email-input{
+.login-email-input{
     width: 24.583vw;
     height: 4.815vh;
     border: 1px solid #4A4A4A;
     font-size: 1.25vw;
     color: #4A4A4A;
 }
-.register-password-block{
+.login-password-block{
     display: flex;
     flex-direction: column;
 }
-.register-password-input{
+.login-password-input{
     width: 24.583vw;
     height: 4.815vh;
     border: 1px solid #4A4A4A;
     font-size: 1.25vw;
     color: #4A4A4A;
 }
-.register-userName-block{
-    display: flex;
-    flex-direction: column;
-}
-.register-userName-input{
-    width: 24.583vw;
-    height: 4.815vh;
-    border: 1px solid #4A4A4A;
-    font-size: 1.25vw;
-    color: #4A4A4A;
-}
-.register-userSurname-block{
-    display: flex;
-    flex-direction: column;
-}
-.register-userSurname-input{
-    width: 24.583vw;
-    height: 4.815vh;
-    border: 1px solid #4A4A4A;
-    font-size: 1.25vw;
-    color: #4A4A4A;
-}
-.register-form label{
+.login-form label{
     font-size: 1.042vw;
     font-weight: bold;
     color: #4A4A4A;
 }
-.register-form span{
+.login-form span{
     font-size: 1.042vw;
     font-weight: 500;
     color: red;
 }
-.btn-register{
+.btn-login{
     width: 9.375vw;
     height: 4.63vh;
     background-color: #616F54;

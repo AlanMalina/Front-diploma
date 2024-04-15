@@ -2,6 +2,8 @@ import pool from "../first-test-postgre/db.js"
 import fileService from "../first-test-postgre/fileService.js"
 import bcrypt from 'bcrypt' 
 import JwtToken from "./JWT-token.js" 
+import jwt from 'jsonwebtoken'
+import { secretKey } from "./JWT-token.js"
 import cookie from "cookie-parser"
 
 class PostController{
@@ -9,9 +11,7 @@ class PostController{
         try{
             const {content, goal, appointer, deadline, user_id} = req.body
             const picture = fileService.saveFile(req.files.picture)
-            // const avatar = fileService.saveFile(req.files.avatar)
 
-            // const post = await pool.query('INSERT INTO posts (author, title, content) VALUES ($1, $2, $3) RETURNING *', [author,title,content])
             const post = await pool.query(
                 'INSERT INTO posts (picture, content, goal, appointer, deadline, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', 
                 [picture, content, goal, appointer, deadline, user_id])
@@ -26,8 +26,7 @@ class PostController{
         try {
           const { email, password, userName, userSurname } = req.body;
       
-          // Hash the password using bcrypt before storing it
-          const saltRounds = 10; // Adjust this value as needed
+          const saltRounds = 10;
           const hashedPassword = await bcrypt.hash(password, saltRounds);
 
           const existingEmail = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -38,10 +37,10 @@ class PostController{
             'INSERT INTO users (email, password, userName, userSurname) VALUES ($1, $2, $3, $4) RETURNING *',
             [email, hashedPassword, userName, userSurname]
           );
+          const accessToken = JwtToken.generateAccessToken(user.rows[0]);
           
-
           
-          res.status(200).json(user.rows);
+          res.json({ token: accessToken });
         } catch (e) {
           res.status(500).json(e);
         }
@@ -62,12 +61,13 @@ class PostController{
             if (!comparedPassword) {
                 return res.status(400).json({ message: 'Wrong password!' });
             }else {
-                const accessToken = JwtToken.generateAccessToken(user);
+                const accessToken = JwtToken.generateAccessToken(user.rows[0]);
                 res.cookie('ACCESS_TOKEN', accessToken, {
                     maxAge: 60*60*24*30*1000,
+                    httpOnly: true,
                 })
 
-                return res.json({ message: 'logged in!' });
+                return res.json({ token: accessToken });
             }
 
         }catch(err){
@@ -76,11 +76,31 @@ class PostController{
         
     }
 
+    async getUserProfile(req, res) {
+        const {id} = req.params
+        try {
+            // const accessToken = req.cookies["ACCESS_TOKEN"];
+            // const secretKey = 'ryjamavpazrobylacrmkuiproyshlainternaturupoflluteru';
+            // const validToken = jwt.verify(accessToken, secretKey);
+            // const userId = validToken.id;
+            
+            const posts = await pool.query('SELECT posts.*, users.username AS user_name, users.usersurname AS user_surname FROM posts JOIN users ON posts.user_id = users.id WHERE user_id = $1', [id]);
+            
+            if (posts.rows.length === 0) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            
+            res.status(200).json(posts.rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json(err);
+        }
+    }
     
 
     async getAll(req, res) {
         try {
-            const posts = await pool.query('select * from posts');
+            const posts = await pool.query('SELECT posts.*, users.username AS user_name, users.usersurname AS user_surname FROM posts JOIN users ON posts.user_id = users.id');
             res.status(200).json(posts.rows);
         } catch (err) {
             console.error(err);
@@ -93,10 +113,10 @@ class PostController{
     async getOne(req, res){
         const {id} = req.params
         try{
-            const post = await pool.query('select * FROM posts where id = $1', [id]);
+            const post = await pool.query('SELECT posts.*, users.username AS user_name, users.usersurname AS user_surname FROM posts JOIN users ON posts.user_id = users.id WHERE posts.id = $1', [id]);
             if (post.rows.length === 0)
             {
-                return res.status(404).json({error:"Post not found"})
+                return res.status(404).json({error: "Post not found"})
             }
             return res.status(200).json(post.rows)
         }catch(e){
@@ -107,7 +127,7 @@ class PostController{
     async getOneUser(req, res){
         const {id} = req.params
         try{
-            const user = await pool.query('select * FROM users where id = $1', [id]);
+            const user = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
             if (user.rows.length === 0)
             {
                 return res.status(404).json({error: "User not found"})

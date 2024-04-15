@@ -85,28 +85,28 @@ class RegistrationPage extends Component {
 
         return(
             <div id='register-page-container' className='register-page-container'>
-                <div className="photo-block">
-                    <img className='back-photo' src="https://static.ukrinform.com/photos/2022_10/thumb_files/630_360_1665682812-404.jpg" alt="" />
+                <div className="register-photo-block">
+                    <img className='register-back-photo' src="https://static.ukrinform.com/photos/2022_10/thumb_files/630_360_1665682812-404.jpg" alt="" />
                 </div>
                 <div className='register-form'>
-                    <div className='email-block'>
-                        <label htmlFor='email-input'>Email:</label>
-                        <input id='email-input' type="text" className='email-input' name="email" value={email} onChange={this.handleChange} />
+                    <div className='register-email-block'>
+                        <label htmlFor='register-email-input'>Email:</label>
+                        <input id='register-email-input' type="text" className='register-email-input' name="email" value={email} onChange={this.handleChange} />
                         {errors.email && <span>{errors.email}</span>}
                     </div>
-                    <div className='password-block'>
-                        <label htmlFor='password-input'>Password:</label>
-                        <input id='password-input' type="password" className='password-input' name="password" value={password} onChange={this.handleChange} />
+                    <div className='register-password-block'>
+                        <label htmlFor='register-password-input'>Password:</label>
+                        <input id='register-password-input' type="password" className='register-password-input' name="password" value={password} onChange={this.handleChange} />
                            {errors.password && <span>{errors.password}</span>}
                     </div>
-                    <div className='userName-block'>
-                        <label htmlFor='userName-input'>Name:</label>
-                        <input id='userName-input' type="text" className='userName-input' name="userName" value={userName} onChange={this.handleChange} />
+                    <div className='register-userName-block'>
+                        <label htmlFor='register-userName-input'>Name:</label>
+                        <input id='register-userName-input' type="text" className='register-userName-input' name="userName" value={userName} onChange={this.handleChange} />
                         {errors.userName && <span>{errors.userName}</span>}
                     </div>
-                    <div className='userSurname-block'>
-                        <label htmlFor='userSurname-input'>Surname:</label>
-                        <input id='userSurname-input' type="text" className='userSurname-input' name="userSurname" value={userSurname} onChange={this.handleChange} />
+                    <div className='register-userSurname-block'>
+                        <label htmlFor='register-userSurname-input'>Surname:</label>
+                        <input id='register-userSurname-input' type="text" className='register-userSurname-input' name="userSurname" value={userSurname} onChange={this.handleChange} />
                         {errors.userSurname && <span>{errors.userSurname}</span>}
                     </div>
                     <div className='btn-register' onClick={this.postUser}>

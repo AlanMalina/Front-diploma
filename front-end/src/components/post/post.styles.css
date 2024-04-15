@@ -84,6 +84,7 @@
     object-fit: cover;
     padding: 0 1.458vw;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .post-footer{
@@ -121,6 +122,9 @@
 h2{
     margin: 0;
 }
+
+
+
 
 
 

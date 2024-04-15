@@ -34,12 +34,12 @@
     top: 12.037vh;
     right: 10vw;
 }
-.menu-profile-header{
+/* .menu-profile-header{
     width: 100%;
     height: 10.185vh;
     background-color: #616F54;
     border-radius: 15px 15px 0 0;
-}
+} */
 
 .sort-container{
     width: 43.907vw;
@@ -50,7 +50,6 @@
     border-radius: 15px;
     background-color: #ffffff;
     margin: 12.037vh 0 30px 18.594vw;
-
 }
 .profile-hr{
     width: 39.063vw;
@@ -81,13 +80,12 @@
 
 .my-profile-post-container{
     width: 100%;
-    height: 73.055vh;
+    max-height: 78.7vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1.615vw;
-    margin-top: 4.63vh;
-    padding: 0 1.52vw 4.63vh;
+    padding: 4.63vh 1.52vw;
     box-sizing: border-box;
     overflow: auto;
 }
@@ -101,6 +99,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 

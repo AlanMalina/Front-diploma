@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Post from '../../components/post/post.component';
 import postService from '../../service/post-service';
 import { NavLink } from 'react-router-dom';
+import { queryAllByAltText } from '@testing-library/react';
+import loginService from '../../service/login-service';
 
 
 // let notify = () => toast("Wow so easy!");
@@ -13,10 +15,11 @@ class MyProfilePage extends Component {
 
     constructor(props){
         super(props)
-        this.state = {post_in_profile: [], sort: false}
+        this.state = {post_in_profile: [], sort: false, fullpost: false, userProfile: []}
         this.funcToast = this.funcToast.bind(this)
         this.ColumnSort = this.ColumnSort.bind(this)
         this.BlockSort = this.BlockSort.bind(this)
+        this.getFullPost = this.getFullPost.bind(this)
     }
     
 
@@ -68,11 +71,42 @@ class MyProfilePage extends Component {
         }
     }
 
+    async getFullPost(pic){
+            const fullpostContainer = document.getElementById('full-post-page-container')
+            if(this.state.fullpost === false){
+                fullpostContainer.style.zIndex = '1'
+                fullpostContainer.style.display = 'flex'
+                this.setState({fullpost: true})
+                this.props.setFullPostData(pic);
+                console.log('State setted: ' + this.state.fullpost) 
+            }
+            
+    }
+
+    async getUserProfile(){
+        try{
+            const response = await loginService.getUserProfile(this.props.user.id)
+            this.setState({userProfile: response.data})
+        }
+        catch(e){
+
+        }
+    }
+    
+
 
     async componentDidMount(){
         await this.getPost()
-        console.log(this.props.data)
+        await this.getUserProfile()
+        console.log(this.props.user)
     }
+
+    componentDidUpdate(){
+        if(this.state.fullpost === true){
+            this.setState({ fullpost: false });
+        }
+    }
+
 
     render() {
 
@@ -100,27 +134,26 @@ class MyProfilePage extends Component {
                 <div id='my-profile-page-main' className='my-profile-page-main'>
                     <div id='my-profile-post-container' className="my-profile-post-container">
                         
-                        {this.state.post_in_profile.map((pic, index ) => (
+                        {this.state.userProfile.map((pic, index ) => (
                             <div id='block-post' key={index} className="block-post" >
-                                <NavLink to={`/post/${pic.id}`}>
-                                    <img className='block-post-img' src={`http://localhost:5000/${pic.picture}`} alt="" />
-                                </NavLink>    
+                                <img className='block-post-img' onClick={() => this.getFullPost(pic)} src={`http://localhost:5000/${pic.picture}`} alt="" />
                             </div>
                         ))}
                     </div>                    
                 </div>
 
                 <div id='my-profile-main-postsColumn' className="my-profile-main-postsColumn">
-                    {this.state.post_in_profile.map((post, index) => (
-                        <div key={index} id='column-post' className="column-post">
-                            <Post data={post}/> 
+                    {this.state.userProfile.map((post) => (
+                        <div key={post.id} id='column-post' className="column-post">
+                            <Post data={post} setFullPostData={this.props.setFullPostData} /> 
                         </div>
                     ))}
                 </div>
-
+ 
                 <div className="user-menu-profile-container">
                     <div className="menu-profile-header"></div>
                     <h1>User menu</h1>
+                    {this.props.user?.email}
                     <button className='next' onClick={this.funcToast}>
                         toast
                     </button>

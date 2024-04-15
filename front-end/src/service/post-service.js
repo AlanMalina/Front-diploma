@@ -27,13 +27,14 @@ const getPic = (picture) => {
     // })
 }
 
-const postPost = ( picture, content, appointer, goal, deadline) => {
+const postPost = ( picture, content, appointer, goal, deadline, user_id) => {
     return axios.post(api + '/post', { 
         picture,
         content,
         appointer,
         goal,
-        deadline
+        deadline,
+        user_id
     },
     {
         headers:{
@@ -49,14 +50,14 @@ const postUser = (email, password, userName, userSurname) => {
         password,
         userName,
         userSurname
-    },
-    {
-        headers:{
-            'Accept' : '*/*',
-            'Content-Type' : 'multipart/form-data'
+    }).then((response) => {
+        if(response.data.token){
+            localStorage.setItem('token', JSON.stringify(response.data))
         }
+        return response.data
     })
 }
+
 
 const postService = {
     getPost,

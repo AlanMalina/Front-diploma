@@ -13,9 +13,11 @@ class Header extends Component {
     constructor(props){
         super(props)
         this.state = {sidebar_in_header: false, chatapp_in_header: false}
+        this.wrapperRef = React.createRef();
         this.funcToast = this.funcToast.bind(this);
         this.ChatAppHandler = this.ChatAppHandler.bind(this);
         this.SideBarHandler = this.SideBarHandler.bind(this);
+        this.closeFullpost = this.closeFullpost.bind(this)
     }
 
     
@@ -34,6 +36,12 @@ class Header extends Component {
             });
     }
 
+    closeFullpost() {
+        const fullpostContainer = document.getElementById('full-post-page-container')
+            fullpostContainer.style.zIndex = '-1'
+            fullpostContainer.style.display = 'none'
+            console.log('Ref is working') 
+    }
 
     ChatAppHandler(){
         const chatapp = document.getElementById('chat-app')
@@ -80,7 +88,7 @@ class Header extends Component {
     render() {
         
         return(
-          <div className='header'>
+          <div className='header' onClick={this.closeFullpost}>
             <div className='nav-left'>
                 <div className='nav-item logo'>
                     <NavLink className={`${setActive} item-content`} to='/main'>Logo</NavLink>
@@ -95,18 +103,18 @@ class Header extends Component {
             <div className='nav-right'>
                 <div className='nav-item '>
                     <NavLink className={`${setActive} create item-content`} to='create-post'>
-                        <img src="../img/create_header_icon.svg"/>
+                        <img className='create-btn-icon' src="../img/create_header_icon.svg"/>
                     </NavLink>
                 </div>
                 <div className='nav-item chat'>
                     <a className='btn-chat ' onClick={this.ChatAppHandler}>
-                        <img src="../img/chat_header_icon.svg"/>
+                        <img className='chat-btn-icon' src="../img/chat_header_icon.svg"/>
                     </a>
                 </div>
                 <div className='nav-item'>
                     <NavLink className={`${setActive} prof item-content`} to='/my-profile'>
                         {/* <div className="avatar-header"> */}
-                            <img src='../img/avatar_header_icon.svg'/>
+                            <img className="avatar-header-icon" src='../img/avatar_header_icon.svg'/>
                         {/* </div> */}
                     </NavLink>
                 </div>
