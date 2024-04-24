@@ -14,12 +14,15 @@ class MyProfilePage extends Component {
 
     constructor(props){
         super(props)
-        this.state = {post_in_profile: [], sort: false, fullpost: false, userProfile: []}
+        this.state = {post_in_profile: [], sort: false, fullpost: false, userProfile: [], 
+            followingCount: [], following: 0, followers: 0, postsCount: 0}
         this.funcToast = this.funcToast.bind(this)
         this.ColumnSort = this.ColumnSort.bind(this)
         this.BlockSort = this.BlockSort.bind(this)
         this.getFullPost = this.getFullPost.bind(this)
         this.logOut = this.logOut.bind(this)
+        this.getFollowingCount = this.getFollowingCount.bind(this);
+        this.getPostsCount = this.getPostsCount.bind(this)
     }
     
 
@@ -107,16 +110,42 @@ class MyProfilePage extends Component {
           console.error(error);
         }
       }
-    
 
+    async getFollowingCount(){
+        try{
+            const response = await postService.getFollowingCount(this.props.user?.id);
+            const { followers, following } = response.data.find(item => item.followers !== undefined);
+            this.setState({ followingCount: response.data });
+            this.setState({ following: following,
+                 followers: followers})
+            // console.log(response.data)
+            // console.log(this.state.following)
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
+    async getPostsCount(){
+        try{
+            const response = await postService.getPostsCount(this.props.user?.id)
+            this.setState({postsCount: response.data.postscount})
+            console.log('posts count: ' + response.data.postscount)
+        }
+        catch(e){
+            console.log("You have no post yet! " + e)
+        }
+    } 
 
     async componentDidMount(){
         await this.getPost()
         await this.getUserProfile()
-        console.log(this.props.user)
+        await this.getFollowingCount()
+        await this.getPostsCount()
     }
 
-    componentDidUpdate(){
+
+    async componentDidUpdate(){
         if(this.state.fullpost === true){
             this.setState({ fullpost: false });
         }
@@ -160,7 +189,10 @@ class MyProfilePage extends Component {
                 <div id='my-profile-main-postsColumn' className="my-profile-main-postsColumn">
                     {this.state.userProfile.map((post) => (
                         <div key={post.id} id='column-post' className="column-post">
-                            <Post data={post} setFullPostData={this.props.setFullPostData} /> 
+                            <Post data={post} 
+                            followingCount={this.props.followingCount} 
+                            setFullPostData={this.props.setFullPostData}
+                            user={this.props.user} /> 
                         </div>
                     ))}
                 </div>
@@ -175,13 +207,17 @@ class MyProfilePage extends Component {
                             </div>
                             <div className="profile-indicators">
                                 <div className="current-posts">
-                                    5 <br /> current <br /> posts
+                                    {this.state.postsCount} <br />
+                                    current <br /> 
+                                    posts
                                 </div>
                                 <div className="folowers">
-                                    150 <br /> followers
+                                    {this.state.followers} <br /> 
+                                    Followers
                                 </div>
                                 <div className="following">
-                                    32 <br /> following
+                                    {this.state.following} <br />
+                                    Following
                                 </div>
                             </div>
                             

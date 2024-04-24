@@ -20,38 +20,34 @@ class App extends Component {
 
   constructor(props){
     super(props)
-    this.state = { fullPostData: null, token: Cookies.get('ACCESS_TOKEN'), decoded: []};
+    this.state = { fullPostData: null, token: Cookies.get('ACCESS_TOKEN'), decoded: [], getFollowingData: null};
   }
 
   setFullPostData = (postData) => {
     this.setState({ fullPostData: postData });
+    // console.log(postData);
   }
 
-//   componentDidMount() {
-    
-//     if (localStorage.getItem('token')) {
-//         const token = JSON.parse(localStorage.getItem('token')).token;
-//         this.setState({ token }, () => {
-//             console.log(this.state.token);
-//             if (this.state.token) {
-//                 const decoded = jwtDecode(this.state.token);
-//                 this.setState({ decoded });
-//                 console.log(decoded);
-//             }
-//         });
-        
-//     }
-// }
-
-
-
+  FollowingData = (followingData) => {
+    this.setState({ getFollowingData: followingData});
+    console.log(followingData);
+  }
+  
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.following !== prevState.following) {
+      this.setState({token: Cookies.set('ACCESS_TOKEN', this.state.following.token)})
+    }
+  }
+  
 componentDidMount() {
   const token = Cookies.get('ACCESS_TOKEN');
   this.setState(prevState => ({
     token,
-    decoded: token ? jwtDecode(token) : prevState.decoded,
+    decoded: token ? jwtDecode(token) : prevState.decoded   
   }));
+  
 }
+
 
 
   render() {
@@ -61,14 +57,14 @@ componentDidMount() {
           <Header/>
           <SideBar/>
           <ChatApp/>
-          <FullPagePost fullPostData={this.state.fullPostData}/>
+          <FullPagePost fullPostData={this.state.fullPostData} user={this.state.decoded}/>
           <div className='app-container'>
-              <Routes>
+              <Routes> 
                 <Route path='/registration' element={<RegistrationPage/>}/>
                 <Route path='/login' element={<LogInPage user={this.state.decoded}/>}/>
                 <Route path='/test-profile' element={<TestProfile/>}/>
-                <Route path='/main' element={<MainPage user={this.state.decoded} setFullPostData={this.setFullPostData}/>}/>
-                <Route path='/my-profile' element={<MyProfilePage user={this.state.decoded} setFullPostData={this.setFullPostData}/>}/>
+                <Route path='/main' element={<MainPage getFollowingData={this.state.getFollowingData} FollowingData={this.FollowingData} user={this.state.decoded} setFullPostData={this.setFullPostData}/>}/>
+                <Route path='/my-profile' element={<MyProfilePage following={this.state.following} user={this.state.decoded} setFullPostData={this.setFullPostData}/>}/>
                 <Route path='/create-post' element={<CreatePostPage user={this.state.decoded}/>}/>
                 <Route path='/chat' element={<ChatPage/>}/>
                 <Route path='/' element={<Navigate to="/login" />} />

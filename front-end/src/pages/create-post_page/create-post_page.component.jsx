@@ -1,4 +1,4 @@
-import { Component } from "react"
+import React, { Component } from "react"
 import './create-post_page.styles.css'
 import postService from "../../service/post-service";
 
@@ -73,7 +73,7 @@ class CreatePostPage extends Component {
                     <input type="text"   placeholder='Title:' className="post-title post-info"/>
                     <input type="text" onChange={this.appointerChange} placeholder='For whom:' className="for-whom post-info" />
                     <input type="text" onChange={this.goalChange} placeholder="Sum:" className="sum post-info" />
-                    <input type="text" onChange={this.deadlineChange} placeholder="Deadline:" className="deadline post-info" />
+                    <input type="date" onChange={this.deadlineChange} placeholder="Deadline:" className="deadline-input post-info" />
                     <input type="text" placeholder="Cooperator:" className="cooperator post-info" />
                     <div>
                         <textarea type="text" onChange={this.contentChange} placeholder="Description:" className="create-post-description" />

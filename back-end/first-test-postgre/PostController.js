@@ -13,8 +13,9 @@ class PostController{
             const picture = fileService.saveFile(req.files.picture)
 
             const post = await pool.query(
-                'INSERT INTO posts (picture, content, goal, appointer, deadline, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', 
+                'INSERT INTO posts (picture, content, goal, appointer, deadline, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING * ', 
                 [picture, content, goal, appointer, deadline, user_id])
+
             res.status(200).json(post.rows)
 
         }catch(e){
@@ -79,55 +80,22 @@ class PostController{
     }
 
 
-    // async logIn(req, res) {
-    //     try {
-    //         const { email, password } = req.body;
-    //         const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-    
-    //         if (!user.rows.length > 0) {
-    //             return res.status(400).json({ message: 'User is not found!' });
-    //         }
-    
-    //         const hashedPassword = user.rows[0].password;
-    //         const comparedPassword = await bcrypt.compare(password, hashedPassword);
-    
-    //         if (!comparedPassword) {
-    //             return res.status(400).json({ message: 'Wrong password!' });
-    //         } else {
-    //             const accessToken = JwtToken.generateAccessToken(user.rows[0]);
-    //             res.cookie('token', accessToken, {
-    //                 maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    //                 httpOnly: true,
-    //                 secure: true,
-    //                 sameSite: 'strict'
-    //             });
-    
-    //             return res.status(200).json({ message: 'Login successful' });
-    //         }
-    //     } catch (err) {
-    //         res.status(500).json(err);
-    //     }
-    // }
-    
-
-
-
-
     async getUserProfile(req, res) {
         const {id} = req.params
         try {
             // const accessToken = req.cookies["ACCESS_TOKEN"];
-            // const secretKey = 'ryjamavpazrobylacrmkuiproyshlainternaturupoflluteru';
             // const validToken = jwt.verify(accessToken, secretKey);
-            // const userId = validToken.id;
+            // const user_id = validToken.id;
             
-            const posts = await pool.query('SELECT posts.*, users.username AS user_name, users.usersurname AS user_surname FROM posts JOIN users ON posts.user_id = users.id WHERE user_id = $1', [id]);
+            const posts = await pool.query('SELECT posts.*, users.username AS user_name, users.usersurname AS user_surname, users.following AS following FROM posts JOIN users ON posts.user_id = users.id WHERE user_id = $1', [id]);
             
             if (posts.rows.length === 0) {
                 return res.status(404).json({ message: 'User not found' });
             }
+
+            const sortedPosts = posts.rows.sort((a, b) => b.id - a.id);
             
-            res.status(200).json(posts.rows);
+            res.status(200).json(sortedPosts);
         } catch (err) {
             console.error(err);
             res.status(500).json(err);
@@ -138,7 +106,8 @@ class PostController{
     async getAll(req, res) {
         try {
             const posts = await pool.query('SELECT posts.*, users.username AS user_name, users.usersurname AS user_surname FROM posts JOIN users ON posts.user_id = users.id');
-            res.status(200).json(posts.rows);
+            const sortedPosts = posts.rows.sort((a, b) => b.id - a.id);
+            res.status(200).json(sortedPosts);
         } catch (err) {
             console.error(err);
             res.status(500).json(err);
@@ -200,15 +169,76 @@ class PostController{
     async update(req, res){
         try{
             const{
-                id,author,title,content 
+                id, content, goal, appointer
             } = req.body
-            const post = await pool.query('update posts set author = $1, title = $2, content = $3 where id=$4 returning *', [author,title,content,id])
+            const post = await pool.query('update posts set content = $1, goal = $2, appointer = $3 where id=$4 returning *', [content, goal, appointer,id])
             res.json(post.rows)
     
         }catch(e){
             res.status(500).json(e.message)
         }
     }
+
+
+    async postFollowing(req, res){
+        const {user_id, username, following_user_id, following_username} = req.body
+        try{
+            const following = await pool.query(
+                'INSERT INTO user_following (user_id, username, following_user_id, following_username) VALUES ($1, $2, $3, $4) RETURNING *',
+                [user_id, username, following_user_id, following_username])
+
+            res.json(following.rows[0])
+        }
+        catch(e){
+            res.status(500).json({message: e.message})
+        }
+    }
+
+    async getFollowingCount(req, res){
+        const {id} = req.params;
+        try {
+            await pool.query(
+                'UPDATE users SET followers = (SELECT COUNT(*) FROM user_following WHERE following_user_id = $1), following = (SELECT COUNT(*) FROM user_following WHERE user_id = $1) WHERE id = $1', 
+                [id]
+            );
+            const getIds = await pool.query(
+                'SELECT user_id, following_user_id FROM user_following WHERE user_id = $1 OR following_user_id = $1',
+                [id]
+            )
+            const getCounts = await pool.query(
+                'SELECT followers, following FROM users WHERE id = $1',
+                [id]);
+            const followingData = [...getIds.rows, ...getCounts.rows];
+                // if (getCounts.rows.length === 0) {
+                //     return res.status(404).json({ error: 'User not found' });
+                // }
+             return res.status(200).json(followingData);
+        } catch(e) {
+            res.status(500).json({message: e.message});
+        }
+    }
+
+    async getPostsCount(req, res){
+        try{
+            const {user_id} = req.params
+             await pool.query(
+            // 'SELECT * FROM posts WHERE user_id = $1', 
+            'UPDATE users SET postsCount = (SELECT COUNT(*) FROM posts WHERE posts.user_id = users.id)',
+           )
+
+            const getPostsCount = await pool.query(
+                'SELECT postsCount FROM users WHERE id = $1', 
+                [user_id]
+            )
+
+            res.status(200).json(getPostsCount.rows[0])
+        }
+        catch(e){
+            res.status(500).json({message: e.message})
+        }
+    }
+    
+    
 
 }
 

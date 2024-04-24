@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import './post.styles.css';
-import { NavLink } from 'react-router-dom';
 import postService from '../../service/post-service';
 
 
@@ -8,8 +7,10 @@ class Post extends Component{
 
     constructor(props){
         super(props)
-        this.state = {openfull: false}
+        this.state = {openfull: false, 
+            followingUserIds: [], isFollow: null}
         this.getFullPost = this.getFullPost.bind(this)
+        this.followHandler = this.followHandler.bind(this)
     }
 
     async getFullPost(){
@@ -33,12 +34,73 @@ class Post extends Component{
         }
     }
 
-    componentDidUpdate(){
-        if(this.state.openfull === true){
-            this.setState({openfull: false})
+    // async postFollower() {
+    //     try{
+    //         const response = await postService.postFollower(this.props.user?.id)
+    //         this.setState({ following: response.data });
+    //         const following = response.data
+    //         this.props.followingCount(following);
+
+    //         console.log(response.data)
+    //     }
+    //     catch(e){
+    //         console.error(e)
+    //     }
+    //     finally{
+    //         const followingBtn = document.getElementById('following-btn')
+    //         if(this.state.followingBtn === false){
+    //             followingBtn.style.display = 'none'
+    //             this.setState({followingBtn: true})
+    //             console.log(this.state.followingBtn)
+    //         }
+    //     }
+        
+    // }
+
+    async followHandler(){
+        try{
+            const response = await postService.postFollowing(this.props.user.id,
+                                            `${this.props.user.userName} ${this.props.user.userSurname}`, 
+                                            this.props.data.user_id, 
+                                            `${this.props.data.user_name} ${this.props.data.user_surname}` )
+            this.setState({followingUserIds: response.data})
+            this.setState({isFollow: response.data.following_user_id})
+            
+            console.log(response.data.following_user_id)
+            // console.log(this.state.isFollow)  
+            // console.log(this.props.data?.user_id)
+            if(this.state.isFollow === this.props.data?.user_id){
+                console.log('Yes, it is follow')
+            }else{
+                console.log('No, it is not follow')
+            }
         }
+        catch(e){
+            console.log("You can't follow to this person twice!" + e)
+        }
+
+    }
+    
+
+    componentDidUpdate(prevState, prevProps) {
+        if (prevState.openfull !== this.state.openfull && this.state.openfull === true) {
+            this.setState({ openfull: false });
+        }    
+        // if (prevState.isFollow !== this.state.isFollow) {
+        //     this.setState({ isFollow: prevState.isFollow });
+        // }
+        
+    }
+    
+    
+
+    componentDidMount() {
+         
     }
 
+    
+       
+    
 
 
 
@@ -53,9 +115,17 @@ class Post extends Component{
                             <p className='post-time'>1w ago</p>
                         </div>
                     </div>
-                    <div className="follow-btn">
-                        +Follow
-                    </div>
+                    {this.props.user.id !== this.props.data.user_id &&
+                        this.state.isFollow !== this.props.data?.user_id &&
+                        !this.props.followingCount.some(item => item.following_user_id === this.props.data?.user_id) &&
+                        (
+                            <div id='following-btn' className='following-btn' onClick={this.followHandler}>
+                                +Follow
+                            </div>
+                        )
+                    }
+
+                    
                 </div>
                 <div className="post-description">
                     <div className="content" onClick={this.getFullPost}>
@@ -83,42 +153,6 @@ class Post extends Component{
                     </div>
                 </div>
             </div>
-
-
-
-            // <div className='post-container' >
-            //     <header className='post-header'>
-            //         <img className='avatar' src={`http://localhost:5000/${this.props.data.avatar}`}/>
-            //         {this.props.data.author}
-            //     </header>
-            //     <div className="post-content-block">
-            //         <NavLink to={`/post/${this.props.data._id}`}>
-            //             <img className='post-img' src={`http://localhost:5000/${this.props.data.picture}`}/>
-            //         </NavLink>
-            //         <div className="post-describtion">
-            //             <h2>{this.props.data.title}</h2>
-            //             <p className='post-content'>{this.props.data.content}</p>
-            //         </div>
-            //     </div>
-            //     <footer className='post-footer'>
-            //         <button className='like-btn footer-item-left'>
-            //             <img src='./img/Like button.svg'/>
-            //         </button>
-            //         <button className='comment-btn footer-item-left'>
-            //             <img src='./img/Comment button.svg'/>
-            //         </button>
-
-            //         <div className="btn-donate-block footer-item">
-            //             <button className='donate-btn'>
-            //                 Donate
-            //                 <img src='./img/la_donate.svg'/>
-            //             </button>
-            //         </div>
-            //          <button className='share-btn footer-item-right'>
-            //              <img src='./img/Share button.svg'/>
-            //          </button>
-            //      </footer>
-            //  </div>
         )
     }
 }

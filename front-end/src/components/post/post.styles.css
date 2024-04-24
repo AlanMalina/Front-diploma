@@ -39,10 +39,16 @@
     margin: 0;
     font-size: 0.833vw;
 }
-.follow-btn{
+.following-btn{
     font-size: 1.25vw;
     font-weight: bold;
     color: #336CFF;
+}
+.stop-following-btn{
+    font-size: 1.25vw;
+    font-weight: bold;
+    color: #336CFF;
+    display: none;
 }
 .post-description{
     width: 100%;

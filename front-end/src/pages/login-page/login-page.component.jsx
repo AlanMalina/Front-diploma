@@ -29,10 +29,11 @@ class LogInPage extends Component{
         try{
             const response = await loginService.logInUser(this.state.email, this.state.password)
             this.setState({ userProfile: response.data })
-            window.location.href = "/my-profile";
+            window.location.href = "/main";
             console.log(response.data)
         }
         catch(e){
+            alert('Невірний email або пароль!')
             console.log(e)
         }
         

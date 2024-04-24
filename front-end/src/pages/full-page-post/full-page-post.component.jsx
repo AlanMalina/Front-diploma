@@ -20,7 +20,6 @@ class FullPagePost extends Component {
         }else{
             console.log('Ref is NOT working') 
         }
-           
     }
    
     componentDidMount() {  
@@ -47,9 +46,11 @@ class FullPagePost extends Component {
                                 <p className='post-time'>1w ago</p>
                             </div>
                         </div>
-                        <div className="follow-btn">
-                            +Follow
-                        </div>
+                        {this.props.user.id !== this.props.fullPostData?.user_id && (
+                            <div className='following-btn' >
+                                +Follow
+                            </div>
+                        )}
                     </div>
                     <div className='fullpost-description'>
                         <div className="fullpost-content">

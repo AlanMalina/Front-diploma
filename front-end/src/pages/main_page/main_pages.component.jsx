@@ -9,8 +9,10 @@ class MainPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { post: [] };
+        this.state = { post: [], followingCount: [], following: 0, followers: 0, postsCount: 0 };
         this.getPost = this.getPost.bind(this);
+        this.getFollowingCount = this.getFollowingCount.bind(this);
+        this.getPostsCount = this.getPostsCount.bind(this)
     }
 
     async getPost() {
@@ -18,8 +20,38 @@ class MainPage extends Component {
         this.setState({ post: response.data });
     }
 
+    async getFollowingCount(){
+        try{
+            const response = await postService.getFollowingCount(this.props.user?.id);
+            const { followers, following } = response.data.find(item => item.followers !== undefined);
+            this.setState({ followingCount: response.data,
+                following: following, followers: followers})
+            // console.log(response.data)
+            // console.log(response.data.filter(item => item.following_user_id === 44))
+            // const filteredIds = response.data.filter(item => item.following_user_id === 44);
+            // const followingUserIds = filteredIds.map(item => item.following_user_id);
+            // console.log(followingUserIds);
+        }
+        catch(e){
+            console.log(e)
+        }
+    }   
+
+    async getPostsCount(){
+        try{
+            const response = await postService.getPostsCount(this.props.user?.id)
+            this.setState({postsCount: response.data.postscount})
+            console.log('posts count: ' + response.data.postscount)
+        }
+        catch(e){
+            console.log("You have no post yet! " + e)
+        }
+    } 
+
     async componentDidMount() {
         await this.getPost();
+        await this.getFollowingCount();
+        await this.getPostsCount()
     }
     
     render() {
@@ -35,17 +67,19 @@ class MainPage extends Component {
                     </NavLink>
                     <div className="user-statistics">
                         <div className='posts-count'>
-                            5
+                            {this.state.postsCount}
                             <p>Current posts</p>
                         </div>
-                        <div className="followers-count">
-                            3000
-                            <p>Followers</p>
-                        </div>
+                            <div className="followers-count">
+                                {this.state.followers}
+                                <p>Followers</p>
+                            </div>
+                        
                         <div className="following-count">
-                            31
+                            {this.state.following}
                             <p>Following</p>
-                        </div>
+                        </div>    
+                                           
                     </div>
                     <div className="services-block">
                         <button className='donate-history-btn services-btn'>
@@ -71,6 +105,8 @@ class MainPage extends Component {
                             key={post.id}
                             data={post}
                             setFullPostData={this.props.setFullPostData}
+                            user={this.props.user}
+                            followingCount={this.state.followingCount}
                         />
                     ))}
                 </div>

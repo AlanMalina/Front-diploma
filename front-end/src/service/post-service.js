@@ -80,6 +80,25 @@ const postUser = async (email, password, userName, userSurname) => {
       throw error; // Перекиньте помилку, щоб обробити її на верхньому рівні
     }
   };
+
+
+  const postFollowing = (user_id, username, following_user_id, following_username ) => {
+    return axios.post(api + '/following',  
+    { 
+        user_id,
+        username,
+        following_user_id,
+        following_username
+    })
+}
+
+const getFollowingCount = (id) => {
+    return axios.get(api + `/followingCounts/${id}`)
+}
+
+const getPostsCount = (user_id) => {
+    return axios.get(api + `/postsCount/${user_id}`)
+}
   
 
 const postService = {
@@ -87,6 +106,9 @@ const postService = {
     getOne,
     postPost,
     postUser,
+    postFollowing,
+    getFollowingCount,
+    getPostsCount,
     getPic
 }
 
