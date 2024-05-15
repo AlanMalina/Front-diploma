@@ -46,6 +46,7 @@
     top: 3.056vh;
     left: 4.688vw;
     object-fit: cover;
+    background-color: #ededed;
 }
 .user-menu-userName{
     font-size: 1.042vw;
@@ -96,7 +97,6 @@
     font-size: 1.042vw;
     text-align: left;
 }
-
 
 
 

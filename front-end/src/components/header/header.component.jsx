@@ -40,7 +40,7 @@ class Header extends Component {
         const fullpostContainer = document.getElementById('full-post-page-container')
             fullpostContainer.style.zIndex = '-1'
             fullpostContainer.style.display = 'none'
-            console.log('Ref is working') 
+            // console.log('Ref is working') 
     }
 
     ChatAppHandler(){
@@ -91,7 +91,9 @@ class Header extends Component {
           <div className='header' onClick={this.closeFullpost}>
             <div className='nav-left'>
                 <div className='nav-item logo'>
-                    <NavLink className={`${setActive} item-content`} to='/main'>Logo</NavLink>
+                    <NavLink className={`${setActive} item-content`} to='/main'>
+                        <img className='logo' src='../img/Donut logo.png'/>
+                    </NavLink>
                 </div>
                 {/* <div className='nav-item search-bar'>
                     <input id='item-content' type='text' />

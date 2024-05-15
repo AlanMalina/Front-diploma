@@ -6,7 +6,8 @@ class CreatePostPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {post: [], content: '', picture: '', appointer: '', goal: '', deadline: '', id: ''};
+        this.state = {post: [], content: '', picture: '', appointer: '', goal: '', deadline: '', id: '',
+            minDate: this.getMinDate()};
         this.postPost = this.postPost.bind(this);
         this.contentChange = this.contentChange.bind(this);
         this.pictureChange = this.pictureChange.bind(this);
@@ -49,6 +50,13 @@ class CreatePostPage extends Component {
     deadlineChange(e){
         const deadline = e.target.value
         this.setState({deadline: deadline})
+        console.log(deadline)
+    }
+
+    getMinDate() {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1); // Додаємо один день
+        return tomorrow.toISOString().split('T')[0]; // Повертаємо дату у форматі "YYYY-MM-DD"
     }
     
 
@@ -58,7 +66,7 @@ class CreatePostPage extends Component {
             <div className="create-post-app">
                 <div className='create-post-container'>
                     <p className="title-to_add-photo">Add photo/video</p>
-                    {this.state.picture ?(
+                    {this.state.picture ? (
                         <div className="add-photo">
                             <img src={URL.createObjectURL(this.state.picture)} className="added-img"/>
                             <input type="file" id="InputPhoto" onChange={this.pictureChange} className="btn-add-photo"/>
@@ -70,10 +78,9 @@ class CreatePostPage extends Component {
                         </div>)}
                     
                     
-                    <input type="text"   placeholder='Title:' className="post-title post-info"/>
-                    <input type="text" onChange={this.appointerChange} placeholder='For whom:' className="for-whom post-info" />
+                    <input type="text" onChange={this.appointerChange} placeholder='Appointer:' className="for-whom post-info" />
                     <input type="text" onChange={this.goalChange} placeholder="Sum:" className="sum post-info" />
-                    <input type="date" onChange={this.deadlineChange} placeholder="Deadline:" className="deadline-input post-info" />
+                    <input type="date" min={this.state.minDate} onChange={this.deadlineChange} placeholder="Deadline:" className="deadline-input post-info" />
                     <input type="text" placeholder="Cooperator:" className="cooperator post-info" />
                     <div>
                         <textarea type="text" onChange={this.contentChange} placeholder="Description:" className="create-post-description" />

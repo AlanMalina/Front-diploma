@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './login-page.styles.css';
 import loginService from '../../service/login-service';
+import { NavLink } from 'react-router-dom';
 
 
 class LogInPage extends Component{
@@ -57,10 +58,13 @@ class LogInPage extends Component{
                         <label htmlFor='login-password-input'>Password:</label>
                         <input id='login-password-input' type="password" className='login-password-input' name="password" value={this.state.password} onChange={this.passwordValue} />
                            {/* {this.state.errors.password && <span>{this.state.errors.password}</span>} */}
-                    </div>     
+                    </div> 
+                    <NavLink to='/registration' style={{ fontStyle: 'italic', fontSize: '1.042vw'}}>
+                        If you already have an account?    
+                    </NavLink>      
                     <div className='btn-login' onClick={this.logIn}>
                         Log in                         
-                    </div>             
+                    </div>  
                 </div>
             </div>
         )

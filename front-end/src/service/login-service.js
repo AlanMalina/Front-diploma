@@ -32,17 +32,38 @@ const logInUser = (email, password) => {
 }
 
 
-
-
-const getUserProfile = (id) => {
+const getMyProfile = (id) => {
     return axios.get(api + `/profile_auth/${id}`);
+}
+
+
+const updateUser = (id, username, usersurname, description, avatar) => {
+    return axios.put(api + `/user/${id}` ,
+    {
+        username,
+        usersurname,
+        description,
+        avatar
+    },
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data'
+        }
+    }).then((response) => {
+        if(response.data.token){
+            Cookies.set('ACCESS_TOKEN', response.data.token, { expires: 30 });
+        }
+        return response.data
+    })
 }
 
 
 
 const loginService = {
     logInUser,
-    getUserProfile,
+    getMyProfile,
+    updateUser
 }
 
 export default loginService;

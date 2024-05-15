@@ -95,6 +95,9 @@
     top: 12.037vh;
     right: 10vw;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .menu-profile-header{
     width: 100%;
@@ -113,13 +116,57 @@
     right: 0.781vw;
     cursor: pointer;
 }
+.check-edit-btn{
+    display: none;
+    position: absolute;
+    top: 30vh;
+    right: 0.781vw;
+    cursor: pointer;
+}
+.close-edit-btn{
+    display: none;
+    position: absolute;
+    top: 30.4vh;
+    right: 3vw;
+    cursor: pointer;
+}
+.edit-photo{
+    width: 12.037vh;
+    height: 12.037vh;
+    background-color: #e7e7e7;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden;
+    display: flex;
+}
 .menu-profile-avatar{
     width: 12.037vh;
     height: 12.037vh;
     background-color: #e7e7e7;
     border-radius: 50%;
     object-fit: cover;
+    /* overflow: hidden; */
 }
+.edit-avatar{
+    width: 12.037vh;
+    height: 12.037vh;
+    position: absolute;
+    background-color: #e7e7e7;
+    border-radius: 50%;
+    display: none;
+    overflow: hidden;
+}
+.input-edit-avatar{
+    width: 12.037vh;
+    height: 12.037vh;
+    opacity: 0;
+}
+.edited-img{
+    width: 100%;
+    height: 12.037vh;
+    object-fit: cover; 
+}
+
 .user-profileData{
     width: 16.979vw;
     height: 12.037vh;
@@ -129,9 +176,34 @@
     justify-content: space-around;
 }
 .menu-profile-userName{
-    font-size: 1.302vw;
+    font-size: 1.3vw;
     font-weight: bold;
+    display: flex;
+    gap: 0.3vw;
 }
+.input-edit-name{
+    display: none;
+    width: 7vw;
+    height: 3.6vh;
+    position: absolute;
+    top: 1.7vw;
+    left: 8vw;
+    font-size: 1.3vw;
+    font-weight: bold;
+    text-align: center;
+}
+.input-edit-surname{
+    display: none;
+    width: 7vw;
+    height: 3.6vh;
+    position: absolute;
+    top: 1.7vw;
+    right: 1.5vw;
+    font-size: 1.3vw;
+    font-weight: bold;
+    text-align: center;
+}
+
 .profile-indicators{
     width: 16.979vw;
     display: flex;
@@ -158,13 +230,29 @@
 }
 .user-profile-description{
     width: 100%;
+    height: 13.519vh;
     font-size: 1.146vw;
     font-weight: 500;
     padding: 1.481vh 1.563vw;
     box-sizing: border-box;
+    overflow: auto;
+}
+.input-edit-description{
+    display: none;
+    min-width: 23.2vw;
+    max-width: 23.2vw;
+    min-height: 13.519vh;
+    max-height: 13.519vh;
+    font-size: 1.146vw;
+    font-weight: 500;
+    /* padding: 1.481vh 1.563vw; */
+    box-sizing: border-box;
+    position: absolute;
+    top: 16vh;
+    
 }
 .user-menu-buttons-block{
-    margin-top: 9.259vh;
+    bottom: 2.5vh;
     width: 100%;
     font-size: 1.25vw;
     font-weight: bold;
@@ -172,11 +260,11 @@
     flex-direction: column;
     align-items: center;
     gap: 1.8vh;
-    position: relative;
+    position: absolute;
 }
 .logOut-btn{
     position: absolute;
-    bottom: 0;
+    bottom: 1.5vh;
     right: 0.781vw;
     cursor: pointer;
 }

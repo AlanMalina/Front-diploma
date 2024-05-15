@@ -1,14 +1,16 @@
 import React, { Component} from 'react';
 import './full-page-post.style.css';
+import postService from '../../service/post-service';
+import { NavLink } from 'react-router-dom';
 
 
 class FullPagePost extends Component {
     constructor(props){
         super(props)
-        this.state = {fullPost: null}
+        this.state = {fullPost: null, followingUserIds: [], isFollow: null, followingCount: []}
         this.wrapperRef = React.createRef();
         this.closeFullpost = this.closeFullpost.bind(this)
-        
+        this.followHandler = this.followHandler.bind(this)
     }
 
     closeFullpost(e) {
@@ -16,14 +18,42 @@ class FullPagePost extends Component {
         if (this.wrapperRef && this.wrapperRef.current.contains(e.target)) {
             fullpostContainer.style.zIndex = '-1'
             fullpostContainer.style.display = 'none'
-            console.log('Ref is working') 
+            // console.log('Ref is working') 
         }else{
-            console.log('Ref is NOT working') 
+            // console.log('Ref is NOT working') 
         }
     }
+
+    async followHandler(){
+        try{
+            const response = await postService.postFollowing(this.props.user.id,
+                                            `${this.props.user.userName} ${this.props.user.userSurname}`, 
+                                            this.props.data.user_id, 
+                                            `${this.props.data.user_name} ${this.props.data.user_surname}` )
+            this.setState({followingUserIds: response.data})
+            this.setState({isFollow: response.data.following_user_id})
+            
+            console.log(response.data.following_user_id)
+            // console.log(this.state.isFollow)  
+            // console.log(this.props.data?.user_id)
+            if(this.state.isFollow === this.props.data?.user_id){
+                console.log('Yes, it is follow')
+            }else{
+                console.log('No, it is not follow')
+            }
+            
+        }
+        catch(e){
+            console.log("You can't follow to this person twice!" + e)
+        }
+
+    }
+
+    
    
     componentDidMount() {  
         document.addEventListener('mousedown', this.closeFullpost);
+        // console.log(this.props.fullPostData)
     }
     
     componentWillUnmount() {
@@ -40,17 +70,12 @@ class FullPagePost extends Component {
                 <div className="info-block">
                     <div className="post-header">
                         <div className="user-block">
-                            <img className='avatar' src='../img/kolobok.png'/>
+                            <img className='avatar' src={`http://localhost:5000/${this.props.fullPostData?.avatar}`}/>
                             <div className="name-and-time">
-                                <p className='user-name'>{this.props.fullPostData?.user_name} {this.props.fullPostData?.user_surname}</p>
+                                <NavLink to='/users-profile' className='user-name'>{this.props.fullPostData?.user_name} {this.props.fullPostData?.user_surname}</NavLink>
                                 <p className='post-time'>1w ago</p>
                             </div>
                         </div>
-                        {this.props.user.id !== this.props.fullPostData?.user_id && (
-                            <div className='following-btn' >
-                                +Follow
-                            </div>
-                        )}
                     </div>
                     <div className='fullpost-description'>
                         <div className="fullpost-content">

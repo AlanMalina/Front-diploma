@@ -47,30 +47,14 @@
     width: 28.889vw;
     min-height: 4.444vh;
     background-color: #F0F0F0;
-    border: 0;   
-}
-.post-info::placeholder {
-    font-size: 15px;
-    color: rgb(143, 143, 143);
+    border: 0; 
+    font-size: 22px;  
 }  
 .deadline-input{
-    appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  background-color: #e9e9e9; /* Light gray background */
-  padding: 0.5rem 1rem; /* Add some padding */
-  border: 1px solid #ccc; /* Subtle border */
-  border-radius: 4px; /* Rounded corners */
   cursor: pointer;
-
-  &::placeholder {
-    color: #999;
-    font-style: italic;
-  }
 }
 .create-post-description{
-    font-size: 15px;
+    font-size: 22px;
     min-width: 28.889vw;
     max-width: 28.889vw;
     min-height: 11.111vh;

@@ -3,6 +3,7 @@ import './main_page.styles.css'
 import Post from '../../components/post/post.component';
 import postService from '../../service/post-service';
 import { NavLink } from 'react-router-dom';
+import FullPagePost from '../full-page-post/full-page-post.component';
 
 
 class MainPage extends Component {
@@ -26,6 +27,7 @@ class MainPage extends Component {
             const { followers, following } = response.data.find(item => item.followers !== undefined);
             this.setState({ followingCount: response.data,
                 following: following, followers: followers})
+            // this.props.followingCount(response.data)
             // console.log(response.data)
             // console.log(response.data.filter(item => item.following_user_id === 44))
             // const filteredIds = response.data.filter(item => item.following_user_id === 44);
@@ -59,7 +61,7 @@ class MainPage extends Component {
             <div className='main-page-app'>
                 <div className="user-menu-main">
                     <div className="user-menu-header"></div>
-                    <img className="user-menu-avatar" src='./img/photofinish.png'/>
+                    <img className="user-menu-avatar" src={`http://localhost:5000/${this.props.user?.avatar}`}/>
                     <NavLink to='/my-profile' className='user-menu-userName'>
                         <div>
                             {this.props.user?.userName} {this.props.user?.userSurname}

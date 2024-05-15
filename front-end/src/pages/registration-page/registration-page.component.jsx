@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './registration-page.styles.css';
 import postService from "../../service/post-service";
+import { NavLink } from 'react-router-dom';
 
 class RegistrationPage extends Component {
 
@@ -111,6 +112,9 @@ class RegistrationPage extends Component {
                         <input id='register-userSurname-input' type="text" className='register-userSurname-input' name="userSurname" value={userSurname} onChange={this.handleChange} />
                         {errors.userSurname && <span>{errors.userSurname}</span>}
                     </div>
+                    <NavLink to='/login' style={{ fontStyle: 'italic', fontSize: '1.042vw'}}>
+                        If haven't an account yet?    
+                    </NavLink> 
                     <div className='btn-register' onClick={this.postUser}>
                         Register                         
                     </div>                    

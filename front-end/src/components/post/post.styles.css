@@ -33,6 +33,8 @@
     margin: 0;
     font-size: 1.146vw;
     font-weight: bold;
+    text-decoration: none;
+    color: black;
 }
 
 .post-time{

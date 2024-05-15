@@ -1,16 +1,18 @@
 import React, {Component} from 'react'
 import './post.styles.css';
 import postService from '../../service/post-service';
+import loginService from '../../service/login-service';
+import { NavLink } from 'react-router-dom';
 
 
 class Post extends Component{
 
     constructor(props){
         super(props)
-        this.state = {openfull: false, 
+        this.state = {openfull: false, formattedDeadline: '',
             followingUserIds: [], isFollow: null}
         this.getFullPost = this.getFullPost.bind(this)
-        this.followHandler = this.followHandler.bind(this)
+        this.followHandler = this.followHandler.bind(this)        
     }
 
     async getFullPost(){
@@ -74,6 +76,7 @@ class Post extends Component{
             }else{
                 console.log('No, it is not follow')
             }
+            
         }
         catch(e){
             console.log("You can't follow to this person twice!" + e)
@@ -95,23 +98,32 @@ class Post extends Component{
     
 
     componentDidMount() {
-         
+        const deadlineISO = this.props.data?.deadline;
+        const deadlineDate = new Date(deadlineISO); 
+
+        const year = deadlineDate.getFullYear();
+        const month = (deadlineDate.getMonth() + 1).toString().padStart(2, '0'); 
+        const day = deadlineDate.getDate().toString().padStart(2, '0');
+
+        const formattedDeadline = `${day}-${month}-${year}`;
+        this.setState({formattedDeadline: formattedDeadline});
+        // this.getMyProfile()
+        // console.log(formattedDeadline);
     }
 
     
        
-    
-
-
 
     render(){
         return(
             <div className='post-container'>
                 <div className="post-header">
                     <div className="user-block">
-                        <img className='avatar' src='./img/kolobok.png'/>
+                        <img className='avatar' src={`http://localhost:5000/${this.props.data?.avatar}`}/>
                         <div className="name-and-time">
-                            <p className='user-name'>{this.props.data.user_name} {this.props.data.user_surname}</p>
+                            <NavLink to='/users-profile' className='user-name'>
+                                {this.props.data?.user_name} {this.props.data?.user_surname}
+                            </NavLink>
                             <p className='post-time'>1w ago</p>
                         </div>
                     </div>
@@ -129,7 +141,7 @@ class Post extends Component{
                 </div>
                 <div className="post-description">
                     <div className="content" onClick={this.getFullPost}>
-                        {this.props.data.content}
+                        {this.props.data?.content}
                     </div>
                     <div className='appointer'>
                         Appointer: {this.props.data.appointer}
@@ -138,7 +150,7 @@ class Post extends Component{
                         Goal: {this.props.data.goal}
                     </div>
                     <div className="deadline">
-                        Deadline: {this.props.data.deadline}
+                        Deadline: {this.state.formattedDeadline}
                     </div>
                 </div>
                 <img className='post-img' onClick={this.getFullPost} src={`http://localhost:5000/${this.props.data.picture}`}/>

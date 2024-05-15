@@ -15,7 +15,8 @@ class MyProfilePage extends Component {
     constructor(props){
         super(props)
         this.state = {post_in_profile: [], sort: false, fullpost: false, userProfile: [], 
-            followingCount: [], following: 0, followers: 0, postsCount: 0}
+            followingCount: [], following: 0, followers: 0, postsCount: 0,
+        avatar: '', description: '', username: '', usersurname: '', edit: false, updatedProf: []}
         this.funcToast = this.funcToast.bind(this)
         this.ColumnSort = this.ColumnSort.bind(this)
         this.BlockSort = this.BlockSort.bind(this)
@@ -23,6 +24,7 @@ class MyProfilePage extends Component {
         this.logOut = this.logOut.bind(this)
         this.getFollowingCount = this.getFollowingCount.bind(this);
         this.getPostsCount = this.getPostsCount.bind(this)
+        this.updateUser = this.updateUser.bind(this)
     }
     
 
@@ -42,7 +44,7 @@ class MyProfilePage extends Component {
     async getPost(){
         const response = await postService.getPost()
         this.setState({post_in_profile: response.data})
-        console.log(response.data)
+        // console.log(response.data)
     }
 
     ColumnSort(){
@@ -86,13 +88,13 @@ class MyProfilePage extends Component {
             
     }
 
-    async getUserProfile(){
+    async getMyProfile(){
         try{
-            const response = await loginService.getUserProfile(this.props.user.id)
+            const response = await loginService.getMyProfile(this.props.user?.id)
             this.setState({userProfile: response.data})
         }
         catch(e){
-
+            console.log(e)
         }
     }
 
@@ -130,27 +132,137 @@ class MyProfilePage extends Component {
         try{
             const response = await postService.getPostsCount(this.props.user?.id)
             this.setState({postsCount: response.data.postscount})
-            console.log('posts count: ' + response.data.postscount)
+            // console.log('posts count: ' + response.data.postscount)
         }
         catch(e){
             console.log("You have no post yet! " + e)
         }
     } 
 
+    openEdit = () => {
+        const edit = document.getElementById('edit-btn');
+        const checkEdit = document.getElementById('check-edit-btn');
+        const editName = document.getElementById('input-edit-name');
+        const editSurname = document.getElementById('input-edit-surname')
+        const closeEdit = document.getElementById('close-edit-btn')
+        const editDescription = document.getElementById('input-edit-description')
+        const editAvatar = document.getElementById("edit-avatar")
+        const menuProfileUserName = document.getElementById("menu-profile-userName")
+
+        if(this.state.edit === false){
+            this.setState({edit: true});
+            edit.style.display = 'none';
+            checkEdit.style.display = 'block';
+            closeEdit.style.display = 'block'
+            editName.style.display = 'block'
+            editSurname.style.display = 'block'
+            editDescription.style.display = 'block'
+            editAvatar.style.display = 'block'
+            menuProfileUserName.style.opacity = '0'
+        }
+    }
+
+    closeEdit = () => {
+        const edit = document.getElementById('edit-btn');
+        const checkEdit = document.getElementById('check-edit-btn');
+        const editName = document.getElementById('input-edit-name');
+        const editSurname = document.getElementById('input-edit-surname')
+        const closeEdit = document.getElementById('close-edit-btn')
+        const editDescription = document.getElementById('input-edit-description')
+        const editAvatar = document.getElementById("edit-avatar")
+        const menuProfileUserName = document.getElementById("menu-profile-userName")
+
+        if(this.state.edit === true){
+            edit.style.display = 'block';
+            checkEdit.style.display = 'none';
+            closeEdit.style.display = 'none'
+            editName.style.display = 'none'
+            editSurname.style.display = 'none'
+            editDescription.style.display = 'none'
+            editAvatar.style.display = 'none'
+            menuProfileUserName.style.opacity = '1'
+
+            this.setState({edit: false})
+        }
+    }
+
+    async updateUser() {
+        const edit = document.getElementById('edit-btn');
+        const checkEdit = document.getElementById('check-edit-btn');
+        const editName = document.getElementById('input-edit-name');
+        const editSurname = document.getElementById('input-edit-surname')
+        const closeEdit = document.getElementById('close-edit-btn')
+        const editDescription = document.getElementById('input-edit-description')
+        const editAvatar = document.getElementById("edit-avatar")
+        const menuProfileUserName = document.getElementById("menu-profile-userName")
+
+        try {
+            this.setState({edit: false}) 
+            // console.log(this.state.avatar)
+            const formAvatar = new FormData()
+            formAvatar.append('image', this.state.avatar)
+            // console.log(formAvatar)
+            const response = await loginService.updateUser(this.props.user?.id, this.state.username, this.state.usersurname, this.state.description, this.state.avatar); 
+            edit.style.display = 'block';
+            checkEdit.style.display = 'none';
+            closeEdit.style.display = 'none'
+            editName.style.display = 'none'
+            editSurname.style.display = 'none'
+            editDescription.style.display = 'none'
+            editAvatar.style.display = 'none'
+            menuProfileUserName.style.opacity = '1'
+
+            this.setState({updatedProf: response.data})
+            window.location.reload();
+            console.log("User updated:", response); 
+        } 
+        catch (error) {
+            console.error("Error updating user:", error);
+        }
+    }
+
+    avatarChange = (e) => {
+        const avatar = e.target.files[0]
+        console.log(avatar)
+        this.setState({avatar: avatar})
+    }
+
+    userNameChange = (e) => {
+        const name = e.target.value
+        console.log(name)
+        this.setState({username: name})
+    }
+
+    userSurnameChange = (e) => {
+        const surname = e.target.value
+        console.log(surname)
+        this.setState({usersurname: surname})
+    }
+
+    descriptionChange = (e) => {
+        const description = e.target.value
+        console.log(description)
+        this.setState({description: description})
+    }
+    
+
     async componentDidMount(){
         await this.getPost()
-        await this.getUserProfile()
+        await this.getMyProfile()
         await this.getFollowingCount()
         await this.getPostsCount()
     }
 
 
-    async componentDidUpdate(){
+    async componentDidUpdate(prevState, prevProps){
         if(this.state.fullpost === true){
             this.setState({ fullpost: false });
         }
+        if(prevProps.user !== this.props.user && this.state.updatedProf !== prevProps.user){
+            this.setState({updatedProf: prevProps.user})
+        }
     }
-
+    
 
     render() {
 
@@ -186,25 +298,50 @@ class MyProfilePage extends Component {
                     </div>                    
                 </div>
 
+
+                
+
+
+
                 <div id='my-profile-main-postsColumn' className="my-profile-main-postsColumn">
                     {this.state.userProfile.map((post) => (
                         <div key={post.id} id='column-post' className="column-post">
                             <Post data={post} 
                             followingCount={this.props.followingCount} 
                             setFullPostData={this.props.setFullPostData}
-                            user={this.props.user} /> 
+                            user={this.props.user}
+                             /> 
                         </div>
                     ))}
+
                 </div>
+                
  
                 <div className="user-menu-profile-container">
+                    
                     <div className="menu-profile-header">
-                        <img className='edit-btn' src="../img/edit.svg" alt="" />
-                        <img className='menu-profile-avatar' src="" alt="" />
+                        <img id='edit-btn' className='edit-btn' onClick={this.openEdit} src="../img/edit.svg" alt="" />
+                        <img id='check-edit-btn' className='check-edit-btn' onClick={this.updateUser} src="../img/check edit.svg" alt="" />
+                        <img id='close-edit-btn' className='close-edit-btn' onClick={this.closeEdit} src="../img/close edit.svg" alt="" />
+                        <img src={`http://localhost:5000/${this.props.user?.avatar}`} className="menu-profile-avatar"/>
+                        <div id='edit-avatar' className="edit-avatar">
+                            {this.state.avatar  ? 
+                                (<div>
+                                    <img src={URL.createObjectURL(this.state.avatar)} className="edited-img"/>
+                                </div>) : (
+                                    <div>
+                                        <input type="file" className='input-edit-avatar' onChange={this.avatarChange}/>
+                                    </div>
+                                )
+                            }
+                        </div>
+                        
                         <div className="user-profileData">
-                            <div className="menu-profile-userName">
+                            <div id='menu-profile-userName' className="menu-profile-userName" >
                                 {this.props.user?.userName} {this.props.user?.userSurname}
                             </div>
+                            <input onChange={this.userNameChange} type="text" defaultValue={this.props.user?.userName} id='input-edit-name' className='input-edit-name'/>
+                            <input onChange={this.userSurnameChange} type="text" defaultValue={this.props.user?.userSurname} id='input-edit-surname' className='input-edit-surname'/>
                             <div className="profile-indicators">
                                 <div className="current-posts">
                                     {this.state.postsCount} <br />
@@ -223,9 +360,10 @@ class MyProfilePage extends Component {
                             
                         </div>
                     </div>
-                    <div className="user-profile-description">
-                        I’m a volunteer with big experience and always ready for hepling
+                    <div className="user-profile-description" >
+                        {this.props.user?.description}
                     </div>
+                    <textarea name="" id="input-edit-description" onChange={this.descriptionChange} defaultValue={this.props.user?.description} className='input-edit-description'></textarea>
                     <div className="user-menu-buttons-block">
                         <div className="donate-history-btn">
                             Donate history
@@ -242,8 +380,8 @@ class MyProfilePage extends Component {
                         <div className="support-btn">
                             Support
                         </div>
-                        <img className='logOut-btn' onClick={this.logOut} src="../img/logout.svg" alt="" />
                     </div>
+                    <img className='logOut-btn' onClick={this.logOut} src="../img/logout.svg" alt="" />
                     
                     {/* <h1>User menu</h1>
                     {this.props.user?.email}
