@@ -77,6 +77,53 @@
     font-size: 1.25vw;
     color: #4A4A4A;
 }
+.role-form{
+    width: auto;
+    display: flex;
+    justify-content: left;
+    gap: 0.5vw;
+    align-items: center;
+    font-size: 1.302vw;
+    font-weight: bold;
+    color: #4A4A4A;
+    
+}
+.check-block{
+    display: flex;
+    align-items: center;
+    gap:0.2vw;
+}
+.check-block label{
+    font-size: 1.302vw;
+}
+.CheckBox{
+    width: 1.5vw;
+    height: 1.5vw;
+}
+.CheckBox{
+    width: 1.5vw;
+    height: 1.5vw;
+}
+.checkBox-label{
+    font-size: 1.302vw;
+}
+.approve-checkbox{
+    width: 24.583vw;
+    display: flex;
+    /* align-items: center; */
+    /* position: relative; */
+    /* margin-top: 2vh; */
+    gap: 0.5vw;
+    font-style: italic;
+    font-size: 1.042vw;
+    color: #626262;
+    font-weight: 400;
+}
+.approve-checkbox-label{
+    font-style: italic;
+    
+    /* width: 11vw; */
+}
 .register-form label{
     font-size: 1.042vw;
     font-weight: bold;
@@ -92,11 +139,12 @@
     height: 4.63vh;
     background-color: #616F54;
     border-radius: 10px;
+    margin-top: 4vh;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #4A4A4A;
-    margin-top: 4.537vh;
+    
     font-size: 1.25vw;
     font-weight: bold;
     text-decoration: none;

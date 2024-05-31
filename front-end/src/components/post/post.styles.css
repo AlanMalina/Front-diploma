@@ -21,6 +21,7 @@
     height: 7.407vh;
     border-radius: 50%;
     object-fit: cover;
+    background-color: #ededed;
 }
 .name-and-time{
     display: flex;
@@ -100,6 +101,7 @@
     height: 9.722vh;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 0 1.51vw;
     box-sizing: border-box;
 }
@@ -114,6 +116,46 @@
 .like-btn-icon{
     width: 1.927vw;
     height: 1.927vw;
+}
+.comment-block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1vw;
+    gap: 0.3vw;
+    color: #646464;
+}
+.comment-btn-icon{
+    width: 1.927vw;
+    height: 1.927vw;
+}
+.donate-block{
+    height: 7.407vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.5vw;
+    font-weight: 500;
+    gap: 0.2vw;
+    color: #646464;
+    padding: 0 0.625vw;
+    box-sizing: border-box;
+    border-radius: 1.302vw;
+}
+.donate-block:hover{
+    background-color: #eeeeee;
+    box-shadow: 1px 1px 5px #c9c9c9;
+}
+.send-block{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1vw;
+    color: #646464;
+}
+.send-btn-icon{
+    width: 2.1vw;
+    height: 2.1vw;
 }
 .repost-block{
     display: flex;

@@ -28,11 +28,24 @@
     width: 43.907vw;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 0.926vh 0 0.926vh;
     box-sizing: border-box;
     border-radius: 15px;
     background-color: #ffffff;
     margin: 12.037vh 0 30px 18.594vw;
+    position: relative;
+}
+.select-bar{
+    font-size: 1.302vw;
+    background: none;
+    border: 0;
+    position: absolute;
+    left: 1.042vw;
+    bottom: 1vh;
+}
+.select-bar option{
+    font-size: 1vw;
 }
 .profile-hr{
     width: 39.063vw;
@@ -146,6 +159,14 @@
     border-radius: 50%;
     object-fit: cover;
     /* overflow: hidden; */
+    /* opacity: 0; */
+    display: flex;
+    justify-content: center;
+}
+.profile-avatar-default{
+    width: 90%;
+    /* border: 1px solid black; */
+    border-radius: 50%;
 }
 .edit-avatar{
     width: 12.037vh;
@@ -174,6 +195,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    padding: 0 0 3vh 0;
+    box-sizing: border-box;
 }
 .menu-profile-userName{
     font-size: 1.3vw;

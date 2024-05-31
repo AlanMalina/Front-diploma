@@ -83,6 +83,14 @@ class Header extends Component {
             this.setState({sidebar_in_header: false});
         }
     }
+
+    componentDidUpdate(){
+        console.log(this.props.user)
+        const createPost_btn = document.getElementById('create-btn-icon')
+        if(this.props.user.role === 'user'){
+            createPost_btn.style.display = 'none';
+        }
+    }
     
 
     render() {
@@ -105,7 +113,7 @@ class Header extends Component {
             <div className='nav-right'>
                 <div className='nav-item '>
                     <NavLink className={`${setActive} create item-content`} to='create-post'>
-                        <img className='create-btn-icon' src="../img/create_header_icon.svg"/>
+                        <img id='create-btn-icon' className='create-btn-icon' src="../img/create_header_icon.svg"/>
                     </NavLink>
                 </div>
                 <div className='nav-item chat'>

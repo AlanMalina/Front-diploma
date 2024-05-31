@@ -279,31 +279,41 @@ class MyProfilePage extends Component {
                         draggable
                         theme="light"
                 />
-                <div id='sort-container' className="sort-container">
-                    <button id='btn-block-sort' className='btn-block-sort' onClick={this.BlockSort}>
-                        <img className='block-sort-icon' src="./img/block sort.svg" alt="" />
-                    </button>
-                    <button id='btn-column-sort' className='btn-column-sort' onClick={this.ColumnSort}>
-                        <img className='column-sort-icon' src="./img/column sort.svg" alt="" />
-                    </button>
-                </div>
-                <div id='my-profile-page-main' className='my-profile-page-main'>
-                    <div id='my-profile-post-container' className="my-profile-post-container">
-                        
-                        {this.state.userProfile.map((pic, index ) => (
-                            <div id='block-post' key={index} className="block-post" >
-                                <img className='block-post-img' onClick={() => this.getFullPost(pic)} src={`http://localhost:5000/${pic.picture}`} alt="" />
-                            </div>
-                        ))}
-                    </div>                    
-                </div>
+                {this.props.user.role !== 'user' &&
+                    (<div id='sort-container' className="sort-container">
+                        <select className='select-bar' name="items" id="items">
+                            <option value="active-posts">Активні публікації</option>
+                            <option value="active-requests">Активні запити</option>
+                        </select>
+                        <button id='btn-block-sort' className='btn-block-sort' onClick={this.BlockSort}>
+                            <img className='block-sort-icon' src="./img/block sort.svg" alt="" />
+                        </button>
+                        <button id='btn-column-sort' className='btn-column-sort' onClick={this.ColumnSort}>
+                            <img className='column-sort-icon' src="./img/column sort.svg" alt="" />
+                        </button>
+                    </div>)}
 
+                {this.props.user.role !== 'user' &&
+                    (<div id='my-profile-page-main' className='my-profile-page-main'>
+                        <div id='my-profile-post-container' className="my-profile-post-container">
+                            
+                            {this.state.userProfile.map((pic, index ) => (
+                                <div id='block-post' key={index} className="block-post" >
+                                    {pic.picture !== null ? (
+                                    <img className='block-post-img' onClick={() => this.getFullPost(pic)} src={`http://localhost:5000/${pic.picture}`} alt="" />
+                                    ) : (
+                                        <div className='block-post-img' style={{backgroundColor: '#d6d6d6'}}></div>
+                                    )}
+                                </div>
 
+                                
+                            ))}
+                        </div>                    
+                    </div>)}
+
+                {this.props.user.role !== 'user' &&
                 
-
-
-
-                <div id='my-profile-main-postsColumn' className="my-profile-main-postsColumn">
+                (<div id='my-profile-main-postsColumn' className="my-profile-main-postsColumn">
                     {this.state.userProfile.map((post) => (
                         <div key={post.id} id='column-post' className="column-post">
                             <Post data={post} 
@@ -314,16 +324,30 @@ class MyProfilePage extends Component {
                         </div>
                     ))}
 
-                </div>
+                </div>)}
+                {/* //  :
+                // (
+                //     <div>
+                //         <h1>Hello</h1>
+                //     </div>
+                // ) */}
                 
- 
+            
                 <div className="user-menu-profile-container">
                     
                     <div className="menu-profile-header">
                         <img id='edit-btn' className='edit-btn' onClick={this.openEdit} src="../img/edit.svg" alt="" />
                         <img id='check-edit-btn' className='check-edit-btn' onClick={this.updateUser} src="../img/check edit.svg" alt="" />
                         <img id='close-edit-btn' className='close-edit-btn' onClick={this.closeEdit} src="../img/close edit.svg" alt="" />
-                        <img src={`http://localhost:5000/${this.props.user?.avatar}`} className="menu-profile-avatar"/>
+                        {this.props.user?.avatar ? 
+                            (<div >
+                                <img className="menu-profile-avatar" src={`http://localhost:5000/${this.props.user?.avatar}`} />
+                            </div>) 
+                            : 
+                            (<div className="menu-profile-avatar">
+                                <img className='profile-avatar-default' src='../img/avatar_header_icon.svg' alt="" />
+                            </div>)}
+                        
                         <div id='edit-avatar' className="edit-avatar">
                             {this.state.avatar  ? 
                                 (<div>
@@ -345,16 +369,15 @@ class MyProfilePage extends Component {
                             <div className="profile-indicators">
                                 <div className="current-posts">
                                     {this.state.postsCount} <br />
-                                    current <br /> 
-                                    posts
+                                    Публікації
                                 </div>
                                 <div className="folowers">
                                     {this.state.followers} <br /> 
-                                    Followers
+                                    Читачі
                                 </div>
                                 <div className="following">
                                     {this.state.following} <br />
-                                    Following
+                                    Стежить за
                                 </div>
                             </div>
                             
@@ -366,19 +389,19 @@ class MyProfilePage extends Component {
                     <textarea name="" id="input-edit-description" onChange={this.descriptionChange} defaultValue={this.props.user?.description} className='input-edit-description'></textarea>
                     <div className="user-menu-buttons-block">
                         <div className="donate-history-btn">
-                            Donate history
+                            Історія донатів
                         </div>
                         <div className="notifications-btn">
-                            Notifications
+                            Сповіщення
                         </div>
                         <div className="settings-btn">
-                            Settings
+                            Налаштування
                         </div>
                         <div className="premium-pots-btn">
-                            Premium post
+                            Закріпити публікацію
                         </div>
                         <div className="support-btn">
-                            Support
+                            Підтримка
                         </div>
                     </div>
                     <img className='logOut-btn' onClick={this.logOut} src="../img/logout.svg" alt="" />

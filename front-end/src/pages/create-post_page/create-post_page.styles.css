@@ -1,82 +1,267 @@
 .create-post-app{
     display: flex;
-    flex-direction: column;
-    width: 34.7vw;
+    position: absolute;
+    overflow: hidden;
+    /* transition: 5s; */
+    /* flex-direction: row; */
+    width: 60.938vw;
     height: 100vh;
-    padding: 8.796vh 0 0.926vh 0;
-    box-sizing: border-box;
+    left: 20.313vw;
+    /* justify-content: center;
+    gap: 2.083vw;
+    padding: 24.074vh 0 29.63vh 0;
+    box-sizing: border-box; */
 }
-.create-post-container{
+.create-info-block{
+    display: flex;
+    flex-direction: row;
     width: 100%;
     height: 100vh;
-    padding: 4.444vh 0 4.444vh 0;
+    /* justify-content: center; */
+    gap: 2.083vw;
+    padding: 24.074vh 0 29.63vh 0;
     box-sizing: border-box;
+    transition: 1s;
+    position: absolute;
+    left: 0vw;
+}
+.create-post-container{
+    width: 30.729vw;
+    height: 46.296vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1.851vh;
+    /* padding: 4.444vh 0 4.444vh 0; */
+    /* box-sizing: border-box;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
     gap: 1.667vh;
     align-items: center;
     box-shadow: 1px 1px 10px #cccecb;
-    overflow: auto;
+    overflow: auto; */
 }
 .add-photo{
-    width: 29.167vw;
-    min-height: 22.222vh;
+    width: 30.729vw;
+    height: 46.296vh;
     overflow: hidden;   
-    background-color: #F0F0F0;
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 0.781vw;
+    /* position: ; */
+}
+.title-to_add-photo{
+    font-size: 1.181vw;
+    margin: 0;
+    color: #949494;
+    /* top: 28.222vh;
+    left: 47.917vw; */
 }
 .added-img{
     width: 100%;
 }
 .btn-add-photo{
-    width: 29.167vw;
-    min-height: 22.222vh;
+    width: 28.646vw;
+    height: 46.296vh;
     opacity: 0;
     position: absolute;
 }
 .add-photo-icon{
-    width: 50px;
-    height: 50px;
-    top: 25.222vh;
-    left: 47.917vw;
+    width: 2.604vw;
+    height: 2.604vw;
+    /* top: 25.222vh;
+    left: 47.917vw; */
 }  
 .post-info{
-    width: 28.889vw;
-    min-height: 4.444vh;
-    background-color: #F0F0F0;
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
     border: 0; 
-    font-size: 22px;  
+    font-size: 1.146vw;  
 }  
+.post-info::placeholder {
+    color: #949494;
+    font-weight: 500;
+}
+
 .deadline-input{
-  cursor: pointer;
+    min-height: 5.556vh;
+    max-height: 5.556vh;
+    cursor: pointer;
 }
 .create-post-description{
-    font-size: 22px;
-    min-width: 28.889vw;
-    max-width: 28.889vw;
-    min-height: 11.111vh;
-    background-color: #F0F0F0;
+    font-size: 1.146vw; 
+    min-width: 30.729vw;
+    max-width: 30.729vw;
+    min-height: 16.296vh;
+    max-height: 16.296vh;
+    background-color: #ffffff;
     border: 0;   
+    border-radius:  0.781vw;
 }
-.btn-create{
-    position: relative;
-    width: 8.542vw;
+.create-post-description::placeholder {
+    color: #949494;
+    font-weight: 500;
+}
+.btn-next{
+    position: absolute;
+    top: 76.296vh;
+    border: 18.704vh;
+    left: 25.782vw;
+    right:45.313vw;
+    width: 9.375vw;
     height: 5vh;
     color: #ffff;
     font-size: 25px;
     background-color: #78866B;
-    border: 0;
+    border-radius: 0.781vw;
+    transition: 1s;
+}
+
+.details-block{
+    position: absolute;
+    overflow: hidden;
+    width: 30.729vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    padding: 20vh 0 29.63vh 0;
+    box-sizing: border-box;
+    transition: 1s;
+    right: -30.729vw;
+}
+/* .detail-input-block{
+    width: 30.729vw;
+    height: 46.296vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    transition: 1s;
+} */
+/* .input-details{
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
+    border: 0; 
+    font-size: 1.146vw;  
+} */
+.link-input{
+    position: absolute;
+    top: 29.63vh;
+    left: 0;
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
+    border: 0; 
+    font-size: 1.146vw;  
+}
+.card-input{
+    position: absolute;
+    top: 36.111vh;
+    left: 0;
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
+    border: 0; 
+    font-size: 1.146vw;  
+    transition: 1s;
+}
+.iban-input{
+    position: absolute;
+    top: 42.593vh;
+    left: 0;
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
+    border: 0; 
+    font-size: 1.146vw;  
+    transition: 1s;
+}
+/* .extra-details{
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
+    border: 0; 
+    font-size: 1.146vw;  
+    transition: 2s;
+} */
+.link-extra{
+    overflow: hidden;
+    position: absolute;
+    top: 29.63vh;
+    left: 0;
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
+    border: 0; 
+    font-size: 1.146vw;  
+    transition: 1s;
+}
+.card-extra{
+    overflow: hidden;
+    position: absolute;
+    top: 36.111vh;
+    left: 0;
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
+    border: 0; 
+    font-size: 1.146vw;  
+    transition: 1s;
+}
+.iban-extra{
+    overflow: hidden;
+    position: absolute;
+    top: 42.593vh;
+    left: 0;
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
+    border: 0; 
+    font-size: 1.146vw;  
+    transition: 1s;
+}
+.add-details{
+    position: absolute;
+    cursor: pointer;
+    transition: 1s;
+}
+.remove-details{
+    position: absolute;
+    cursor: pointer;
+    width: 1.406vw;
+    height: 1.406vw;
+}
+.btn-back{
+    overflow: hidden;
+    position: absolute;
+    top: 76.296vh;
+    border: 18.704vh;
+    left: 25.782vw;
+    right:45.313vw;
+    width: 9.375vw;
+    height: 5vh;
+    color: #ffff;
+    font-size: 25px;
+    background-color: #a5a4a4;
+    border-radius: 0.781vw;
+    transition: 1s;
 }
     
-.title-to_add-photo{
-    font-size: 1.181vw;
-    position: relative;
-    left: -10.069vw;
-    margin: 0 0 -1.6vh 0;
-}
+
+
 
 
 

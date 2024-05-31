@@ -61,7 +61,17 @@ class MainPage extends Component {
             <div className='main-page-app'>
                 <div className="user-menu-main">
                     <div className="user-menu-header"></div>
-                    <img className="user-menu-avatar" src={`http://localhost:5000/${this.props.user?.avatar}`}/>
+                    {/* <img className="user-menu-avatar" src={`http://localhost:5000/${this.props.user?.avatar}`}/> */}
+                    {this.props.user?.avatar ? 
+                        (<div >
+                            <img className="user-menu-avatar" src={`http://localhost:5000/${this.props.user?.avatar}`}/>
+                        </div>
+                        ) : (
+                        
+                        <div className="user-menu-avatar">
+                            <img style={{width: '100%', borderRadius: '50%'}} src='../img/avatar_header_icon.svg' alt="" />
+                        </div>
+                    )}
                     <NavLink to='/my-profile' className='user-menu-userName'>
                         <div>
                             {this.props.user?.userName} {this.props.user?.userSurname}
@@ -109,6 +119,7 @@ class MainPage extends Component {
                             setFullPostData={this.props.setFullPostData}
                             user={this.props.user}
                             followingCount={this.state.followingCount}
+                            // otherProf={this.props.otherProf}
                         />
                     ))}
                 </div>

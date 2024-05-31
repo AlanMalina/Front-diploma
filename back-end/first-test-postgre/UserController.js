@@ -8,7 +8,7 @@ class UserController{
 
     async addUser(req, res) {
         try {
-        const { email, password, userName, userSurname } = req.body;
+        const { email, password, userName, userSurname, role } = req.body;
     
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -18,13 +18,44 @@ class UserController{
                 return res.status(400).json({message: 'This email is already registered!'})
             }
         const user = await pool.query(
-            'INSERT INTO users (email, password, userName, userSurname) VALUES ($1, $2, $3, $4) RETURNING *',
-            [email, hashedPassword, userName, userSurname]
+            'INSERT INTO users (email, password, userName, userSurname, role) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [email, hashedPassword, userName, userSurname, role]
         );
         const accessToken = JwtToken.generateAccessToken(user.rows[0]);
         
+        res.cookie('ACCESS_TOKEN', accessToken, {
+            maxAge: 60*60*24*30*1000,
+            httpOnly: true,
+            secure: true, // Токен передається лише через HTTPS
+            sameSite: 'strict' // Встановлення атрибута SameSite
+        })
         
         res.json({ token: accessToken });
+        } catch (e) {
+        res.status(500).json(e);
+        }
+    }
+
+    async addVolunteer(req, res) {
+        try {
+            const {role} = req.params
+            const { email, password, userName, userSurname } = req.body;
+        
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+            const existingEmail = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+                if(existingEmail.rows.length > 0){
+                    return res.status(400).json({message: 'This email is already registered!'})
+                }
+            const user = await pool.query(
+                'INSERT INTO users (email, password, userName, userSurname, role) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+                [email, hashedPassword, userName, userSurname, role]
+            );
+            const accessToken = JwtToken.generateAccessToken(user.rows[0]);
+            
+            
+            res.json({ token: accessToken });
         } catch (e) {
         res.status(500).json(e);
         }
@@ -69,18 +100,43 @@ class UserController{
             // const accessToken = req.cookies["ACCESS_TOKEN"];
             // const validToken = jwt.verify(accessToken, secretKey);
             // const user_id = validToken.id;
-            
-            const posts = await pool.query(
-                'SELECT posts.*, users.username AS user_name, users.usersurname AS user_surname, users.avatar AS avatar FROM posts JOIN users ON posts.user_id = users.id WHERE user_id = $1', 
+            const role  = await pool.query(
+                'SELECT role FROM users WHERE id = $1',
+                [id]
+            )
+
+            const donorProf = await pool.query(
+                'SELECT username, usersurname, avatar FROM users WHERE id = $1',
+                [id]
+            );
+            const volunteerProf = await pool.query(
+                "SELECT posts.*, users.username AS user_name, users.usersurname AS user_surname, users.avatar AS avatar FROM posts JOIN users ON posts.user_id = users.id WHERE user_id = $1", 
                 [id]);
-            
-            if (posts.rows.length === 0) {
-                return res.status(404).json({ message: 'User not found' });
+    
+            const militaryProf = await pool.query(
+                'SELECT username, usersurname, avatar FROM users WHERE id = $1',
+                [id])
+    
+
+            if(role.rows[0].role === 'donor'){
+                res.status(200).json(donorProf.rows);
+            }else if(role.rows[0].role === 'volunteer'){
+                if (volunteerProf.rows.length === 0) {
+                    return res.status(404).json({ message: 'User not found' });
+                }
+                
+                const sortedPosts = volunteerProf.rows.sort((a, b) => b.id - a.id);
+                res.status(200).json(sortedPosts);
+            }else if(role.rows[0].role === 'military'){
+                // if (militaryProf.rows.length === 0) {
+                //     return res.status(404).json({ message: 'User not found' });
+                // }
+                res.status(200).json(militaryProf.rows);
+            }
+            else{
+                res.status(400).json({error: 'Wrong role'});
             }
 
-            const sortedPosts = posts.rows.sort((a, b) => b.id - a.id);
-            
-            res.status(200).json(sortedPosts);
         } catch (err) {
             res.status(500).json(err);
         }
@@ -176,6 +232,23 @@ class UserController{
             res.status(500).json({message: e.message});
         }
     }
+
+    async getPublicProfile(req, res) {
+        const {id} = req.params 
+        try{
+            const volunteerProf = await pool.query(
+                "SELECT posts.*, users.username AS user_name, users.usersurname AS user_surname, users.avatar AS avatar, users.description, users.following, users.followers, users.postsCount FROM posts JOIN users ON posts.user_id = users.id WHERE user_id = $1", 
+                [id]);
+
+            const sortedPosts = volunteerProf.rows.sort((a, b) => b.id - a.id);
+            res.status(200).json(sortedPosts); 
+        }
+        catch(e){
+            res.status(500).json({message: e.message});
+        }
+    }
+
+
 
 }
 

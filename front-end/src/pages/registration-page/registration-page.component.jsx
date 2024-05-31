@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import './registration-page.styles.css';
 import postService from "../../service/post-service";
 import { NavLink } from 'react-router-dom';
+import loginService from '../../service/login-service';
 
 class RegistrationPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {user: [], email: '', password: '', userName: '', userSurname: '', errors: {email: '', password: '', userName: '', userSurname: ''}}
+        this.state = {user: [], email: '', password: '', userName: '', userSurname: '', errors: {email: '', password: '', userName: '', userSurname: ''},
+    role: '', isVolonteerChecked: false, isDonorChecked: false}
         this.postUser = this.postUser.bind(this);
     }    
 
@@ -30,7 +32,8 @@ class RegistrationPage extends Component {
                 errors.userSurname = "Це поле є обов'язковим";
                 isValid = false;
             }if(isValid) {
-                const response = await postService.postUser(this.state.email, this.state.password, this.state.userName, this.state.userSurname)
+                // const response = await postService.postUser(this.state.email, this.state.password, this.state.userName, this.state.userSurname)
+                const response = await loginService.addUser(this.state.role, this.state.email, this.state.password, this.state.userName, this.state.userSurname)
                 window.location.href = "/main";
                 this.setState({user: response.data})
             }
@@ -80,6 +83,16 @@ class RegistrationPage extends Component {
         
       }
 
+      chooseUserRole = (e) => {
+        this.setState({ isDonorChecked: e.target.checked, role: 'user' });
+        console.log(this.state.role)
+      }
+
+      chooseVolunteerRole = (e) => {
+        this.setState({ isVolonteerChecked: e.target.checked, role: 'volunteer'});
+        console.log(this.state.role)
+      }
+
 
     render(){
 
@@ -93,31 +106,75 @@ class RegistrationPage extends Component {
                 
                 <div className='register-form'>
                     <div className='register-email-block'>
-                        <label htmlFor='register-email-input'>Email:</label>
+                        <label htmlFor='register-email-input'>Електрона пошта:</label>
                         <input id='register-email-input' type="text" className='register-email-input' name="email" value={email} onChange={this.handleChange} />
                         {errors.email && <span>{errors.email}</span>}
                     </div>
                     <div className='register-password-block'>
-                        <label htmlFor='register-password-input'>Password:</label>
+                        <label htmlFor='register-password-input'>Пароль:</label>
                         <input id='register-password-input' type="password" className='register-password-input' name="password" value={password} onChange={this.handleChange} />
                            {errors.password && <span>{errors.password}</span>}
                     </div>
                     <div className='register-userName-block'>
-                        <label htmlFor='register-userName-input'>Name:</label>
+                        <label htmlFor='register-userName-input'>Ім'я:</label>
                         <input id='register-userName-input' type="text" className='register-userName-input' name="userName" value={userName} onChange={this.handleChange} />
                         {errors.userName && <span>{errors.userName}</span>}
                     </div>
                     <div className='register-userSurname-block'>
-                        <label htmlFor='register-userSurname-input'>Surname:</label>
+                        <label htmlFor='register-userSurname-input'>Прізвище:</label>
                         <input id='register-userSurname-input' type="text" className='register-userSurname-input' name="userSurname" value={userSurname} onChange={this.handleChange} />
                         {errors.userSurname && <span>{errors.userSurname}</span>}
                     </div>
-                    <NavLink to='/login' style={{ fontStyle: 'italic', fontSize: '1.042vw'}}>
-                        If haven't an account yet?    
-                    </NavLink> 
+                    <div className='role-form'>
+                        Роль: 
+                        <div className='check-block'>
+                            <input
+                                id='user-CheckBox'
+                                className='CheckBox'
+                                type="checkbox"
+                                checked={this.state.isDonorChecked}
+                                onChange={this.chooseUserRole}
+                            />
+                            <label className='checkBox-label' htmlFor='user-CheckBox'>Донор</label>
+                            <input
+                                id='volunteer-CheckBox'
+                                className='CheckBox'
+                                type="checkbox"
+                                checked={this.state.isVolonteerChecked}
+                                onChange={this.chooseVolunteerRole}
+                            />
+                            <label className='checkBox-label' htmlFor='volunteer-CheckBox'>Волонтер</label>
+                            <input
+                                id='volunteer-CheckBox'
+                                className='CheckBox'
+                                type="checkbox"
+                                checked={this.state.isVolonteerChecked}
+                                onChange={this.chooseVolunteerRole}
+                            />
+                            <label className='checkBox-label' htmlFor='volunteer-CheckBox'>Військовий</label>
+                        </div>
+                    </div>
+                    <div className='approve-checkbox'>
+                        <input
+                            id='volunteer-CheckBox'
+                            className='CheckBox'
+                            type="checkbox"
+                            checked={this.state.isVolonteerChecked}
+                            onChange={this.chooseVolunteerRole}
+                        />
+                        Підтвердіть що ви надаєте право на обробку ваших даних
+                        
+                    </div>
+                    {/* <div style={{display: 'flex', alignItems: 'center', marginTop: '4.537vh', gap: '2.5vw'}}> */}
                     <div className='btn-register' onClick={this.postUser}>
-                        Register                         
-                    </div>                    
+                        Далі                         
+                    </div>     
+                    <NavLink to='/login' style={{ fontStyle: 'italic', fontSize: '1.042vw', marginTop: '1vh'}}>
+                        Якщо у вас вже є акаунт?    
+                    </NavLink> 
+                    
+                    {/* </div> */}
+                                      
                 </div>
             </div>
         )

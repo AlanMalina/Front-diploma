@@ -3,18 +3,26 @@ import PostController from './PostController.js';
 import monobank from './monobank.js';
 import diia from './diia.js';
 import UserController from './UserController.js';
+import validateVolunteer from './middlewares/validate_Volunteer.js';
+import validateMilitary from './middlewares/validate_Military.js';
+import validateDonor from './middlewares/validate_Donor.js';
+import JwtToken from './JWT-token.js';
 
 const router = new Router();
 
+// const donorRoleValidator = new validateRole('donor');
+// const volunteerValidator = new RoleValidator;
+// const militaryValidator = new RoleValidator(['military']);
 
-router.post('/post', PostController.create)
+router.post('/post', validateVolunteer, PostController.create)
 router.post('/user', UserController.addUser)
 router.post('/login', UserController.logIn)
-router.get('/posts', PostController.getAll)
-router.get('/profile_auth/:id', UserController.getMyProfile)
+router.get('/posts', JwtToken.validateToken, PostController.getAll)
+router.get('/profile_auth/:id', JwtToken.validateToken, UserController.getMyProfile)
+router.get('/publicProf/:id', UserController.getPublicProfile);
 router.get('/posts/:id', PostController.getOne)
 router.get('/users/:id', UserController.getOneUser)
-router.put('/posts/:id', PostController.update)
+router.put('/posts/:id', JwtToken.validateToken, PostController.update)
 router.delete('/posts/:id', PostController.deleteOne)
 router.delete('/posts', PostController.deleteAll)
 router.get('/money', monobank.getCurrencyRates)
@@ -32,8 +40,8 @@ router.post('/createPayment', async (req, res) => {
 
 router.get('/diia', diia.getData)
 // router.put('/following/:id', PostController.postFollowers);
-router.post('/following', UserController.postFollowing)
-router.get('/followingCounts/:id', UserController.getFollowingCount)
-router.get('/postsCount/:user_id', PostController.getPostsCount)  
+router.post('/following', JwtToken.validateToken, UserController.postFollowing)
+router.get('/followingCounts/:id', JwtToken.validateToken, UserController.getFollowingCount)
+router.get('/postsCount/:user_id', JwtToken.validateToken, PostController.getPostsCount)  
 
 export default router;

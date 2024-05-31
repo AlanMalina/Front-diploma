@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 class FullPagePost extends Component {
     constructor(props){
         super(props)
-        this.state = {fullPost: null, followingUserIds: [], isFollow: null, followingCount: []}
+        this.state = {fullPost: null, followingUserIds: [], isFollow: null, followingCount: [], formattedDeadline: ''}
         this.wrapperRef = React.createRef();
         this.closeFullpost = this.closeFullpost.bind(this)
         this.followHandler = this.followHandler.bind(this)
@@ -49,11 +49,31 @@ class FullPagePost extends Component {
 
     }
 
+    formatDeadline() {
+        const deadlineISO = this.props.fullPostData?.deadline; // Перевірка на наявність fullPostData
+            const deadlineDate = new Date(deadlineISO); 
+            const year = deadlineDate.getFullYear();
+            const month = (deadlineDate.getMonth() + 1).toString().padStart(2, '0'); 
+            const day = deadlineDate.getDate().toString().padStart(2, '0');
+            const formattedDeadline = `${day}-${month}-${year}`;
+            this.setState({formattedDeadline: formattedDeadline});
+        
+    }
+    
+    componentDidUpdate(prevProps) {
+        if (this.props.fullPostData !== prevProps.fullPostData) {
+            if (this.props.fullPostData && this.props.fullPostData.deadline) {
+                this.formatDeadline();
+            } else {
+                console.error('Deadline is empty!')
+            }
+        }
+    }
     
    
     componentDidMount() {  
         document.addEventListener('mousedown', this.closeFullpost);
-        // console.log(this.props.fullPostData)
+        this.formatDeadline()
     }
     
     componentWillUnmount() {
@@ -88,7 +108,7 @@ class FullPagePost extends Component {
                             Appointer: {this.props.fullPostData?.appointer}
                         </div>
                         <div className="fullpost-deadline">
-                            Deadline: {this.props.fullPostData?.deadline}
+                            Deadline: {this.state.formattedDeadline}
                         </div>
                     </div>
                     <hr className='fullpost-hr'/>

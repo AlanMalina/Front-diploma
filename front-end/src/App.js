@@ -14,7 +14,8 @@ import LogInPage from './pages/login-page/login-page.component'
 import TestProfile from './pages/test-profile/test-profile.component'
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie'
-import UsersProfile from './pages/users-profile/users-profile.component'
+import PublicProfilePage from './pages/users-profile/users-profile.component'
+import axios from 'axios';
 
 
 class App extends Component {
@@ -22,7 +23,7 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = { fullPostData: null, token: Cookies.get('ACCESS_TOKEN'), decoded: [], path: '/login',
-    followingCount: [], getFollowingData: null, userProf: []};
+    followingCount: [], getFollowingData: null, getOtherProfile: []};
   }
 
   setFullPostData = (postData) => {
@@ -35,6 +36,10 @@ class App extends Component {
     console.log(followingData);
   }
   
+  // getOtherProfile = (profile) => {
+  //   this.setState({ getOtherProfile: profile})
+  //   console.log(profile)
+  // }
 //   FollowingCount = (followingCount) => {
 //     this.setState({followingCount: followingCount})
 // }
@@ -43,21 +48,23 @@ class App extends Component {
     if (this.state.following !== prevState.following) {
       this.setState({token: Cookies.set('ACCESS_TOKEN', this.state.following.token)})
     }
+    console.log(this.state.decoded.role)
   }
   
-componentDidMount() {
+async componentDidMount() {
   const token = Cookies.get('ACCESS_TOKEN');
   this.setState(prevState => ({
     token, 
     decoded: token ? jwtDecode(token) : prevState.decoded
   }));
+  // console.log(token)
 
   if(token){
     this.setState({path: '/main'})
   }else{
     this.setState({path: '/login'})
   }
-  
+
 }
 
 
@@ -66,7 +73,7 @@ componentDidMount() {
     return (
       <div className='app'>
         <Router>
-          <Header/>
+          <Header user={this.state.decoded}/>
           <SideBar/>
           <ChatApp/>
           <FullPagePost followingCount={this.state.followingCount} fullPostData={this.state.fullPostData} user={this.state.decoded}/>
@@ -76,8 +83,11 @@ componentDidMount() {
                 <Route path='/login' element={<LogInPage user={this.state.decoded}/>}/>
                 <Route path='/main' element={<MainPage getFollowingData={this.state.getFollowingData} FollowingData={this.FollowingData} user={this.state.decoded} setFullPostData={this.setFullPostData}/>}/>
                 <Route path='/my-profile' element={<MyProfilePage following={this.state.following} user={this.state.decoded} setFullPostData={this.setFullPostData}/>}/>
-                <Route path='/create-post' element={<CreatePostPage user={this.state.decoded}/>}/>
+                {this.state.decoded.role === 'volunteer' &&(
+                  <Route path='/create-post' element={<CreatePostPage user={this.state.decoded}/>}/>
+                )}
                 <Route path='/chat' element={<ChatPage/>}/>
+                <Route path='/public-profile/:id' element={<PublicProfilePage following={this.state.following} user={this.state.decoded} setFullPostData={this.setFullPostData}/>}/>
                 <Route path='/' element={<Navigate to={this.state.path}/>} />
               </Routes>
           </div>

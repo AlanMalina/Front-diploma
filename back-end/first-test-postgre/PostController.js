@@ -3,22 +3,59 @@ import fileService from "../first-test-postgre/fileService.js"
 
 
 class PostController{
-    async create(req, res){
-        try{
-            const {content, goal, appointer, deadline, user_id} = req.body
-            const picture = fileService.saveFile(req.files.picture)
+    // async create(req, res){
+    //     try{
+    //         const {content, goal, appointer, deadline, user_id} = req.body
+    //         const picture = fileService.saveFile(req.files.picture)
             
 
+    //         const post = await pool.query(
+    //             'INSERT INTO posts (picture, content, goal, appointer, deadline, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING * ', 
+    //             [picture, content, goal, appointer, deadline, user_id])
+
+    //         res.status(200).json(post.rows)
+
+    //     }catch(e){
+    //         res.status(500).json(e)
+    //     }
+    // }
+
+    async create(req, res) {
+        try {
+            const { 
+                content, 
+                goal = null, 
+                appointer = null, 
+                deadline = null, 
+                user_id 
+            } = req.body;
+            
+            let picture = null;
+            if (req.files && req.files.picture) {
+                picture = fileService.saveFile(req.files.picture);
+            }
+    
+            let parsedDeadline = null;
+            if (deadline) {
+                const parsedDate = Date.parse(deadline);
+                if (!isNaN(parsedDate)) {
+                    parsedDeadline = new Date(parsedDate).toISOString();
+                } else {
+                    parsedDeadline = null; // Записуємо null, якщо дата некоректна
+                }
+            }
+    
             const post = await pool.query(
-                'INSERT INTO posts (picture, content, goal, appointer, deadline, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING * ', 
-                [picture, content, goal, appointer, deadline, user_id])
-
-            res.status(200).json(post.rows)
-
-        }catch(e){
-            res.status(500).json(e)
+                'INSERT INTO posts (picture, content, goal, appointer, deadline, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', 
+                [picture, content, goal, appointer, parsedDeadline, user_id]
+            );
+    
+            res.status(200).json(post.rows);
+        } catch (e) {
+            res.status(500).json(e);
         }
     }
+    
 
    
 

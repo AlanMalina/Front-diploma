@@ -4,7 +4,14 @@ import Cookies from 'js-cookie'
 const api = 'http://localhost:5000/api';
 
 const getPost = () => {
-    return axios.get(api + '/posts')
+    return axios.get(api + '/posts',
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data',
+            "Authorization": Cookies.get('ACCESS_TOKEN')
+        }
+    })
 }
 
 const getOne = (id) => {
@@ -40,9 +47,10 @@ const postPost = ( picture, content, appointer, goal, deadline, user_id) => {
     {
         headers:{
             'Accept' : '*/*',
-            'Content-Type' : 'multipart/form-data'
+            'Content-Type' : 'multipart/form-data',
+            "Authorization": Cookies.get('ACCESS_TOKEN')
         }
-    })
+    });
 }
 
 // const postUser = (email, password, userName, userSurname) => {
@@ -89,15 +97,36 @@ const postUser = async (email, password, userName, userSurname) => {
         username,
         following_user_id,
         following_username
-    })
+    },
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data',
+            "Authorization": Cookies.get('ACCESS_TOKEN')
+        }
+    });
 }
 
 const getFollowingCount = (id) => {
-    return axios.get(api + `/followingCounts/${id}`)
+    return axios.get(api + `/followingCounts/${id}`,
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data',
+            "Authorization": Cookies.get('ACCESS_TOKEN')
+        }
+    });
 }
 
 const getPostsCount = (user_id) => {
-    return axios.get(api + `/postsCount/${user_id}`)
+    return axios.get(api + `/postsCount/${user_id}`,
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data',
+            "Authorization": Cookies.get('ACCESS_TOKEN')
+        }
+    });
 }
   
 

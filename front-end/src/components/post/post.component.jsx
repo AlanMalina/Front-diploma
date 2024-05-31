@@ -10,9 +10,9 @@ class Post extends Component{
     constructor(props){
         super(props)
         this.state = {openfull: false, formattedDeadline: '',
-            followingUserIds: [], isFollow: null}
+            followingUserIds: [], isFollow: null, profilePath: ''}
         this.getFullPost = this.getFullPost.bind(this)
-        this.followHandler = this.followHandler.bind(this)        
+        this.followHandler = this.followHandler.bind(this)       
     }
 
     async getFullPost(){
@@ -83,6 +83,8 @@ class Post extends Component{
         }
 
     }
+
+    
     
 
     componentDidUpdate(prevState, prevProps) {
@@ -107,6 +109,8 @@ class Post extends Component{
 
         const formattedDeadline = `${day}-${month}-${year}`;
         this.setState({formattedDeadline: formattedDeadline});
+        
+        
         // this.getMyProfile()
         // console.log(formattedDeadline);
     }
@@ -116,15 +120,32 @@ class Post extends Component{
 
     render(){
         return(
-            <div className='post-container'>
+            // {this.props.user.role !== 'user' && 
+            <div id='post-container' className='post-container'>
                 <div className="post-header">
                     <div className="user-block">
-                        <img className='avatar' src={`http://localhost:5000/${this.props.data?.avatar}`}/>
+                        
+                        {this.props.data?.avatar ? 
+                        (<div >
+                            <img className='avatar' src={`http://localhost:5000/${this.props.data?.avatar}`}/>
+                        </div>
+                        ) : (
+                        <div className="avatar">
+                            <img style={{width: '100%', borderRadius: '50%'}} src='../img/avatar_header_icon.svg' alt="" />
+                        </div>
+                    )}
                         <div className="name-and-time">
-                            <NavLink to='/users-profile' className='user-name'>
-                                {this.props.data?.user_name} {this.props.data?.user_surname}
-                            </NavLink>
-                            <p className='post-time'>1w ago</p>
+                        {this.props.data?.user_id === this.props.user?.id ?
+                            (
+                                <NavLink to='/my-profile' className='user-name'>
+                                    {this.props.data?.user_name} {this.props.data?.user_surname}
+                                </NavLink>
+                            ) : (
+                                <NavLink to={`/public-profile/${this.props.data?.user_id}`} className='user-name'>
+                                    {this.props.data?.user_name} {this.props.data?.user_surname}
+                                </NavLink>
+                            )}
+                            <p className='post-time'>1тж тому</p>
                         </div>
                     </div>
                     {this.props.user.id !== this.props.data.user_id &&
@@ -132,7 +153,7 @@ class Post extends Component{
                         !this.props.followingCount.some(item => item.following_user_id === this.props.data?.user_id) &&
                         (
                             <div id='following-btn' className='following-btn' onClick={this.followHandler}>
-                                +Follow
+                                +Стежити
                             </div>
                         )
                     }
@@ -143,28 +164,45 @@ class Post extends Component{
                     <div className="content" onClick={this.getFullPost}>
                         {this.props.data?.content}
                     </div>
-                    <div className='appointer'>
-                        Appointer: {this.props.data.appointer}
-                    </div>  
-                    <div className="goal">
-                        Goal: {this.props.data.goal}
-                    </div>
-                    <div className="deadline">
-                        Deadline: {this.state.formattedDeadline}
-                    </div>
+                    {this.props.data?.appointer !== '' && 
+                        <div className='appointer'>
+                            Отримувач: {this.props.data.appointer}
+                        </div>}
+                    {this.props.data?.goal !== '' &&
+                        <div className="goal">
+                            Ціль: {this.props.data.goal}
+                        </div>}
+                    {this.props.data?.deadline !== null &&
+                        <div className="deadline">
+                            Термін: {this.state.formattedDeadline}
+                        </div>}
                 </div>
-                <img className='post-img' onClick={this.getFullPost} src={`http://localhost:5000/${this.props.data.picture}`}/>
+                {this.props.data?.picture !== null &&
+                    <img className='post-img' onClick={this.getFullPost} src={`http://localhost:5000/${this.props.data.picture}`}/>}
                 <div className="post-footer">
                     <div className="like-block">
-                        <img className='like-btn-icon' src="./img/like-btn.svg" alt="#" />
-                        Like
+                        <img className='like-btn-icon' src="../img/like-btn.svg" alt="#" />
+                        Лайк
+                    </div>
+                    <div className="comment-block">
+                        <img className='comment-btn-icon' src="../img/comment icon.png" alt="#" />
+                        Комент
+                    </div>
+                    <div className="donate-block">
+                        <img className='donate-btn-icon' src="../img/donate icon.svg" alt="" />
+                        Донат
+                    </div>
+                    <div className="send-block">
+                        <img className='send-btn-icon' src="../img/send icon.svg" alt="#" />
+                        Поширити
                     </div>
                     <div className="repost-block">
-                        <img className='repost-btn-icon' src="./img/repost-btn.svg" alt="#" />
-                        Repost
+                        <img className='repost-btn-icon' src="../img/repost-btn.svg" alt="#" />
+                        Репост
                     </div>
                 </div>
             </div>
+        
         )
     }
 }
