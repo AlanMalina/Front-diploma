@@ -111,10 +111,21 @@ class Header extends Component {
                 </div>
             </div>
             <div className='nav-right'>
+                {this.props.user?.role === 'volunteer' &&
                 <div className='nav-item '>
+                    <NavLink className={`${setActive} create item-content`} to='requests-table'>
+                        S<img id='create-btn-icon' className='create-btn-icon' src="../img/create_header_icon.svg"/>S
+                    </NavLink>
+                </div>}
+                <div className='nav-item '>
+                    {this.props.user?.role === 'volunteer' &&
                     <NavLink className={`${setActive} create item-content`} to='create-post'>
                         <img id='create-btn-icon' className='create-btn-icon' src="../img/create_header_icon.svg"/>
-                    </NavLink>
+                    </NavLink>}
+                    {this.props.user?.role === 'military' &&
+                    <NavLink className={`${setActive} create item-content`} to='create-request'>
+                        <img id='create-btn-icon' className='create-btn-icon' src="../img/create_header_icon.svg"/>
+                    </NavLink>}
                 </div>
                 <div className='nav-item chat'>
                     <a className='btn-chat ' onClick={this.ChatAppHandler}>

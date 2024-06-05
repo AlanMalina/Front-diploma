@@ -185,53 +185,31 @@
     font-size: 1.146vw;  
     transition: 1s;
 }
-/* .extra-details{
-    width: 30.729vw;
-    min-height: 5.37vh;
-    max-height: 5.37vh;
-    background-color: #ffffff;
-    border: 0; 
-    font-size: 1.146vw;  
-    transition: 2s;
-} */
-.link-extra{
+.extra-details{
     overflow: hidden;
     position: absolute;
+    width: 30.729vw;
+    min-height: 5vh;
+    max-height: 5vh;
+    background-color: #fefefe;
+    border: 0; 
+    font-size: 1.146vw;  
+    transition: 1s;
+}
+.link-extra{
     top: 29.63vh;
     left: 0;
-    width: 30.729vw;
-    min-height: 5.37vh;
-    max-height: 5.37vh;
-    background-color: #ffffff;
-    border: 0; 
-    font-size: 1.146vw;  
-    transition: 1s;
+    font-style: italic;
 }
 .card-extra{
-    overflow: hidden;
-    position: absolute;
     top: 36.111vh;
     left: 0;
-    width: 30.729vw;
-    min-height: 5.37vh;
-    max-height: 5.37vh;
-    background-color: #ffffff;
-    border: 0; 
-    font-size: 1.146vw;  
-    transition: 1s;
+    font-style: italic;
 }
 .iban-extra{
-    overflow: hidden;
-    position: absolute;
     top: 42.593vh;
     left: 0;
-    width: 30.729vw;
-    min-height: 5.37vh;
-    max-height: 5.37vh;
-    background-color: #ffffff;
-    border: 0; 
-    font-size: 1.146vw;  
-    transition: 1s;
+    font-style: italic;
 }
 .add-details{
     position: absolute;
@@ -259,6 +237,8 @@
     border-radius: 0.781vw;
     transition: 1s;
 }
+
+
     
 
 

@@ -201,7 +201,7 @@ class PublicProfilePage extends Component {
                         {this.state.userProfile[0]?.description}
                     </div>
                     <textarea name="" id="input-edit-description" onChange={this.descriptionChange} defaultValue={this.props.user?.description} className='input-edit-description'></textarea>
-                    <div className="user-menu-buttons-block">
+                    {/* <div className="user-menu-buttons-block">
                         <div className="donate-history-btn">
                             Donate history
                         </div>
@@ -217,7 +217,7 @@ class PublicProfilePage extends Component {
                         <div className="support-btn">
                             Support
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             

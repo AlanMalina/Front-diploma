@@ -9,7 +9,7 @@ class RegistrationPage extends Component {
     constructor(props) {
         super(props);
         this.state = {user: [], email: '', password: '', userName: '', userSurname: '', errors: {email: '', password: '', userName: '', userSurname: ''},
-    role: '', isVolonteerChecked: false, isDonorChecked: false}
+    role: '', isVolonteerChecked: false, isDonorChecked: false, isMilitaryChecked: false, aproveRules: false}
         this.postUser = this.postUser.bind(this);
     }    
 
@@ -33,7 +33,12 @@ class RegistrationPage extends Component {
                 isValid = false;
             }if(isValid) {
                 // const response = await postService.postUser(this.state.email, this.state.password, this.state.userName, this.state.userSurname)
-                const response = await loginService.addUser(this.state.role, this.state.email, this.state.password, this.state.userName, this.state.userSurname)
+                const response = await loginService.addUser(this.state.aproveRules, 
+                                                            this.state.role, 
+                                                            this.state.email, 
+                                                            this.state.password, 
+                                                            this.state.userName, 
+                                                            this.state.userSurname)
                 window.location.href = "/main";
                 this.setState({user: response.data})
             }
@@ -83,15 +88,27 @@ class RegistrationPage extends Component {
         
       }
 
-      chooseUserRole = (e) => {
-        this.setState({ isDonorChecked: e.target.checked, role: 'user' });
-        console.log(this.state.role)
-      }
+      chooseRole = (role, check) => {
+        if (role === 'donor') {
+            this.setState({ isDonorChecked: check.checked, isVolonteerChecked: false, isMilitaryChecked: false, role: role });
+            console.log(role)
+        } else if (role === 'volunteer') {
+            this.setState({ isVolonteerChecked: check.checked, isDonorChecked: false, isMilitaryChecked: false, role: role });
+            console.log(role)
+        } else if (role === 'military') {
+            this.setState({ isMilitaryChecked: check.checked, isDonorChecked: false, isVolonteerChecked: false, role: role });
+            console.log(role)
+        }else{
+            this.setState({ isMilitaryChecked: false, isDonorChecked: false, isVolonteerChecked: false, role: role });
+            console.log(role)
+        }
+    }
 
-      chooseVolunteerRole = (e) => {
-        this.setState({ isVolonteerChecked: e.target.checked, role: 'volunteer'});
-        console.log(this.state.role)
-      }
+    aproveRules = (e) => {
+        this.setState({ aproveRules: e.target.checked });
+        console.log(e.target.checked)
+        console.log(this.state.aproveRules)
+    }
 
 
     render(){
@@ -129,11 +146,12 @@ class RegistrationPage extends Component {
                         Роль: 
                         <div className='check-block'>
                             <input
-                                id='user-CheckBox'
+                                id='donor-CheckBox'
                                 className='CheckBox'
                                 type="checkbox"
                                 checked={this.state.isDonorChecked}
-                                onChange={this.chooseUserRole}
+                                // onChange={this.chooseUserRole}
+                                onChange={(e) => this.chooseRole('donor', e.target)}
                             />
                             <label className='checkBox-label' htmlFor='user-CheckBox'>Донор</label>
                             <input
@@ -141,34 +159,42 @@ class RegistrationPage extends Component {
                                 className='CheckBox'
                                 type="checkbox"
                                 checked={this.state.isVolonteerChecked}
-                                onChange={this.chooseVolunteerRole}
+                                // onChange={this.chooseVolunteerRole}
+                                onChange={(e) => this.chooseRole('volunteer', e.target)}
                             />
                             <label className='checkBox-label' htmlFor='volunteer-CheckBox'>Волонтер</label>
                             <input
-                                id='volunteer-CheckBox'
+                                id='military-CheckBox'
                                 className='CheckBox'
                                 type="checkbox"
-                                checked={this.state.isVolonteerChecked}
-                                onChange={this.chooseVolunteerRole}
+                                checked={this.state.isMilitaryChecked}
+                                // onChange={this.chooseMilitaryRole}
+                                onChange={(e) => this.chooseRole('military', e.target)}
                             />
                             <label className='checkBox-label' htmlFor='volunteer-CheckBox'>Військовий</label>
                         </div>
                     </div>
                     <div className='approve-checkbox'>
                         <input
-                            id='volunteer-CheckBox'
+                            id='aprove-rules'
                             className='CheckBox'
                             type="checkbox"
-                            checked={this.state.isVolonteerChecked}
-                            onChange={this.chooseVolunteerRole}
+                            checked={this.state.aproveRules}
+                            onChange={this.aproveRules}
                         />
-                        Підтвердіть що ви надаєте право на обробку ваших даних
-                        
+                        Підтвердіть що ви надаєте право на обробку та зберігання ваших даних
                     </div>
                     {/* <div style={{display: 'flex', alignItems: 'center', marginTop: '4.537vh', gap: '2.5vw'}}> */}
-                    <div className='btn-register' onClick={this.postUser}>
-                        Далі                         
-                    </div>     
+                    {this.state.aproveRules !== true ? (
+                        <div className='btn-register' style={{opacity: '80%', cursor: 'not-allowed'}}>
+                            Далі                         
+                        </div> 
+                    ) : (
+                        <div className='btn-register' onClick={this.postUser}>
+                            Далі                         
+                        </div> 
+                    )}
+                        
                     <NavLink to='/login' style={{ fontStyle: 'italic', fontSize: '1.042vw', marginTop: '1vh'}}>
                         Якщо у вас вже є акаунт?    
                     </NavLink> 

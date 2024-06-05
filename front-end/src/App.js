@@ -16,6 +16,8 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie'
 import PublicProfilePage from './pages/users-profile/users-profile.component'
 import axios from 'axios';
+import CreateRequest from './pages/create-request/create-request.component'
+import RequestsTable from './pages/requests-table/requests-table.component'
 
 
 class App extends Component {
@@ -88,6 +90,8 @@ async componentDidMount() {
                 )}
                 <Route path='/chat' element={<ChatPage/>}/>
                 <Route path='/public-profile/:id' element={<PublicProfilePage following={this.state.following} user={this.state.decoded} setFullPostData={this.setFullPostData}/>}/>
+                <Route path='/create-request' element={<CreateRequest user={this.state.decoded}/>}/>
+                <Route path='/requests-table' element={< RequestsTable/>}/>
                 <Route path='/' element={<Navigate to={this.state.path}/>} />
               </Routes>
           </div>

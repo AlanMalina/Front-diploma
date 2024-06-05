@@ -3,13 +3,15 @@ import Cookies from 'js-cookie';
 
 const api = 'http://localhost:5000/api';
 
-const addUser = async (role, email, password, userName, userSurname) => {
+const addUser = async (aproveRules, role, email, password, userName, userSurname) => {
     try {
-      const response = await axios.post(api + `/addVolunteer/${role}`, {
+      const response = await axios.post(api + '/user', {
         email,
         password,
         userName,
-        userSurname
+        userSurname,
+        role,
+        aproveRules
       });
   
       if (response.data.token) {

@@ -26,6 +26,7 @@
 
 .sort-container{
     width: 43.907vw;
+    min-height: 4.63vh;
     display: flex;
     justify-content: center;
     align-items: center;

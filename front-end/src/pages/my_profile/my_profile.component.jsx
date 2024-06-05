@@ -6,7 +6,8 @@ import Post from '../../components/post/post.component';
 import postService from '../../service/post-service';
 import Cookies from 'js-cookie'
 import loginService from '../../service/login-service';
-
+import requestService from '../../service/request-service';
+import Request from '../../components/request/request.component';
 
 // let notify = () => toast("Wow so easy!");
 
@@ -16,7 +17,8 @@ class MyProfilePage extends Component {
         super(props)
         this.state = {post_in_profile: [], sort: false, fullpost: false, userProfile: [], 
             followingCount: [], following: 0, followers: 0, postsCount: 0,
-        avatar: '', description: '', username: '', usersurname: '', edit: false, updatedProf: []}
+        avatar: '', description: '', username: '', usersurname: '', edit: false, updatedProf: [],
+        requests: []}
         this.funcToast = this.funcToast.bind(this)
         this.ColumnSort = this.ColumnSort.bind(this)
         this.BlockSort = this.BlockSort.bind(this)
@@ -244,6 +246,12 @@ class MyProfilePage extends Component {
         console.log(description)
         this.setState({description: description})
     }
+
+    async getRequests(){
+        const response = await requestService.getOwnReq(this.props.user?.id)
+        this.setState({requests: response.data})
+        console.log(response.data)
+    }
     
 
     async componentDidMount(){
@@ -251,6 +259,7 @@ class MyProfilePage extends Component {
         await this.getMyProfile()
         await this.getFollowingCount()
         await this.getPostsCount()
+        await this.getRequests()
     }
 
 
@@ -279,41 +288,53 @@ class MyProfilePage extends Component {
                         draggable
                         theme="light"
                 />
-                {this.props.user.role !== 'user' &&
-                    (<div id='sort-container' className="sort-container">
+                {this.props.user.role === 'volunteer' &&
+                    <div id='sort-container' className="sort-container">
                         <select className='select-bar' name="items" id="items">
                             <option value="active-posts">Активні публікації</option>
                             <option value="active-requests">Активні запити</option>
                         </select>
-                        <button id='btn-block-sort' className='btn-block-sort' onClick={this.BlockSort}>
-                            <img className='block-sort-icon' src="./img/block sort.svg" alt="" />
-                        </button>
-                        <button id='btn-column-sort' className='btn-column-sort' onClick={this.ColumnSort}>
-                            <img className='column-sort-icon' src="./img/column sort.svg" alt="" />
-                        </button>
-                    </div>)}
+                        <div>
+                            <button id='btn-block-sort' className='btn-block-sort' onClick={this.BlockSort}>
+                                <img className='block-sort-icon' src="./img/block sort.svg" alt="" />
+                            </button>
+                            <button id='btn-column-sort' className='btn-column-sort' onClick={this.ColumnSort}>
+                                <img className='column-sort-icon' src="./img/column sort.svg" alt="" />
+                            </button>
+                        </div>
+                    </div>}
 
-                {this.props.user.role !== 'user' &&
-                    (<div id='my-profile-page-main' className='my-profile-page-main'>
-                        <div id='my-profile-post-container' className="my-profile-post-container">
+                    {this.props.user.role === 'military' &&
+                    <div id='sort-container' className="sort-container">
+                        <select className='select-bar' name="items" id="items">
+                            <option value="active-posts">Активні запити</option>
+                            <option value="active-requests">Очікуються</option>
+                        </select>
+                    </div>}
+
+                    {this.props.user.role === 'volunteer' && (
+                        <div id='my-profile-page-main' className='my-profile-page-main'>
                             
-                            {this.state.userProfile.map((pic, index ) => (
-                                <div id='block-post' key={index} className="block-post" >
-                                    {pic.picture !== null ? (
-                                    <img className='block-post-img' onClick={() => this.getFullPost(pic)} src={`http://localhost:5000/${pic.picture}`} alt="" />
-                                    ) : (
-                                        <div className='block-post-img' style={{backgroundColor: '#d6d6d6'}}></div>
-                                    )}
-                                </div>
-
+                            <div id='my-profile-post-container' className="my-profile-post-container">
                                 
-                            ))}
-                        </div>                    
-                    </div>)}
+                                {this.state.userProfile.map((pic, index ) => (
+                                    <div id='block-post' key={index} className="block-post" >
+                                        {pic.picture !== null ? (
+                                        <img className='block-post-img' onClick={() => this.getFullPost(pic)} src={`http://localhost:5000/${pic.picture}`} alt="" />
+                                        ) : (
+                                            <div className='block-post-img' onClick={() => this.getFullPost(pic)} style={{backgroundColor: '#d6d6d6'}}></div>
+                                        )}
+                                    </div>
+                                    
 
-                {this.props.user.role !== 'user' &&
+                                ))}
+                            </div>               
+                        </div>)}
+
                 
-                (<div id='my-profile-main-postsColumn' className="my-profile-main-postsColumn">
+                
+                {this.props.user.role === 'volunteer' &&
+                    <div id='my-profile-main-postsColumn' className="my-profile-main-postsColumn">
                     {this.state.userProfile.map((post) => (
                         <div key={post.id} id='column-post' className="column-post">
                             <Post data={post} 
@@ -323,14 +344,22 @@ class MyProfilePage extends Component {
                              /> 
                         </div>
                     ))}
+                    </div>}
 
-                </div>)}
-                {/* //  :
-                // (
-                //     <div>
-                //         <h1>Hello</h1>
-                //     </div>
-                // ) */}
+
+                    {this.props.user.role === 'military' &&
+                        <div style={{display: 'flex', overflow: 'auto'}} id='my-profile-main-postsColumn' className="my-profile-main-postsColumn"> 
+                            {this.state.requests.map((req) => (
+                                <div key={req.id} id='column-post' className="column-post">
+                                    <Request req={req} 
+                                    // followingCount={this.props.followingCount} 
+                                    // setFullPostData={this.props.setFullPostData}
+                                    user={this.props.user}
+                                 /> 
+                                </div>
+                            ))}
+                        </div>}  
+                
                 
             
                 <div className="user-menu-profile-container">
@@ -383,9 +412,10 @@ class MyProfilePage extends Component {
                             
                         </div>
                     </div>
-                    <div className="user-profile-description" >
-                        {this.props.user?.description}
-                    </div>
+                    {this.props.user.role === 'volunteer' &&
+                        <div className="user-profile-description" >
+                            {this.props.user?.description}
+                        </div>}
                     <textarea name="" id="input-edit-description" onChange={this.descriptionChange} defaultValue={this.props.user?.description} className='input-edit-description'></textarea>
                     <div className="user-menu-buttons-block">
                         <div className="donate-history-btn">
@@ -397,9 +427,10 @@ class MyProfilePage extends Component {
                         <div className="settings-btn">
                             Налаштування
                         </div>
-                        <div className="premium-pots-btn">
-                            Закріпити публікацію
-                        </div>
+                        {this.props.user.role === 'volunteer' &&
+                            <div className="premium-pots-btn">
+                                Закріпити публікацію
+                            </div>}
                         <div className="support-btn">
                             Підтримка
                         </div>

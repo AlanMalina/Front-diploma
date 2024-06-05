@@ -3,6 +3,7 @@ import './post.styles.css';
 import postService from '../../service/post-service';
 import loginService from '../../service/login-service';
 import { NavLink } from 'react-router-dom';
+import PostDetails from '../post-details/post-details.component';
 
 
 class Post extends Component{
@@ -10,9 +11,13 @@ class Post extends Component{
     constructor(props){
         super(props)
         this.state = {openfull: false, formattedDeadline: '',
-            followingUserIds: [], isFollow: null, profilePath: ''}
+            followingUserIds: [], isFollow: null, profilePath: '', details: [],
+            showDonateForm: false}
         this.getFullPost = this.getFullPost.bind(this)
-        this.followHandler = this.followHandler.bind(this)       
+        this.followHandler = this.followHandler.bind(this)     
+        // this.displayDonateBlock = this.displayDonateBlock.bind(this)  
+        this.displayDonateBlock = this.displayDonateBlock.bind(this);
+        this.closeDonateForm = this.closeDonateForm.bind(this);
     }
 
     async getFullPost(){
@@ -85,37 +90,78 @@ class Post extends Component{
     }
 
     
-    
+    // displayDonateBlock() {
+    //     const donateContainer = document.getElementById('post-details')
+    //     const postDescription = document.getElementById('post-description')
+    //     const postImg = document.getElementById('post-img')
 
-    componentDidUpdate(prevState, prevProps) {
-        if (prevState.openfull !== this.state.openfull && this.state.openfull === true) {
-            this.setState({ openfull: false });
-        }    
-        // if (prevState.isFollow !== this.state.isFollow) {
-        //     this.setState({ isFollow: prevState.isFollow });
-        // }
+    //     this.setState({ details: [this.props.data.link, this.props.data.extra_link,
+    //         this.props.data.card, this.props.data.extra_card, this.props.data.iban, 
+    //         this.props.data.extra_iban
+    //     ] })
+
+    //             donateContainer.style.display = 'flex'
+    //             postDescription.style.display = 'none'
+    //             postImg.style.display = 'none'
+                // const { id } = postData; // Assuming data has an 'id' property
+                // this.setState({ details: true })
+            
+            // else{
+            //     donateContainer.style.display = 'none'
+            //     postDescription.style.display = 'flex'
+            //     postImg.style.display = 'flex'
+            //     this.setState({details: false})
+            // }
         
+    // }
+
+    displayDonateBlock() {
+        this.setState({ showDonateForm: true });
+    }
+
+    closeDonateForm() {
+        this.setState({ showDonateForm: false });
+    }
+
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.openfull !== this.state.openfull && this.state.openfull === true) {
+            this.setState({ openfull: false});
+        }
+        // console.log(this.props.data)
+        // if (prevProps.data !== this.props.data) {
+        //     console.log('Updated post data:', this.props.data);
+        // }
     }
     
     
-
     componentDidMount() {
         const deadlineISO = this.props.data?.deadline;
-        const deadlineDate = new Date(deadlineISO); 
-
-        const year = deadlineDate.getFullYear();
-        const month = (deadlineDate.getMonth() + 1).toString().padStart(2, '0'); 
-        const day = deadlineDate.getDate().toString().padStart(2, '0');
-
-        const formattedDeadline = `${day}-${month}-${year}`;
-        this.setState({formattedDeadline: formattedDeadline});
-        
-        
-        // this.getMyProfile()
-        // console.log(formattedDeadline);
+        if (deadlineISO) {
+            const deadlineDate = new Date(deadlineISO); 
+            const year = deadlineDate.getFullYear();
+            const month = (deadlineDate.getMonth() + 1).toString().padStart(2, '0'); 
+            const day = deadlineDate.getDate().toString().padStart(2, '0');
+            const formattedDeadline = `${day}-${month}-${year}`;
+            this.setState({formattedDeadline: formattedDeadline});
+        }
+    
+        // console.log(this.props.data)
     }
 
-    
+    // componentDidMount() {
+    //     const deadlineISO = this.props.data?.deadline;
+    //     const deadlineDate = new Date(deadlineISO); 
+
+    //     const year = deadlineDate.getFullYear();
+    //     const month = (deadlineDate.getMonth() + 1).toString().padStart(2, '0'); 
+    //     const day = deadlineDate.getDate().toString().padStart(2, '0');
+
+    //     const formattedDeadline = `${day}-${month}-${year}`;
+    //     this.setState({formattedDeadline: formattedDeadline});
+        
+    //     console.log(this.props.data)
+    // }
        
 
     render(){
@@ -148,21 +194,30 @@ class Post extends Component{
                             <p className='post-time'>1тж тому</p>
                         </div>
                     </div>
-                    {this.props.user.id !== this.props.data.user_id &&
-                        this.state.isFollow !== this.props.data?.user_id &&
-                        !this.props.followingCount.some(item => item.following_user_id === this.props.data?.user_id) &&
-                        (
-                            <div id='following-btn' className='following-btn' onClick={this.followHandler}>
-                                +Стежити
-                            </div>
-                        )
-                    }
+                    {this.props.user.role === 'military' ? (
+                        <div>
+                        {this.props.user.id !== this.props.data.user_id &&
+                            this.state.isFollow !== this.props.data?.user_id &&
+                            !this.props.followingCount.some(item => item.following_user_id === this.props.data?.user_id) &&
+                            (
+                                <div id='following-btn' className='following-btn' onClick={this.followHandler}>
+                                    +Стежити
+                                </div>
+                            )
+                        }
+                        </div>
+                    ) : (
+                        <div id='following-btn' className='following-btn' onClick={this.followHandler}>
+                            +Стежити
+                        </div>
+                    )}
+                    
 
                     
                 </div>
-                <div className="post-description">
+                <div id='post-description' className="post-description">
                     <div className="content" onClick={this.getFullPost}>
-                        {this.props.data?.content}
+                        {this.props.data?.content}                        
                     </div>
                     {this.props.data?.appointer !== '' && 
                         <div className='appointer'>
@@ -170,15 +225,15 @@ class Post extends Component{
                         </div>}
                     {this.props.data?.goal !== '' &&
                         <div className="goal">
-                            Ціль: {this.props.data.goal}
+                            Ціль: {this.props.data.goal} грн
                         </div>}
                     {this.props.data?.deadline !== null &&
                         <div className="deadline">
                             Термін: {this.state.formattedDeadline}
-                        </div>}
+                        </div>}                  
                 </div>
                 {this.props.data?.picture !== null &&
-                    <img className='post-img' onClick={this.getFullPost} src={`http://localhost:5000/${this.props.data.picture}`}/>}
+                    <img id='post-img' className='post-img' onClick={this.getFullPost} src={`http://localhost:5000/${this.props.data.picture}`}/>}
                 <div className="post-footer">
                     <div className="like-block">
                         <img className='like-btn-icon' src="../img/like-btn.svg" alt="#" />
@@ -188,7 +243,7 @@ class Post extends Component{
                         <img className='comment-btn-icon' src="../img/comment icon.png" alt="#" />
                         Комент
                     </div>
-                    <div className="donate-block">
+                    <div onClick={this.displayDonateBlock} className="donate-block">
                         <img className='donate-btn-icon' src="../img/donate icon.svg" alt="" />
                         Донат
                     </div>
@@ -201,7 +256,21 @@ class Post extends Component{
                         Репост
                     </div>
                 </div>
+                
+                {this.state.showDonateForm && (
+                    <PostDetails
+                        link={this.props.data.link}
+                        extraLink={this.props.data.extra_link}
+                        card={this.props.data.card}
+                        extraCard={this.props.data.extra_card}
+                        iban={this.props.data.iban}
+                        extraIban={this.props.data.extra_iban}
+                        closeForm={this.closeDonateForm}
+                    />
+                )}
+                
             </div>
+            
         
         )
     }

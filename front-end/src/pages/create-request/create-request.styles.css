@@ -1,0 +1,57 @@
+.create-request-container{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+.request-data-form{
+    width: 58.854vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2.083vw;
+}
+.add-request-photo{
+    width: 26.042vw;
+    height: 37.87vh;
+    background-color: #ffffff;
+    border-radius: 0.781vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+}
+.create-request-info-container{
+    display: flex;
+    flex-direction: column;
+    gap: 4.167vh;
+}
+.create-request-description{
+    max-width: 30.729vw;
+    min-width: 30.729vw;
+    max-height: 18.426vh;
+    min-height: 18.426vh;
+    border: 0;
+    font-size: 1.146vw;
+    background-color: #ffffff;
+}
+.create-request-info{
+    width: 30.729vw;
+    min-height: 5.37vh;
+    max-height: 5.37vh;
+    background-color: #ffffff;
+    border: 0; 
+    font-size: 1.146vw;  
+}
+.btn-create-req{
+    position: absolute;
+    top: 76.296vh;
+    border: 18.704vh;
+    width: 9.375vw;
+    height: 5vh;
+    color: #ffff;
+    font-size: 25px;
+    background-color: #78866B;
+    border-radius: 0.781vw;
+}

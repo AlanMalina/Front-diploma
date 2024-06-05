@@ -35,14 +35,21 @@ const getPic = (picture) => {
     // })
 }
 
-const postPost = ( picture, content, appointer, goal, deadline, user_id) => {
+const postPost = ( picture, content, appointer, goal, deadline, user_id, 
+    link, extra_link, card, extra_card, iban, extra_iban) => {
     return axios.post(api + '/post', { 
         picture,
         content,
         appointer,
         goal,
         deadline,
-        user_id
+        user_id,
+        link,
+        extra_link, 
+        card, 
+        extra_card, 
+        iban, 
+        extra_iban
     },
     {
         headers:{
