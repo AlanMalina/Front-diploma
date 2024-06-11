@@ -18,7 +18,7 @@ class MyProfilePage extends Component {
         this.state = {post_in_profile: [], sort: false, fullpost: false, userProfile: [], 
             followingCount: [], following: 0, followers: 0, postsCount: 0,
         avatar: '', description: '', username: '', usersurname: '', edit: false, updatedProf: [],
-        requests: []}
+        requests: [], waitingRequests: [], approveRequest: [], vol_SelectedOption: 'active-posts', mil_SelectedOption: 'active-requests'}
         this.funcToast = this.funcToast.bind(this)
         this.ColumnSort = this.ColumnSort.bind(this)
         this.BlockSort = this.BlockSort.bind(this)
@@ -27,6 +27,8 @@ class MyProfilePage extends Component {
         this.getFollowingCount = this.getFollowingCount.bind(this);
         this.getPostsCount = this.getPostsCount.bind(this)
         this.updateUser = this.updateUser.bind(this)
+        this.handleVolunteerSelectChange = this.handleVolunteerSelectChange.bind(this);
+        this.handleMilitarySelectChange = this.handleMilitarySelectChange.bind(this);
     }
     
 
@@ -225,34 +227,70 @@ class MyProfilePage extends Component {
 
     avatarChange = (e) => {
         const avatar = e.target.files[0]
-        console.log(avatar)
+        // console.log(avatar)
         this.setState({avatar: avatar})
     }
 
     userNameChange = (e) => {
         const name = e.target.value
-        console.log(name)
+        // console.log(name)
         this.setState({username: name})
     }
 
     userSurnameChange = (e) => {
         const surname = e.target.value
-        console.log(surname)
+        // console.log(surname)
         this.setState({usersurname: surname})
     }
 
     descriptionChange = (e) => {
         const description = e.target.value
-        console.log(description)
+        // console.log(description)
         this.setState({description: description})
     }
 
     async getRequests(){
-        const response = await requestService.getOwnReq(this.props.user?.id)
-        this.setState({requests: response.data})
-        console.log(response.data)
+        try{
+            const response = await requestService.getOwnReq(this.props.user?.id)
+            this.setState({requests: response.data})
+            // console.log(response.data)
+        }
+        catch(e){
+            console.error(e)
+        }
+    }
+
+    async getApproveRequest(){
+        try{
+            const response = await requestService.getAccept(this.props.user?.id)
+            this.setState({approveRequest: response.data})
+        }
+        catch(e){
+            console.error(e)
+        }
+    }
+
+    async getWaiting(){
+        try{
+            console.log('getWaiting called' + this.props.user?.id);
+            const response = await requestService.getWaiting(this.props.user?.id)
+            this.setState({waitingRequests: response.data})
+            console.log(response.data)
+        }
+        catch(e){
+            console.error(e)
+        }
     }
     
+    handleVolunteerSelectChange(event) {
+        this.setState({ vol_SelectedOption: event.target.value });
+        // console.log(this.state.selectedOption)
+    }
+
+    handleMilitarySelectChange(event) {
+        this.setState({ mil_SelectedOption: event.target.value });
+        // console.log(this.state.selectedOption)
+    }
 
     async componentDidMount(){
         await this.getPost()
@@ -260,6 +298,9 @@ class MyProfilePage extends Component {
         await this.getFollowingCount()
         await this.getPostsCount()
         await this.getRequests()
+        await this.getWaiting()
+        await this.getApproveRequest()
+        
     }
 
 
@@ -270,6 +311,7 @@ class MyProfilePage extends Component {
         if(prevProps.user !== this.props.user && this.state.updatedProf !== prevProps.user){
             this.setState({updatedProf: prevProps.user})
         }
+        // console.log(this.state.selectedOption)
     }
     
 
@@ -290,29 +332,33 @@ class MyProfilePage extends Component {
                 />
                 {this.props.user.role === 'volunteer' &&
                     <div id='sort-container' className="sort-container">
-                        <select className='select-bar' name="items" id="items">
+                        <select className='select-bar' name="items" id="items" onChange={this.handleVolunteerSelectChange}>
                             <option value="active-posts">Активні публікації</option>
                             <option value="active-requests">Активні запити</option>
                         </select>
                         <div>
-                            <button id='btn-block-sort' className='btn-block-sort' onClick={this.BlockSort}>
-                                <img className='block-sort-icon' src="./img/block sort.svg" alt="" />
-                            </button>
-                            <button id='btn-column-sort' className='btn-column-sort' onClick={this.ColumnSort}>
-                                <img className='column-sort-icon' src="./img/column sort.svg" alt="" />
-                            </button>
+                        {this.state.vol_SelectedOption === 'active-posts' &&
+                            <div>
+                                <button id='btn-block-sort' className='btn-block-sort' onClick={this.BlockSort}>
+                                    <img className='block-sort-icon' src="./img/block sort.svg" alt="" />
+                                </button>
+                                <button id='btn-column-sort' className='btn-column-sort' onClick={this.ColumnSort}>
+                                    <img className='column-sort-icon' src="./img/column sort.svg" alt="" />
+                                </button>
+                            </div>}
                         </div>
                     </div>}
 
                     {this.props.user.role === 'military' &&
                     <div id='sort-container' className="sort-container">
-                        <select className='select-bar' name="items" id="items">
-                            <option value="active-posts">Активні запити</option>
-                            <option value="active-requests">Очікуються</option>
+                        <select onChange={this.handleMilitarySelectChange} className='select-bar' name="items" id="items">
+                            <option value="active-requests">Активні запити</option>
+                            <option value="waiting">Очікуються</option>
                         </select>
                     </div>}
 
-                    {this.props.user.role === 'volunteer' && (
+                    {this.props.user.role === 'volunteer' && 
+                    this.state.vol_SelectedOption === 'active-posts' &&(
                         <div id='my-profile-page-main' className='my-profile-page-main'>
                             
                             <div id='my-profile-post-container' className="my-profile-post-container">
@@ -331,9 +377,8 @@ class MyProfilePage extends Component {
                             </div>               
                         </div>)}
 
-                
-                
-                {this.props.user.role === 'volunteer' &&
+                {this.props.user.role === 'volunteer' && 
+                this.state.vol_SelectedOption === 'active-posts' &&
                     <div id='my-profile-main-postsColumn' className="my-profile-main-postsColumn">
                     {this.state.userProfile.map((post) => (
                         <div key={post.id} id='column-post' className="column-post">
@@ -346,19 +391,55 @@ class MyProfilePage extends Component {
                     ))}
                     </div>}
 
+                    {this.props.user.role === 'volunteer' &&
+                    this.state.vol_SelectedOption === 'active-requests' &&
+                        (<div style={{display: 'flex', overflow: 'auto'}} id='my-profile-main-postsColumn' className="my-profile-main-postsColumn"> 
+                            {this.state.approveRequest && this.state.approveRequest.length > 0 ? (
+                            this.state.approveRequest.map((req) => (
+                                <div key={req.id} id='column-post' className="column-post">
+                                    <Request req={req} 
+                                    followingCount={this.props.followingCount} 
+                                    setFullPostData={this.props.setFullPostData}
+                                    user={this.props.user}
+                                /> 
+                                </div>))
+                            ): (
+                                <div className='my-profile-page-main-empty'>
+                                    Немає запитів
+                                </div>
+                            )}
+                        </div>
+                    )}
+                        
 
-                    {this.props.user.role === 'military' &&
+
+                    {this.props.user.role === 'military' && 
+                    this.state.mil_SelectedOption === 'active-requests' &&
                         <div style={{display: 'flex', overflow: 'auto'}} id='my-profile-main-postsColumn' className="my-profile-main-postsColumn"> 
                             {this.state.requests.map((req) => (
                                 <div key={req.id} id='column-post' className="column-post">
                                     <Request req={req} 
-                                    // followingCount={this.props.followingCount} 
-                                    // setFullPostData={this.props.setFullPostData}
+                                    followingCount={this.props.followingCount} 
+                                    setFullPostData={this.props.setFullPostData}
                                     user={this.props.user}
                                  /> 
                                 </div>
                             ))}
                         </div>}  
+
+                    {this.props.user.role === 'military' && 
+                    this.state.mil_SelectedOption === 'waiting' &&
+                        <div style={{display: 'flex', overflow: 'auto'}} id='my-profile-main-postsColumn' className="my-profile-main-postsColumn"> 
+                            {this.state.waitingRequests.map((req) => (
+                                <div key={req.id} id='column-post' className="column-post">
+                                    <Request req={req} 
+                                    followingCount={this.props.followingCount} 
+                                    setFullPostData={this.props.setFullPostData}
+                                    user={this.props.user}
+                                 /> 
+                                </div>
+                            ))}
+                        </div>} 
                 
                 
             
@@ -396,14 +477,21 @@ class MyProfilePage extends Component {
                             <input onChange={this.userNameChange} type="text" defaultValue={this.props.user?.userName} id='input-edit-name' className='input-edit-name'/>
                             <input onChange={this.userSurnameChange} type="text" defaultValue={this.props.user?.userSurname} id='input-edit-surname' className='input-edit-surname'/>
                             <div className="profile-indicators">
+                                {this.props.user?.role === 'volunteer' &&
                                 <div className="current-posts">
                                     {this.state.postsCount} <br />
                                     Публікації
-                                </div>
+                                </div>}
+                                {this.props.user?.role === 'military' &&
+                                <div className="current-posts">
+                                    {this.state.postsCount} <br />
+                                    Запити
+                                </div>}
+                                {this.props.user?.role === 'volunteer' &&
                                 <div className="folowers">
                                     {this.state.followers} <br /> 
                                     Читачі
-                                </div>
+                                </div>}
                                 <div className="following">
                                     {this.state.following} <br />
                                     Стежить за

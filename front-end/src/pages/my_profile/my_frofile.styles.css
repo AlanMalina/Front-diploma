@@ -20,8 +20,22 @@
     background-color: #ffffff;
     box-shadow: 1px 1px 10px #c3c5c1;
     margin-left: 18.594vw;
-    border-radius: 15px;
+    border-radius: 0.781vw;
     box-sizing: border-box;
+}
+.my-profile-page-main-empty{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    width: 43.907vw;
+    height: 79.352vh;
+    background-color:white;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.781vw;
+    font-size:2.083vw;
+    font-weight: bold;
+    color: #8B8B8B
 }
 
 .sort-container{

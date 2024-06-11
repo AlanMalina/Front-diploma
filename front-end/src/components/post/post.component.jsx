@@ -194,8 +194,8 @@ class Post extends Component{
                             <p className='post-time'>1тж тому</p>
                         </div>
                     </div>
-                    {this.props.user.role === 'military' ? (
-                        <div>
+                    {/* {this.props.user.role === 'volunteer' ? (
+                        <div> */}
                         {this.props.user.id !== this.props.data.user_id &&
                             this.state.isFollow !== this.props.data?.user_id &&
                             !this.props.followingCount.some(item => item.following_user_id === this.props.data?.user_id) &&
@@ -205,12 +205,12 @@ class Post extends Component{
                                 </div>
                             )
                         }
-                        </div>
+                        {/* </div>
                     ) : (
                         <div id='following-btn' className='following-btn' onClick={this.followHandler}>
                             +Стежити
                         </div>
-                    )}
+                    )} */}
                     
 
                     

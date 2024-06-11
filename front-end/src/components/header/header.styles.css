@@ -49,6 +49,10 @@
 .burger{
     display: none;
 }
+.clipboard-btn-icon{
+    width: 5.8vh;
+    height: 5.8vh;
+}
 .create-btn-icon{
     width: 5vh;
     height: 5vh;

@@ -42,10 +42,61 @@ const getRequests = () => {
     })
 }
 
+const addVolunteerReq = (user_id, request_id) => {
+    return axios.post(api + '/addVolunteerReq', {
+        user_id,
+        request_id
+    },
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data',
+            "Authorization": Cookies.get('ACCESS_TOKEN')
+        }
+    });
+}
+
+const getAccept = (id) => {
+    return axios.get(api + `/getAccept/${id}`,
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data',
+            "Authorization": Cookies.get('ACCESS_TOKEN')
+        }
+    });
+}
+
+const getWaiting = (id) => {
+    return axios.get(api + `/getWaiting/${id}`,
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data',
+            "Authorization": Cookies.get('ACCESS_TOKEN')
+        }
+    })
+}
+
+const finishRequest = (id) => {
+    return axios.delete(api + `/finishReq/${id}`,
+    {
+        headers:{
+            'Accept' : '*/*',
+            'Content-Type' : 'multipart/form-data',
+            "Authorization": Cookies.get('ACCESS_TOKEN')
+        }
+    });
+}
+
 const requestService = {
     createRequest,
     getOwnReq,
-    getRequests
+    getRequests,
+    addVolunteerReq,
+    getAccept,
+    getWaiting,
+    finishRequest
 }
 
 export default requestService;

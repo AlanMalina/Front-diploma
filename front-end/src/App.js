@@ -91,7 +91,7 @@ async componentDidMount() {
                 <Route path='/chat' element={<ChatPage/>}/>
                 <Route path='/public-profile/:id' element={<PublicProfilePage following={this.state.following} user={this.state.decoded} setFullPostData={this.setFullPostData}/>}/>
                 <Route path='/create-request' element={<CreateRequest user={this.state.decoded}/>}/>
-                <Route path='/requests-table' element={< RequestsTable/>}/>
+                <Route path='/requests-table' element={< RequestsTable user={this.state.decoded}/>}/>
                 <Route path='/' element={<Navigate to={this.state.path}/>} />
               </Routes>
           </div>

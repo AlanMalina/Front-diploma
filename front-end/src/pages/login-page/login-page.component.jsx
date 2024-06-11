@@ -50,17 +50,17 @@ class LogInPage extends Component{
                 </div>
                 <div className='login-form'>
                     <div className='login-email-block'>
-                        <label htmlFor='login-email-input'>Email:</label>
+                        <label htmlFor='login-email-input'>Електронна пошта:</label>
                         <input id='login-email-input' type="text" className='login-email-input' name="email" value={this.state.email} onChange={this.emailValue} />
                         {/* {this.state.errors.email && <span>{this.state.errors.email}</span>} */}
                     </div>
                     <div className='login-password-block'>
-                        <label htmlFor='login-password-input'>Password:</label>
+                        <label htmlFor='login-password-input'>Пароль:</label>
                         <input id='login-password-input' type="password" className='login-password-input' name="password" value={this.state.password} onChange={this.passwordValue} />
                            {/* {this.state.errors.password && <span>{this.state.errors.password}</span>} */}
                     </div> 
                     <NavLink to='/registration' style={{ fontStyle: 'italic', fontSize: '1.042vw'}}>
-                        If you already have an account?    
+                        Якщо у вас ще немає акаунту?    
                     </NavLink>      
                     <div className='btn-login' onClick={this.logIn}>
                         Log in                         

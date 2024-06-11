@@ -2,13 +2,35 @@ import React, {Component} from 'react'
 import './request.styles.css';
 import postService from '../../service/post-service';
 import loginService from '../../service/login-service';
+import requestService from '../../service/request-service';
 import { NavLink } from 'react-router-dom';
 
 class Request extends Component{
 
     constructor(props){
         super(props)
-        this.state = {formattedDeadline: ''}
+        this.state = {formattedDeadline: '', approveRequest: []}
+        this.approveRequest = this.approveRequest.bind(this)
+        this.finishRequest = this.finishRequest.bind(this)
+    }
+
+    async approveRequest() {
+        try {
+            const response = await requestService.addVolunteerReq(this.props.user?.id, this.props.req?.id);
+            this.setState({approveRequest: response.data})
+            window.location.href = '/my-profile'
+        } catch (error) {
+            console.error("Error approving request:", error);
+        }
+    }
+
+    async finishRequest() {
+        try {
+            await requestService.finishRequest(this.props.req?.id);
+            window.location.reload();
+        } catch (error) {
+            console.error("Error finishing request:", error);
+        }
     }
 
     componentDidMount(){
@@ -23,9 +45,27 @@ class Request extends Component{
         }
     }
 
+    componentDidUpdate(){
+        console.log(this.props.user)
+    }
+
     render(){
         return(
             <div className='request-container'>
+                {/* {this.props.user?.role === 'volunteer' && 
+                <div className="request-header">
+                    {this.props.req?.avatar !== null ? (
+                        <div className="request-header-avatar">
+                            <img src={`http://localhost:5000/${this.props.req?.avatar}`}/>    
+                        </div>
+                    ) : (
+                        <div className="request-header-avatar">
+                            <img className='requests-profile-avatar-default' src='../img/avatar_header_icon.svg' alt="" />
+                        </div>
+                    )}
+                    
+                    {this.props.req?.user_name} {this.props.req?.user_surname}
+                </div>} */}
                 {this.props.req?.picture ? (
                     <div style={{width: '100%', height: '27.778vh', display: 'flex', gap: '0.521vw'}}>
                         <img className="request-picture" src={`http://localhost:5000/${this.props.req?.picture}`}/>    
@@ -39,6 +79,18 @@ class Request extends Component{
                             <div className='request-deadline-info'>
                                 Терміни: {this.state.formattedDeadline}
                             </div>
+                            {this.props.user.role === 'volunteer' &&
+                            <div>
+                                {this.props.req.status === false ? (
+                                    <div onClick={this.approveRequest} className='btn-approve'>
+                                        Прийняти
+                                    </div>
+                                ) : (
+                                    <div onClick={this.finishRequest} className='btn-stop'>
+                                        Завершити
+                                    </div>
+                                )}
+                            </div>}
                         </div>
                     </div>
                 ) : (
@@ -52,6 +104,18 @@ class Request extends Component{
                         <div className='request-deadline-info'>
                             Терміни: {this.state.formattedDeadline}
                         </div>
+                        {this.props.user.role === 'volunteer' &&
+                            <div>
+                                {this.props.req.status === false ? (
+                                    <div onClick={this.approveRequest} className='btn-approve'>
+                                        Прийняти
+                                    </div>
+                                ) : (
+                                    <div onClick={this.finishRequest} className='btn-stop'>
+                                        Завершити
+                                    </div>
+                                )}
+                            </div>}
                     </div>
                 )}
                 

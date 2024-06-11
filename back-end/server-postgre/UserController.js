@@ -8,38 +8,38 @@ class UserController{
 
     async addUser(req, res, next) {
         try {
-        const { email, password, userName, userSurname, role, aproveRules } = req.body;
-    
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
+            const { email, password, userName, userSurname, role, aproveRules } = req.body;
+        
+            const saltRounds = 10;
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        const existingEmail = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-        // console.log('aproveRules:', aproveRules);
-        if(!aproveRules){
-            return res.status(400).json({message: 'You must confirm that you grant the right to process and store your data!'})
-        }
-        if(existingEmail.rows.length > 0){
-            return res.status(400).json({message: 'This email is already registered!'})
-        }
-        if (!role || (role !== 'donor' && role !== 'volunteer' && 
-        role !== 'military' && role !== null)) {
-            return res.status(400).json({ message: 'You need to choose a role!' });
-        };
+            const existingEmail = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+            // console.log('aproveRules:', aproveRules);
+            if(!aproveRules){
+                return res.status(400).json({message: 'You must confirm that you grant the right to process and store your data!'})
+            }
+            if(existingEmail.rows.length > 0){
+                return res.status(400).json({message: 'This email is already registered!'})
+            }
+            if (!role || (role !== 'donor' && role !== 'volunteer' && 
+            role !== 'military' && role !== null)) {
+                return res.status(400).json({ message: 'You need to choose a role!' });
+            };
+                
+            const user = await pool.query(
+                'INSERT INTO users (email, password, userName, userSurname, role) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+                [email, hashedPassword, userName, userSurname, role]
+            );
+            const accessToken = JwtToken.generateAccessToken(user.rows[0]);
             
-        const user = await pool.query(
-            'INSERT INTO users (email, password, userName, userSurname, role) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [email, hashedPassword, userName, userSurname, role]
-        );
-        const accessToken = JwtToken.generateAccessToken(user.rows[0]);
-        
-        res.cookie('ACCESS_TOKEN', accessToken, {
-            maxAge: 60*60*24*30*1000,
-            httpOnly: true,
-            secure: true, // Токен передається лише через HTTPS
-            sameSite: 'strict' // Встановлення атрибута SameSite
-        })
-        
-        res.json({ token: accessToken });
+            res.cookie('ACCESS_TOKEN', accessToken, {
+                maxAge: 60*60*24*30*1000,
+                httpOnly: true,
+                secure: true, // Токен передається лише через HTTPS
+                sameSite: 'strict' // Встановлення атрибута SameSite
+            })
+            
+            res.json({ token: accessToken });
         } catch (e) {
             res.status(500).json(e);
         }

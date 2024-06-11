@@ -182,16 +182,15 @@ class PublicProfilePage extends Component {
                             <div className="profile-indicators">
                                 <div className="current-posts">
                                     {this.state.postsCount} <br />
-                                    current <br /> 
-                                    posts
+                                    Публікації
                                 </div>
                                 <div className="folowers">
                                     {this.state.followers} <br /> 
-                                    Followers
+                                    Читачів
                                 </div>
                                 <div className="following">
                                     {this.state.following} <br />
-                                    Following
+                                    Стежить за
                                 </div>
                             </div>
                             

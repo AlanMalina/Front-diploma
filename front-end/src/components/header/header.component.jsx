@@ -114,7 +114,7 @@ class Header extends Component {
                 {this.props.user?.role === 'volunteer' &&
                 <div className='nav-item '>
                     <NavLink className={`${setActive} create item-content`} to='requests-table'>
-                        S<img id='create-btn-icon' className='create-btn-icon' src="../img/create_header_icon.svg"/>S
+                        <img style={{}} id='create-btn-icon' className='clipboard-btn-icon' src="../img/clipboard.png"/>
                     </NavLink>
                 </div>}
                 <div className='nav-item '>

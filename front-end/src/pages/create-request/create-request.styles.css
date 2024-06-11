@@ -47,7 +47,7 @@
 .btn-create-req{
     position: absolute;
     top: 76.296vh;
-    border: 18.704vh;
+    border: 0;
     width: 9.375vw;
     height: 5vh;
     color: #ffff;
